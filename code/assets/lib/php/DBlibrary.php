@@ -112,6 +112,7 @@
             selectDataWithInCondition("user", "id", "id ", $paramArray);
 
         */
+        
         //INSERT
         public function insertData($table, $data = []) {
             $columns = implode(', ', array_keys($data));
