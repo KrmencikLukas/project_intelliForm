@@ -1,0 +1,19 @@
+.ErrorDis{
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    width: 90%;
+    min-height: 45px;
+    color: rgba(192, 17, 17);
+    margin: 5px;
+}
+.ErrorDis p{
+    font-size: 18px;
+
+}
+.ErrorDis h2{
+    font-size: 26px;
+    font-weight: 700;
+    margin: 3px;
+    margin-top: 5px;
+}
