@@ -8,37 +8,15 @@
     
     $form = $DBlib->fetchDataWithCondition("form", "*", "id=:id",[":id"=>$id])[0];
 
-    /*
-    {
-        ID: 1, //ID formu co se upravuje v DB, může být null pokud je neznámé
-        name: "", //Název formuláře
-        settings: {
-            bgColor: "#N3V1M" //Příklad nastavení
-            //Zde může být neomezeně dalších nastavení
-        },
-        questions: [
-            {
-                heading: "", //Nadpis otázky
-                description: "", //Popis otázky
-                type: 1, //Typy budou očíslované od 0 do 2
-                media: [
-                    "/mujobrazek.png", //Cesta k souboru, v určité složce
-                    //Zde může být neomezeně dalších cest
-                ],
-                settings: {
-                    bgColor: "#N3V1M" //Příklad nastavení
-                    //Zde může být neomezeně dalších nastavení
-                },
-                answers: [
-                    "text odpovedi",
-                    //Zde může být neomezeně dalších odpovědí
-                ]
-            },
-            //Zde může být neomezeně dalších otázek
-        ]
-    
-    }
-    */
+    $json = [
+        "ID" => $id,
+        "name" => $form["name"],
+        "settings" => formSettings(),
+        "questions" => questions(),
+    ];
+
+    print_r($json);
+
 
     function questionSettings($id){
         global $DBlib;
@@ -60,6 +38,39 @@
         return $settingsArr;
     }
 
+    function answers($id){
+        global $DBlib;
+        $answers = $DBlib->fetchDataWithCondition("answer", "*", "question_id=:id",[":id"=>$id]);
+        $answersArr = [];
+        foreach($answers as $value){
+            $answersArr[] = [
+                "name" => $value["name"],
+                "correctness" => $value["correctness"],
+            ];
+        }
+        return $answersArr;
+    }
+
+    function question_media($id){
+        global $DBlib;
+        $media = $DBlib->fetchDataWithCondition("question_media", "*", "question_id=:id",[":id"=>$id]);
+        $mediaArr = [];
+        foreach($media as $value){
+            $mediaArr[] = $value["path"];
+        }
+        return $mediaArr;
+    }
+
+    function questionType($id){
+        global $DBlib;
+        $type = $DBlib->fetchDataWithCondition("question_type", "*", "id=:id",[":id"=>$id])[0];
+        return [
+            "number" => $type["number"],
+            "name" => $type["name"],
+            "description" => $type["description"],
+        ];
+    }
+
     function questions(){
         global $DBlib, $id;
         $questions = $DBlib->fetchDataWithCondition("question", "*", "form_id=:id",[":id"=>$id]);
@@ -68,25 +79,13 @@
             $questionArr[] = [
                     "heading"=> $value["heading"],
                     "description"=> $value["description"],
-                    "type"=> 1,
-                    "media"=> [
-                        "/mujobrazek.png",
-                    ],
+                    "type"=> questionType($value["type_id"]),
+                    "media"=> question_media($value["id"]),
                     "settings"=> questionSettings($value["id"]),
-                    "answers"=> [
-                        "text odpovedi",
-                    ]
+                    "answers"=> answers($value["id"]),
             ];
         }
         return $questionArr;
     }
-
-
-    $json = [
-        "ID" => $id,
-        "name" => $form["name"],
-        "settings" => formSettings(),
-        "questions" => questions(),
-    ];
 
 ?>
