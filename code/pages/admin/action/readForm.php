@@ -3,20 +3,32 @@
     include("../../../assets/lib/php/DBlibrary.php");
     $DBlib = new DatabaseFunctions($db);
 
-    //$id = $_POST["id"];
-    $id = 1;
-    
-    $form = $DBlib->fetchDataWithCondition("form", "*", "id=:id",[":id"=>$id])[0];
+    //Načtení id z POST
+    if(isset($_POST["id"])){
+        $id = $_POST["id"];
+        if(is_numeric($id)){
+            //Načtení formu z DB
+            $form = $DBlib->fetchDataWithCondition("form", "*", "id=:id",[":id"=>$id])[0];
 
-    $json = [
-        "ID" => $id,
-        "name" => $form["name"],
-        "settings" => formSettings(),
-        "questions" => questions(),
-    ];
+            //Složení JSONU
+            $json = [
+                "ID" => $id,
+                "name" => $form["name"],
+                "settings" => formSettings(),
+                "questions" => questions(),
+            ];
 
-    print_r($json);
+            //Enkódování JSONU Z php pole a vypsání
+            echo json_encode($json);
+        }else{
+            echo 0;
+        }
+    }else{
+        echo 0;
+    }
 
+
+    //Funkce pro skládání JSONU
 
     function questionSettings($id){
         global $DBlib;
