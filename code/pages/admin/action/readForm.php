@@ -14,8 +14,9 @@
 
             //Složení JSONU
             $json = [
-                "ID" => $id,
+                "id" => $id,
                 "name" => $form["name"],
+                "user" => $form["user_id"],
                 "settings" => formSettings(),
                 "questions" => questions(),
             ];
@@ -38,7 +39,10 @@
         $settings = $DBlib->fetchDataWithCondition("question_settings", "*", "question_id=:id",[":id"=>$id]);
         $settingsArr = [];
         foreach($settings as $value){
-            $settingsArr[$value["key"]] = $value["value"];
+            $settingsArr[$value["id"]] = [
+                "key" => $value["key"],
+                "value" => $value["value"],
+            ];
         }
         return $settingsArr;
     }
@@ -48,7 +52,10 @@
         $settings = $DBlib->fetchDataWithCondition("form_settings", "*", "form_id=:id",[":id"=>$id]);
         $settingsArr = [];
         foreach($settings as $value){
-            $settingsArr[$value["key"]] = $value["value"];
+            $settingsArr[$value["id"]] = [
+                "key" => $value["key"],
+                "value" => $value["value"],
+            ];
         }
         return $settingsArr;
     }
@@ -58,7 +65,7 @@
         $answers = $DBlib->fetchDataWithCondition("answer", "*", "question_id=:id",[":id"=>$id]);
         $answersArr = [];
         foreach($answers as $value){
-            $answersArr[] = [
+            $answersArr[$value["id"]] = [
                 "name" => $value["name"],
                 "correctness" => $value["correctness"],
             ];
@@ -71,7 +78,7 @@
         $media = $DBlib->fetchDataWithCondition("question_media", "*", "question_id=:id",[":id"=>$id]);
         $mediaArr = [];
         foreach($media as $value){
-            $mediaArr[] = $value["path"];
+            $mediaArr[$value["id"]] = $value["path"];
         }
         return $mediaArr;
     }
@@ -91,7 +98,7 @@
         $questions = $DBlib->fetchDataWithCondition("question", "*", "form_id=:id",[":id"=>$id]);
         $questionArr = [];
         foreach($questions as $value){
-            $questionArr[] = [
+            $questionArr[$value["id"]] = [
                     "heading"=> $value["heading"],
                     "description"=> $value["description"],
                     "type"=> questionType($value["type_id"]),
