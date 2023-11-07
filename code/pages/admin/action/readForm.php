@@ -14,8 +14,9 @@
 
             //Složení JSONU
             $json = [
-                "ID" => $id,
+                "id" => $id,
                 "name" => $form["name"],
+                "user" => $form["user_id"],
                 "settings" => formSettings(),
                 "questions" => questions(),
             ];
