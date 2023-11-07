@@ -1,0 +1,8 @@
+:root{
+    --font : Sans-Serif;
+}
+*{
+    font-family: var(--font);
+    margin: 0;
+    padding: 0;
+}
