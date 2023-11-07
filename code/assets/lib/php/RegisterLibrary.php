@@ -40,7 +40,7 @@
         if (count($errors) > 0) {
             return ["PasswordValid" => "Password must contain a minimum of: " . implode(', ', $errors)];
         } else {
-            return false;
+            return [];
         }
     }
     function PasswordMatch($arg1, $arg2){

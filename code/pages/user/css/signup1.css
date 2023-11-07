@@ -51,7 +51,7 @@ form{
 h1{
     width: 80%;
     border-bottom:  2px solid black;
-    padding-bottom: 8px;
+    padding-bottom: 14px;
     margin-top: 30px;
     text-align: center;
     font-size: 36px;
@@ -64,6 +64,7 @@ input{
     padding-left: 2%;
     font-size: 20px;
     border-radius: 26px;
+    position: relative;
 }
 button{
     width: 80%;
@@ -77,3 +78,46 @@ button{
     text-align: center;
     
 }
+#HaveAccount{
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 15px;
+}
+#HaveAccount a{
+    margin-left: 10px;
+    color: black;
+}
+#Disclaimer{
+    width: 60%;
+    text-align: center;
+    font-size: 16px;
+    margin-top: 10px;
+    color: rgb(107, 105, 105);
+    height: fit-content;
+    margin-bottom: 5px;
+}
+.password-input-container {
+    position: relative;
+    display: flex;
+    width: 81%;
+  }
+  
+  .password-input {
+    padding-right: 30px; /* Add space for the Show Password span */
+    width: 98%;
+  }
+  
+  .show-password {
+    position: absolute;
+    top: 50%;
+    right: 5px;
+    transform: translateY(-50%);
+    cursor: pointer;
+    background-image: url("../../../assets/img/icons/unseen.png");
+    display: none; /* Hidden by default */
+    background-size: cover;
+    width: 28px;
+    height: 28px;
+    margin-top: 9px;
+    margin-right: 3px;
+  }
