@@ -4,6 +4,8 @@
     $DBlib = new DatabaseFunctions($db);
 
     //Načtení id z POST
+    //$_POST["id"] = 1;
+
     if(isset($_POST["id"])){
         $id = $_POST["id"];
         if(is_numeric($id)){
@@ -20,6 +22,7 @@
 
             //Enkódování JSONU Z php pole a vypsání
             echo json_encode($json);
+            //print_r($json);
         }else{
             echo 0;
         }

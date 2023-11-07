@@ -119,7 +119,6 @@
             $placeholders = ':' . implode(', :', array_keys($data));
             
             $sql = "INSERT INTO $table ($columns) VALUES ($placeholders)";
-            echo $sql;
             $sql_com = $this->pdo->prepare($sql);
             if ($sql_com === false) {
                 return false;
@@ -149,7 +148,6 @@
             $setClause = implode(', ', $setClauses);
             
             $sql = "UPDATE $table SET $setClause WHERE $condition";
-            echo $sql;
             
             $sql_com = $this->pdo->prepare($sql);
             
