@@ -1,5 +1,11 @@
 @import url("vars.css");
 
+*{
+    font-family: var(--font);
+    margin: 0;
+    padding: 0;
+}
+
 .ErrorDis{
     display: flex;
     flex-flow: row nowrap;
@@ -22,9 +28,6 @@
 
 /*header sidebar styly*/
 
-*{
-    font-family: var(--font);
-}
 #header {
     color: #4F4F4F;
     display: flex;
