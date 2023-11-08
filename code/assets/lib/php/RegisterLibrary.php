@@ -4,7 +4,7 @@
         unset($_SESSION[$key]);
         $return = "";
         if($check != null){
-            $return .= "<div class='ErrorDis'><p>".$check."</p></div>";
+            $return .= "<div class='ErrorDis'><h2>*</h2><p>".$check."</p></div>";
         }
         
         return $return;

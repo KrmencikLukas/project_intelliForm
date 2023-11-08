@@ -1,6 +1,5 @@
 $(document).ready(function() {
     $('.password-input-container').hover(function() {
-        // Append the "Show Password" span to the input field
         var inputField = $(this).find('.password-input');
         var showPasswordSpan = inputField.next('.show-password');
         if (showPasswordSpan.length === 0) {
