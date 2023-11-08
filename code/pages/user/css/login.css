@@ -82,10 +82,12 @@ button{
     font-size: 18px;
     font-weight: bold;
     margin-top: 15px;
+    margin-bottom: 15px;
 }
 #HaveAccount a{
     margin-left: 10px;
     color: black;
+    margin-right: 5px;
 }
 #Disclaimer{
     width: 60%;
@@ -94,7 +96,7 @@ button{
     margin-top: 10px;
     color: rgb(107, 105, 105);
     height: fit-content;
-    margin-bottom: 5px;
+    margin-bottom: 15px;
 }
 .password-input-container {
     position: relative;

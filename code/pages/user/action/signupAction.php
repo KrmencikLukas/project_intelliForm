@@ -27,10 +27,9 @@
         define("Location", "../signup/signup.php");
         
         $params = [
-            ":email" => $Email,
-            ":password" => HashSalt($Password, $Email)
+            ":email" => $Email
         ];
-        $Exists = $pdo->countByPDOWithCondition("user","*","email = :email AND password = :password", $params);
+        $Exists = $pdo->countByPDOWithCondition("user","*","email = :email", $params);
         if($Exists > 0){
             $error["AccountExists"] = "Account already exists";
         }
@@ -39,7 +38,7 @@
         foreach ($_POST as $value) {
             $InputCounter++;
             while($InputCounter > 6){
-                $error["InputError"] = "Unexpected amount of Inputs [ 5 Expected ]";
+                $error["InputError"] = "Unexpected amount of Inputs [ 6 Expected ]";
                 break;
             }
         }
@@ -47,12 +46,14 @@
             $error["EmailFormat"] = "Invalid Email format";
         }
 
-
+        if(empty($Password) || empty($PasswordCheck) || empty($Firstname) || empty($Lastname) || empty($Email)){
+            $error["Empty"] = "All fields are requiered";
+        }
         $error = array_merge($error, PasswordValidation($Password, $PasswordCheck));
         $error = array_merge($error, PasswordMatch($Password, $PasswordCheck));
 
         SessionLog($error, Location);
-       /*foreach($_POST as $key2 => $value2){
+       foreach($_POST as $key2 => $value2){
             $HeaderInitiate = true;
             if($key2 == "Name"){
                 $_SESSION["Name"] = $_POST['Name'] ?? null;
@@ -70,7 +71,7 @@
                 header("location:../signup/signup.php");
             } 
         }
-*/
+
         if(SessionLog($error, Location) == false){
             $_SESSION["Password"]= HashSalt($Password,$Email);
             $_SESSION["NameDB"]=$Firstname;
