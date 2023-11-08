@@ -31,7 +31,7 @@
             ":password" => HashSalt($Password, $Email)
         ];
         $Exists = $pdo->countByPDOWithCondition("user","*","email = :email AND password = :password", $params);
-        if($Exists = 0){
+        if($Exists > 0){
             $error["AccountExists"] = "Account already exists";
         }
 
