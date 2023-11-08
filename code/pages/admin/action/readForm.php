@@ -4,7 +4,7 @@
     $DBlib = new DatabaseFunctions($db);
 
     //Načtení id z POST
-    //$_POST["id"] = 1;
+    $_POST["id"] = 8;
 
     if(isset($_POST["id"])){
         $id = $_POST["id"];
@@ -14,15 +14,16 @@
 
             //Složení JSONU
             $json = [
-                "ID" => $id,
+                "id" => $id,
                 "name" => $form["name"],
+                "user" => $form["user_id"],
                 "settings" => formSettings(),
                 "questions" => questions(),
             ];
 
             //Enkódování JSONU Z php pole a vypsání
             echo json_encode($json);
-            //print_r($json);
+            print_r($json);
         }else{
             echo 0;
         }
@@ -38,7 +39,10 @@
         $settings = $DBlib->fetchDataWithCondition("question_settings", "*", "question_id=:id",[":id"=>$id]);
         $settingsArr = [];
         foreach($settings as $value){
-            $settingsArr[$value["key"]] = $value["value"];
+            $settingsArr[$value["id"]] = [
+                "key" => $value["key"],
+                "value" => $value["value"],
+            ];
         }
         return $settingsArr;
     }
@@ -48,7 +52,10 @@
         $settings = $DBlib->fetchDataWithCondition("form_settings", "*", "form_id=:id",[":id"=>$id]);
         $settingsArr = [];
         foreach($settings as $value){
-            $settingsArr[$value["key"]] = $value["value"];
+            $settingsArr[$value["id"]] = [
+                "key" => $value["key"],
+                "value" => $value["value"],
+            ];
         }
         return $settingsArr;
     }
@@ -58,7 +65,7 @@
         $answers = $DBlib->fetchDataWithCondition("answer", "*", "question_id=:id",[":id"=>$id]);
         $answersArr = [];
         foreach($answers as $value){
-            $answersArr[] = [
+            $answersArr[$value["id"]] = [
                 "name" => $value["name"],
                 "correctness" => $value["correctness"],
             ];
@@ -71,7 +78,7 @@
         $media = $DBlib->fetchDataWithCondition("question_media", "*", "question_id=:id",[":id"=>$id]);
         $mediaArr = [];
         foreach($media as $value){
-            $mediaArr[] = $value["path"];
+            $mediaArr[$value["id"]] = $value["path"];
         }
         return $mediaArr;
     }
@@ -80,6 +87,7 @@
         global $DBlib;
         $type = $DBlib->fetchDataWithCondition("question_type", "*", "id=:id",[":id"=>$id])[0];
         return [
+            "id" => $type["id"],
             "number" => $type["number"],
             "name" => $type["name"],
             "description" => $type["description"],
@@ -91,7 +99,7 @@
         $questions = $DBlib->fetchDataWithCondition("question", "*", "form_id=:id",[":id"=>$id]);
         $questionArr = [];
         foreach($questions as $value){
-            $questionArr[] = [
+            $questionArr[$value["id"]] = [
                     "heading"=> $value["heading"],
                     "description"=> $value["description"],
                     "type"=> questionType($value["type_id"]),
