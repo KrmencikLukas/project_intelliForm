@@ -4,7 +4,7 @@
         unset($_SESSION[$key]);
         $return = "";
         if($check != null){
-            $return .= "<div class='ErrorDis'><h2>*</h2><p>".$check."</p></div>";
+            $return .= "<div class='ErrorDis'><p>".$check."</p></div>";
         }
         
         return $return;
@@ -18,7 +18,7 @@
         $errors = [];
     
         // Check minimum length
-        if (strlen($arg1) <= 8 || strlen($arg2) <= 8) {
+        if (strlen($arg1) < 8 || strlen($arg2) < 8) {
             $errors[] = "8 letters";
         }
     
@@ -76,25 +76,5 @@
         }
         return $log;
     } 
-    function KeepValLog($array = [], $headerURL){
-        $HeaderActivate = true;
-        $log = "";
-        foreach($array as $value){
-            if($value){
-                $_SESSION[$value] = $_POST[$value] ?? null;
-            }else{
-                $HeaderActivate = false;
-            }
-            if($HeaderActivate == true){
-                header("location".$headerURL);
-            }
-        }
-        if(empty($array)){
-            $log = false;
-        }else{
-            $log = true;
-        }
-        return $log;
-    }
 
 ?>

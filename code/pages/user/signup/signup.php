@@ -9,10 +9,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Sign up step 1</title>
     <link rel="stylesheet" href="../css/signup1.css">
     <link rel="stylesheet" href="../../../assets/global/vars.css">
     <link rel="stylesheet" href="../../../assets/global/general.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="../js/viewPassword.js"></script>
+
 </head>
 <body>
     <div id="BodyWrap">
@@ -26,14 +29,25 @@
                 <input type="text" name="Lastname"  placeholder="Lastname" value="<?= KeepValue("Lastname")?>">
                 <input type="Email" name="Email" placeholder="E-mail" value="<?= KeepValue("Email")?>">
                 <?= notify("EmailFormat")?>
-                <input type="password" name="Password" placeholder="Password">
-                <input type="password" name="PasswordValid" placeholder="Confirm password">
+              
+                <div class="password-input-container">
+                    <input class="password-input" type="password" name="Password" placeholder="Password">
+                    <span class="show-password"></span>
+                </div>
+                <div class="password-input-container">
+                    <input type="password" name="PasswordValid" placeholder="Confirm password" class="password-input">
+                    <span class="show-password"></span>
+
+
+                </div>
+                
                 <?= notify("PasswordValid")?>
                 <?= notify("PasswordMatch")?>
                 <?= notify("InputError")?>
                 <?= notify("AccountExists")?>
                 <button type="submit" name="submit">Sign up</button>
-                <p>Already have an account? <a>Log in</a></p>
+                <p id="HaveAccount">Already have an account? <a href="../login/login.php" target="_self">Log in</a></p>
+                <p id="Disclaimer">By clicking Sign up, you agree to the <a target="_self" href>Terms of service</a>and <a href="" target="_self">Privacy policy</a></p>
             </form>
         </div>
     </div>
