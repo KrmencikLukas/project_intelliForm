@@ -4,6 +4,9 @@
     session_start();    
     $update = $_SESSION["Update"] ?? null;
     unset($_SESSION["Update"]);
+    if(!isset($_SESSION["Email"])){
+        header("location:signup.php");
+    }
 ?>
 
 <!DOCTYPE html>
