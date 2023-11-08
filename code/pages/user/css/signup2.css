@@ -37,7 +37,7 @@ form{
 }
 h1{
     width: 80%;
-    border-bottom:  2px solid var(--grey);
+    border-bottom:  2px solid var(--gray);
     padding-bottom: 8px;
     margin-top: 30px;
     text-align: center;
@@ -52,7 +52,7 @@ input{
     font-size: 20px;
     border-radius: 26px;
     text-align: center;
-    border: 1px solid  var(--grey);
+    border: 1px solid  var(--gray);
 }
 button[name = "submit"]{
     width: 80%;
@@ -83,7 +83,7 @@ input[type=number] {
 }
 #resend{
     margin-top: 10px;
-    color: var(--grey);
+    color: var(--gray);
     font-size: 18px;
 }
 #resend button{

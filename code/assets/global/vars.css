@@ -4,8 +4,11 @@
 :root{
     --blue: #04B9E8;
     --red: #F16566;
-    --grey: #3C3C3B;
+    --gray: #3C3C3B;
+    --light-gray: #ababab;
     --darkBG: #121212;
     --fontRegular: 'Inter Tight', sans-serif;
-    --fontSpecial: 'Gabarito', sans-serif;
+    --fontSpecial: 'Gabarito', sans-serif;    
+    --shadow: 0px 0px 100px 0px rgba(137, 137, 137, 0.3);
+    --dark-shadow: 0px 0px 100px 10px rgba(137, 137, 137, 0.5);
 }
