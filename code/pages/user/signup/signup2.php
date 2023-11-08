@@ -2,6 +2,8 @@
     include("../../../assets/lib/php/db.php");
     include("../../../assets/lib/php/RegisterLibrary.php");
     session_start();    
+    $update = $_SESSION["Update"] ?? null;
+    unset($_SESSION["Update"]);
 ?>
 
 <!DOCTYPE html>
@@ -17,13 +19,40 @@
 <body>
     <div id="BodyWrap">
         <div id="Main">
-            <form method="post" action="../action/signupAction.php">
-                <h1>Sign up</h1>
-
+            <form method="post" action="../action/signupAction2.php">
+                <h1>Email verification</h1>
+                <input type="number" name="VerifCode" placeholder="00-00-00">
+                <?= notify("InputError")?>
+                <?= notify("NaN")?>
+                <?= notify("Not6Digit")?>
+                <?= notify("WrongCode")?>
                 <button type="submit" name="submit">Sign up</button>
-                <p>Already have an account? <a>Log in</a></p>
+                <div id="resendiv">
+                    <p id="resend">Didnt recieve the Email? <button type="submit" id="resendbtn" placeholder="Resend" name="resend">Resend Email</button></p>
+                    <?=notify("Cooldown")?>
+                </div>
             </form>
-        </div>
+        </div>  
     </div>
+    <script>
+        var countdownElement = document.getElementById('countdown');
+        var timeRemaining = <?=$update ?? null?>;
+
+        function updateCountdown() {
+            var minutes = Math.floor(timeRemaining / 60);
+            var seconds = timeRemaining % 60;
+
+            countdownElement.innerHTML = minutes + ':' + (seconds < 10 ? '0' : '') + seconds;
+
+            if (timeRemaining <= 0) {
+                clearInterval(countdownInterval);
+            } else {
+                timeRemaining--;
+            }
+        }
+        
+        var countdownInterval = setInterval(updateCountdown, 1000);
+        updateCountdown(); 
+    </script>
 </body>
 </html>

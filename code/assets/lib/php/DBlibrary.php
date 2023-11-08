@@ -19,7 +19,7 @@
         // Count věci v db
         public function DBcountByPDO( $countColumn = "*",$table){
             if ($countColumn === "*") {
-                $countColumn = "*";
+                $countColumn = "COUNT(*)";
             } else {
                 $countColumn = "COUNT($countColumn)";
             }
@@ -33,7 +33,7 @@
 
         public function countByPDOWithCondition($table, $countColumn = "*", $condition = "", $params = []) {
             if ($countColumn === "*") {
-                $countColumn = "*";
+                $countColumn = "COUNT(*)";
             } else {
                 $countColumn = "COUNT($countColumn)";
             }
@@ -42,7 +42,6 @@
             if (!empty($condition)) {
                 $sql .= " WHERE $condition";
             }
-        
             $sql_com = $this->pdo->prepare($sql);
         
             if ($sql_com === false) {
