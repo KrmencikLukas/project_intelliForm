@@ -2,7 +2,7 @@
 @import url("vars.css");
 
 *{
-    font-family: var(--font);
+    font-family: var(--fontRegular);
     margin: 0;
     padding: 0;
 }
@@ -126,6 +126,7 @@
     padding: 20px;
     width: 0;
     border-radius: 10px;
+    background-size: 100% 100%;
 }
 #Sidebar a {
     padding-top: 15px;
@@ -165,3 +166,24 @@
     color: #4F4F4F;
     text-decoration: none;
 }
+
+#SidebarHome{
+    background-image: url(../img/icons/home.png);
+}
+
+#SidebarNewForm{
+    background-image: url(../img/icons/newForm.png);
+}
+
+#SidebarImport{
+    background-image: url(../img/icons/import.png);
+}
+
+#SidebarAbout{
+    background-image: url(../img/icons/about.png);
+}
+
+#SidebarQA{
+    background-image: url(../img/icons/help.png);
+}
+
