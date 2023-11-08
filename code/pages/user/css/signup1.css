@@ -1,10 +1,11 @@
+@import url("../../../assets/global/general.css");
 
 #BodyWrap{
     width: 100%;    
     height: 100vh;
     display: flex;
     flex-flow: column nowrap;
-    background-color: azure;
+    background-color: white;
 }
 #ButtonWrap{
     width: 100%;
@@ -26,9 +27,8 @@
     text-align: center;
     width: 160px;
     height: 70px;
-    background-color: white;
     border-radius: 18px;
-    border: 1px solid black;
+
     display: flex;
     justify-content: center;
     align-items: center;
@@ -36,21 +36,34 @@
     margin: 10px 10px;
     text-decoration: none;
     color: black;
+    box-shadow: 0px 0px 30px 0px rgba(111,111,111,0.57);
+    -webkit-box-shadow: 0px 0px 80px -15px rgba(111,111,111,0.57);
+    -moz-box-shadow: 0px 1px 42px 0px rgba(111,111,111,0.57);
+}
+#BackBtn span{
+    background-image: url("../../../assets/img/icons/back-curved-arrow-svgrepo-com.svg");
+    background-repeat: no-repeat;
+    width: 35px;
+    height: 25px;
+    margin-bottom: -5px;
+    margin-right: 5px;
 }
 form{
     width: 28%;
     min-height: 300px;
     background-color: white;
-    border: 1px solid black;
     display: flex;
     flex-flow: column nowrap;
     align-items: center;
-    border-radius: 16px;
+    border-radius: 24px;
     margin-top: -50px;
+    box-shadow: 0px 0px 30px 0px rgba(111,111,111,0.57);
+-webkit-box-shadow: 0px 0px 80px -20px rgba(111,111,111,0.57);
+-moz-box-shadow: 0px 1px 42px 0px rgba(111,111,111,0.57);
 }
 h1{
     width: 80%;
-    border-bottom:  2px solid black;
+    border-bottom:  2px solid var(--grey);
     padding-bottom: 14px;
     margin-top: 30px;
     text-align: center;
@@ -65,6 +78,7 @@ input{
     font-size: 20px;
     border-radius: 26px;
     position: relative;
+    border: 1px solid var(--grey);
 }
 button{
     width: 80%;
@@ -73,10 +87,10 @@ button{
     font-size: 20px;
     border-radius: 26px;
     font-weight: bold;
-    background-color: black;
+    background-color: var(--blue);
     color: white;
     text-align: center;
-    
+    border: none;
 }
 #HaveAccount{
     font-size: 18px;
@@ -95,6 +109,9 @@ button{
     color: rgb(107, 105, 105);
     height: fit-content;
     margin-bottom: 5px;
+}
+#Disclaimer a{
+    color: var(--grey);
 }
 .password-input-container {
     position: relative;
@@ -116,7 +133,8 @@ button{
     background-image: url("../../../assets/img/icons/unseen.png");
     display: none; /* Hidden by default */
     background-size: cover;
-    width: 30px;
+    width: 32px;
+    background-repeat: no-repeat;
     height: 28px;
     margin-top: 9px;
     margin-right: 3px;

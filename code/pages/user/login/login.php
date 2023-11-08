@@ -20,7 +20,7 @@
 <body>
     <div id="BodyWrap">
         <div id="ButtonWrap">
-            <a href="" target="_self" id="BackBtn">&#x21A9; go back</a>
+            <a href="" target="_self" id="BackBtn"><span></span> go back</a>
         </div>
         <div id="Main">
             <form method="post" action="../action/loginAction.php">
