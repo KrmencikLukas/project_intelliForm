@@ -5,7 +5,7 @@
 
     $DBlib = new DatabaseFunctions($db);
 
-    $_POST["id"] = 3;
+    
 
     //Načtení id z POST
     if(isset($_POST["id"])){
