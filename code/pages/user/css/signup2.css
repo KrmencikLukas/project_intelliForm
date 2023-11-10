@@ -81,10 +81,14 @@ input::-webkit-inner-spin-button {
 input[type=number] {
   -moz-appearance: textfield;
 }
+#resendiv{
+    width: 90%;
+}
 #resend{
     margin-top: 10px;
     color: var(--gray);
     font-size: 18px;
+    text-align: center;
 }
 #resend button{
     border: none;
