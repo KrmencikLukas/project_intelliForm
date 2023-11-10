@@ -15,7 +15,7 @@
     align-items: center;
     width: 90%;
     min-height: 25px;
-    color: rgba(192, 17, 17);
+    color: var(--red);
 }
 .ErrorDis p{
     font-size: 18px;
@@ -32,9 +32,8 @@ input:focus{
 /*header sidebar styly*/
 
 #header {
-    color: #4F4F4F;
+    color: var(--gray);
     display: flex;
-    background-color: #F6F6F6;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
@@ -42,6 +41,12 @@ input:focus{
     padding-left: 1%;
     padding-right: 3%;
     width: 96%;
+    -webkit-box-shadow: var(--shadow);
+    -moz-box-shadow: var(--shadow);
+    box-shadow: var(--shadow); 
+    height: 100px;
+    z-index: 200000000000;
+    background-color: white;
 }
 #HeaderAndSidebar {
     width: 100%;
@@ -93,20 +98,22 @@ input:focus{
     border-left: #707070 2px solid;
     height: 81px;
 }
-#UserIcon {
+.UserIcon {
     margin-left: 25px;
-    padding: 30px;
-    border-radius: 30px;
+    border-radius: 50%;
     border: 2px solid #707070;
     background-color: white;
     cursor: pointer;
+    width: 60px;
+    height: 60px;
 }
+
 #Sidebar {
     font-weight: 300;
     padding-left: 18px;
     padding-top: 15px;
+    padding-right: 15px;
     height: 100%;
-    width: 65px;
     border-top-right-radius: 20px;
     border-bottom-right-radius: 20px;
     display: flex;
@@ -115,8 +122,19 @@ input:focus{
     transition: width 0.4s ease-in-out;
     -webkit-box-shadow: var(--shadow);
     -moz-box-shadow: var(--shadow);
-    box-shadow: var(--shadow);
+    box-shadow: var(--shadow); 
+    width: 40px;
+    background-color: white;
 }
+
+.sidebarIn{
+    width: 100%;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
 #Content {
     margin-left: 80px;
     margin-top: 96px;
@@ -125,8 +143,9 @@ input:focus{
     padding: 20px;
     width: 0;
     border-radius: 10px;
-    background-size: 100% 100%;
+    background-size: 95% 95%;
     transition: 500ms;
+    background-position: center;
 }
 #Sidebar a {
     padding-top: 15px;
@@ -135,9 +154,9 @@ input:focus{
     transition: width 0.5s ease-in-out;
     display: flex;
     flex-direction: row;
-    align-content: center;
     align-items: center;
     text-decoration: none;
+    transition: 300ms;
 }
 #Sidebar a:last-child {
     padding-top: 15px;
@@ -151,21 +170,31 @@ input:focus{
     width: 80%;
 }
 #Sidebar a:hover{
-    background-color: #e8e8e8;
+    /*background-color: #e8e8e8;*/
+    font-size: 20px;
 }
 
+#Sidebar a:hover .SidebarIcon{
+    /*background-color: #e8e8e8;*/
+    font-size: 20px;
+    background-size: 105% 105%;
+}
+
+
 .IconText {
-    display: none;
+    /*display: none;*/
     transition: width 0.5s ease-in-out;
     margin: 0;
     margin-left: 10px;
+    font-family: var(--fontSpecial);
+    overflow: hidden;
+    display: inline-block;
+    white-space: nowrap;
+    color: var(--gray);
+    text-decoration: none;
 }
 #Sidebar:hover .IconText {
-    display: inline-block;
-    overflow: hidden;
-    white-space: nowrap;
-    color: #4F4F4F;
-    text-decoration: none;
+
 }
 
 #SidebarHome{
@@ -177,26 +206,34 @@ input:focus{
 }
 
 #SidebarNewForm{
-    background-image: url(../img/icons/newForm.svg);
+    background-image: url(../img/icons/plus.svg);
 }
 
 #Sidebar a:hover #SidebarNewForm{
-    background-image: url(../img/icons/newForm-blue.svg);
+    background-image: url(../img/icons/plus-blue.svg);
 }
 
 #SidebarImport{
-    background-image: url(../img/icons/import.png);
+    background-image: url(../img/icons/import.svg);
+}
+
+#Sidebar a:hover #SidebarImport{
+    background-image: url(../img/icons/import-blue.svg);
 }
 
 #SidebarAbout{
-    background-image: url(../img/icons/about.svg);
+    background-image: url(../img/icons/info.svg);
 }
 
 #Sidebar a:hover #SidebarAbout{
-    background-image: url(../img/icons/about-blue.svg);
+    background-image: url(../img/icons/info-blue.svg);
 }
 
 #SidebarQA{
-    background-image: url(../img/icons/help.png);
+    background-image: url(../img/icons/FAQ.svg);
+}
+
+#Sidebar a:hover #SidebarQA{
+    background-image: url(../img/icons/FAQ-blue.svg);
 }
 

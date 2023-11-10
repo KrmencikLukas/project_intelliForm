@@ -17,35 +17,31 @@
             ?>
         </div>
         <div id="HeaderRight">
-            <div id="notification" class="HeaderSmallBox"></div>
-            <div id="HeaderSettings" class="HeaderSmallBox"></div>
-            <div id="HeaderWall"></div>
-            <div id="UserIcon"></div>
+            <img class="UserIcon" src="<?php echo __DIR__ ?>" alt="">
         </div>
     </div>
     <div id="Sidebar">
-        <a href="">
-            <div class="SidebarIcon" id="SidebarHome"></div>
-            <p class="IconText">Home</p>
-        </a>
-        <a href="">
-            <div class="SidebarIcon" id="SidebarNewForm"></div>
-            <p class="IconText">New Form</p>
-        </a>
-        <a href="">
-            <div class="SidebarIcon" id="SidebarImport"></div>
-            <p class="IconText">Import Form</p>
-        </a>
-        <a href="">
-            <div class="SidebarIcon" id="SidebarAbout"></div>
-            <p class="IconText">About</p>
-        </a>
-        <a href="">
-            <div class="SidebarIcon" id="SidebarQA"></div>
-            <p class="IconText">Q&A</p>
-        </a>
+        <div class="sidebarIn">
+            <a href="">
+                <div class="SidebarIcon" id="SidebarHome"></div>
+                <p class="IconText">Home</p>
+            </a>
+            <a href="">
+                <div class="SidebarIcon" id="SidebarNewForm"></div>
+                <p class="IconText">New Form</p>
+            </a>
+            <a href="">
+                <div class="SidebarIcon" id="SidebarImport"></div>
+                <p class="IconText">Import Form</p>
+            </a>
+            <a href="">
+                <div class="SidebarIcon" id="SidebarAbout"></div>
+                <p class="IconText">About</p>
+            </a>
+            <a href="">
+                <div class="SidebarIcon" id="SidebarQA"></div>
+                <p class="IconText">Q&A</p>
+            </a>
+        </div>
     </div>
-</div>
-<div id="Content">
-
 </div>
