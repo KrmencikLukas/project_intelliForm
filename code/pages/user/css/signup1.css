@@ -63,7 +63,7 @@ form{
 }
 h1{
     width: 80%;
-    border-bottom:  2px solid var(--grey);
+    border-bottom:  2px solid var(--gray);
     padding-bottom: 14px;
     margin-top: 30px;
     text-align: center;
@@ -78,7 +78,7 @@ input{
     font-size: 20px;
     border-radius: 26px;
     position: relative;
-    border: 1px solid var(--grey);
+    border: 1px solid var(--gray);
 }
 button{
     width: 80%;
@@ -111,7 +111,7 @@ button{
     margin-bottom: 5px;
 }
 #Disclaimer a{
-    color: var(--grey);
+    color: var(--gray);
 }
 .password-input-container {
     position: relative;
