@@ -115,8 +115,8 @@
             
             $mail->isHTML(true);
             $mail->Subject = 'Verification Code'; 
-            $bodyContent = '<h1>ok</h1>'; 
-            $bodyContent .= '<p>Here is your Verification code :'.$vercode.'</p>'; 
+            $bodyContent = '<div style=" display:flex; flex-flow: column nowrap;">'; 
+            $bodyContent .= '<p style="width: fit-content; background-color: black; color: white; font-size: 24px; align-self: center;">Here is your Verification code :'.$vercode.'</p>'; 
             $bodyContent .= '<p>If you didnt ask for this Email please contact our support</p>';
             $mail->Body  = $bodyContent; 
             
