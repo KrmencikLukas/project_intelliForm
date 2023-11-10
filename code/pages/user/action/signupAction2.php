@@ -96,7 +96,7 @@
             $vercode = rand(100000,999999);
             $_SESSION["Vercode"] = $vercode;
             $Email =   $_SESSION["Email"]?? null;
-
+            $font = "Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;";
             $mail = new PHPMailer; 
          
             $mail->SMTPDebug = SMTP::DEBUG_SERVER; 
@@ -115,11 +115,13 @@
             
             $mail->isHTML(true);
             $mail->Subject = 'Verification Code'; 
-            $bodyContent = '<div style=" display:flex; flex-flow: column nowrap;">'; 
-            $bodyContent .= '<p style="width: fit-content; background-color: black; color: white; font-size: 24px; align-self: center;">Here is your Verification code :'.$vercode.'</p>'; 
-            $bodyContent .= '<p>If you didnt ask for this Email please contact our support</p>';
+        
+            $bodyContent = '<div style=" display:flex; flex-direction:column; font-family:'.$font.'">';
+            $bodyContent .= "<h1 style='margin-left: 30px;'>Email verification</h1>";
+            $bodyContent .= '<p style="margin-left: 40px;">Please paste this code into the verification field to finish the sign up process.</p>';
+            $bodyContent .=  '<p style="width: fit-content; background-color: black; color: white; font-size: 24px; align-self: center; font-weight: bold; padding: 5px; border-radius: 6px; margin-left:100px;">'.$vercode.'</p>';
+            $bodyContent .=  '<p style="margin-left: 40px;">If you didnt ask for this Email please contact our support because your private information may be in danger</p></div>';
             $mail->Body  = $bodyContent; 
-            
             if($mail->send()) { 
                 setcookie('last_activation_time', time(), time()+300);
                 header("location:../signup/signup2.php");

@@ -48,6 +48,7 @@
             countdownElement.innerHTML = minutes + ':' + (seconds < 10 ? '0' : '') + seconds;
 
             if (timeRemaining <= 0) {
+                countdownElement.innerHTML = ''
                 clearInterval(countdownInterval);
             } else {
                 timeRemaining--;
