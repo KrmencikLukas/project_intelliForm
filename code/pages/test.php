@@ -7,7 +7,10 @@
     <link rel="stylesheet" href="../assets/global/general.css">
 </head>
 <body>
-    <?php include("../assets/global/headerSidebar.php") ?>
+    <?php 
+    include("../assets/lib/php/general.php");
+    include("../assets/global/headerSidebar.php");
+    ?>
     <div id="Content">
     <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Vivamus luctus egestas leo. Morbi scelerisque luctus velit. Duis bibendum, lectus ut viverra rhoncus, dolor nunc faucibus libero, eget facilisis enim ipsum id lacus. Aenean fermentum risus id tortor. Etiam egestas wisi a erat. Maecenas sollicitudin. Phasellus enim erat, vestibulum vel, aliquam a, posuere eu, velit. Vivamus ac leo pretium faucibus. Integer rutrum, orci vestibulum ullamcorper ultricies, lacus quam ultricies odio, vitae placerat pede sem sit amet enim.</p>
 
