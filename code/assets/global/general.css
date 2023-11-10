@@ -98,14 +98,21 @@ input:focus{
     border-left: #707070 2px solid;
     height: 81px;
 }
-.UserIcon {
+
+.userIconDiv{
+    box-shadow: var(--dark-shadow);
     margin-left: 25px;
     border-radius: 50%;
-    border: 2px solid #707070;
+}
+
+
+.UserIcon {
+    border-radius: 50%;
     background-color: white;
     cursor: pointer;
     width: 60px;
     height: 60px;
+    object-fit: cover;
 }
 
 #Sidebar {
