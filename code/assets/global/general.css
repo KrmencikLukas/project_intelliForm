@@ -146,6 +146,11 @@ input:focus{
     margin-left: 80px;
     margin-top: 96px;
 }
+
+#content {
+    margin-left: 80px;
+    margin-top: 96px;
+}
 .SidebarIcon {
     padding: 20px;
     width: 0;
