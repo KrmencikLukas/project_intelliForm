@@ -66,7 +66,14 @@ input:focus{
     align-content: center;
     justify-content: flex-end;
     align-items: center;
+    width: 400px;
 }
+
+h1{
+    font-weight: 400;
+    font-size: 30px;
+}
+
 #logo {
     background-color: #ffffff;
     padding: 5%;
@@ -208,9 +215,6 @@ input:focus{
     color: var(--gray);
     text-decoration: none;
 }
-#Sidebar:hover .IconText {
-
-}
 
 #SidebarHome{
     background-image: url(../img/icons/home.svg);
@@ -252,3 +256,6 @@ input:focus{
     background-image: url(../img/icons/FAQ-blue.svg);
 }
 
+#PageSpecific{
+    margin-left: 80px;
+}

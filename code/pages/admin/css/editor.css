@@ -34,6 +34,7 @@
     border-radius: var(--radius);
     box-sizing: border-box;
     padding: 30px;
+    margin-bottom: 20px;
 }
 
 .questionHeading{
@@ -71,11 +72,26 @@
 .answer {
     display: flex;
     align-items: center;
-    margin-bottom: 13px;
+    margin-bottom: 13px; 
 }
 
 .answerInput{
     border: none;
     outline: none;
     font-size: 20px;
+    width: calc(100% - 65px);
+}
+
+.delete{
+    color: var(--red);
+    font-size: 30px;
+    cursor: pointer;
+    margin-left: auto;
+}
+
+.formName{
+    text-align: center;
+    font-size: 30px;
+    border: none;
+    font-family: var(--fontSpecial);
 }

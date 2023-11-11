@@ -12,9 +12,9 @@
             </div>
             <?php
             if(isset($location)){
-                echo "<div id='LocationName'><p>";
+                echo "<div id='LocationName'><h1>";
                 echo $location;
-                echo "</p></div>";
+                echo "</h1></div>";
             }
             ?>
         </div>
