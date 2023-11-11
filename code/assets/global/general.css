@@ -47,6 +47,7 @@ input:focus{
     height: 100px;
     z-index: 200000000000;
     background-color: white;
+    pointer-events: all;
 }
 #HeaderAndSidebar {
     width: 100%;
@@ -56,6 +57,7 @@ input:focus{
     left: 0;
     display: flex;
     flex-direction: column;
+    pointer-events: none;
 }
 #HeaderLeft, #HeaderRight {
     display: flex;
@@ -64,7 +66,14 @@ input:focus{
     align-content: center;
     justify-content: flex-end;
     align-items: center;
+    width: 400px;
 }
+
+h1{
+    font-weight: 400;
+    font-size: 30px;
+}
+
 #logo {
     background-color: #ffffff;
     padding: 5%;
@@ -132,6 +141,7 @@ input:focus{
     box-shadow: var(--shadow); 
     width: 40px;
     background-color: white;
+    pointer-events: all;
 }
 
 .sidebarIn{
@@ -143,6 +153,11 @@ input:focus{
 }
 
 #Content {
+    margin-left: 80px;
+    margin-top: 96px;
+}
+
+#content {
     margin-left: 80px;
     margin-top: 96px;
 }
@@ -200,9 +215,6 @@ input:focus{
     color: var(--gray);
     text-decoration: none;
 }
-#Sidebar:hover .IconText {
-
-}
 
 #SidebarHome{
     background-image: url(../img/icons/home.svg);
@@ -244,3 +256,6 @@ input:focus{
     background-image: url(../img/icons/FAQ-blue.svg);
 }
 
+#PageSpecific{
+    margin-left: 80px;
+}
