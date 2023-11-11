@@ -47,6 +47,7 @@ input:focus{
     height: 100px;
     z-index: 200000000000;
     background-color: white;
+    pointer-events: all;
 }
 #HeaderAndSidebar {
     width: 100%;
@@ -56,6 +57,7 @@ input:focus{
     left: 0;
     display: flex;
     flex-direction: column;
+    pointer-events: none;
 }
 #HeaderLeft, #HeaderRight {
     display: flex;
@@ -132,6 +134,7 @@ input:focus{
     box-shadow: var(--shadow); 
     width: 40px;
     background-color: white;
+    pointer-events: all;
 }
 
 .sidebarIn{
