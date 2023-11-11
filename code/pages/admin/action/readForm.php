@@ -22,8 +22,9 @@
             ];
 
             //Enkódování JSONU Z php pole a vypsání
-            echo json_encode($json);
+            //echo json_encode($json);
             print_r($json);
+            
         }else{
             echo 0;
         }

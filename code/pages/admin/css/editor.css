@@ -7,7 +7,7 @@
     box-sizing: border-box;
 }
 
-.anwerBox{
+.answerBox{
     margin-right: 17px;
 }
 
@@ -94,4 +94,42 @@
     font-size: 30px;
     border: none;
     font-family: var(--fontSpecial);
+}
+
+.type0 .answers{
+    display: flex;
+    justify-content: center;
+}
+
+.type0 .answerInput{
+    width: 100%;
+    text-align: center;
+}
+
+.type0 .answer{
+    width: 30%;
+    margin: 0;
+    position: relative;
+    height: 50px;
+    margin: 5px;
+}
+
+.type0 .answerBox {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+}
+
+.dis{
+    display: none;
+}
+
+.yes{
+    border: 3px solid var(--blue);
+    border-radius: var(--radius);
+}
+
+.no{
+    border: 3px solid var(--red);
+    border-radius: var(--radius);
 }
