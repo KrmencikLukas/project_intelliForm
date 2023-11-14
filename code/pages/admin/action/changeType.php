@@ -1,5 +1,5 @@
 <?php
-    
+
     include("../../../assets/lib/php/db.php");
     include("../../../assets/lib/php/DBlibrary.php");
 
