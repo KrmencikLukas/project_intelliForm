@@ -59,7 +59,7 @@
         */
 
         //SELECT
-        public function fetchaDataFromDB($table, $Something){
+        public function fetchDataFromDB($table, $Something){
             $sql = "SELECT $Something FROM $table";
             $sql_com =$this->pdo->prepare($sql);
             $sql_com->execute();
