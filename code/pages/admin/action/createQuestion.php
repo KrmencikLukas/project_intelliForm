@@ -48,11 +48,11 @@
             //když ano/ne otázka, vytvoření odpovědí ano/ne
             $DatabaseQuestionType = $DBlib->fetchDataWithCondition("question_type", "name", "number = :id", $getDefault);
             
-            if ($DatabaseQuestionType[0]["name"]=="Yes/No quiz") {
+            if (($DatabaseQuestionType[0]["name"]=="Yes/No quiz")||($DatabaseQuestionType[0]["name"]=="Yes/No poll")) {
                 $questionAnswers=[
                     "question_id" => intval($questionID),
                     "name" => "Yes",
-                    "correctness" => "1",
+                    "correctness" => "0",
                 ];
                 $DBlib->insertData("answer", $questionAnswers);
                 $questionAnswers=[
