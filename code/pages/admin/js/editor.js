@@ -4,8 +4,21 @@ function autoGrow(element) {
     element.style.height = (element.scrollHeight) + "px";
 }
 
-function divCheckBox() {
+function divCheckBox(id,yesNo) {
+    let yesNoInvert;
+    if(yesNo == "yes"){
+        yesNoInvert = "no";
+    }else{
+        yesNoInvert = "yes";
+    }
     
+    if($("."+yesNoString+" .yesNoCheckbox"+id).checked){
+        $(".yesNoDiv3"+id+"."+yesNoString).toggleClass("checked");
+        $(".yesNoDiv3"+id+"."+yesNoInvert).removeClass("checked");
+    }else{
+        $(".yesNoDiv3"+id+"."+yesNoString).removeClass("checked");
+        $(".yesNoDiv3"+id+"."+yesNoInvert).toggleClass("checked");
+    }
 }
 
 

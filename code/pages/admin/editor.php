@@ -57,13 +57,13 @@
                     <textarea class="description" rows="1" placeholder="Enter description" oninput="autoGrow(this)"></textarea>
                 </div>
                 <div class="answers">
-                    <div class="answer yes">
-                        <input type="checkbox" class="dis">
+                    <div class="answer yes yesNoDiv3">
+                        <input type="checkbox" class="dis yesNoCheckbox3" oninput="divCheckbox(3,'yes')">
                         <p class="answerInput">Yes</p>
                     </div>
 
-                    <div class="answer no">
-                        <input type="checkbox" class="dis">
+                    <div class="answer no yesNoDiv3">
+                        <input type="checkbox" class="dis yesNoCheckbox3" oninput="divCheckbox(3,'no')">
                         <p class="answerInput">No</p>
                     </div>
                 </div>    
