@@ -190,7 +190,7 @@
                     "Price" => $Price,
                     "id" => $UpdateId
                 ];
-            deleteDataWithCondition("Menus",$insertArr,"id = :id")
+            deleteDataWithCondition("Menus","id = :id",$insertArr) 
         */
         public function deleteAllData($table) {
             $sql = "DELETE FROM $table";

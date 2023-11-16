@@ -8,7 +8,7 @@
    //defaultní hodnoty
    //
     $heading="Enter question name...";
-    $desc="Description question name...";
+    $desc="Enter question description...";
    //
 
     //Načtení id a type z POST
@@ -44,6 +44,24 @@
                 $sql = $db->prepare($sql);
                 $sql->execute($settingsAttributes);
             }
+
+            //když ano/ne otázka, vytvoření odpovědí ano/ne
+            $DatabaseQuestionType = $DBlib->fetchDataWithCondition("question_type", "name", "number = :id", $getDefault);
+            
+            if (($DatabaseQuestionType[0]["name"]=="Yes/No quiz")||($DatabaseQuestionType[0]["name"]=="Yes/No poll")) {
+                $questionAnswers=[
+                    "question_id" => intval($questionID),
+                    "name" => "Yes",
+                    "correctness" => "0",
+                ];
+                $DBlib->insertData("answer", $questionAnswers);
+                $questionAnswers=[
+                    "question_id" => intval($questionID),
+                    "name" => "No",
+                    "correctness" => "0",
+                ];
+                $DBlib->insertData("answer", $questionAnswers);
+            }
             echo 1;
         }else{
             echo 0;
@@ -51,4 +69,4 @@
     }else{
         echo 0;
     }
-?>
+?> 
