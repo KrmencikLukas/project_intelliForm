@@ -1,14 +1,10 @@
 #content{
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    flex-direction: row;
+    justify-content: space-between;
     padding-top: 50px;
-    height: 85vh;
+    min-height: 85vh;
     box-sizing: border-box;
-}
-
-.answerBox{
-    margin-right: 17px;
 }
 
 .yesNoLabel{
@@ -83,7 +79,8 @@
     border: none;
     outline: none;
     font-size: 20px;
-    width: calc(100% - 65px);
+    width: calc(100% - 65px); 
+    margin-left: 15px;
 }
 
 .delete{
@@ -100,49 +97,166 @@
     font-family: var(--fontSpecial);
 }
 
-.type0 .answers{
+.type0 .answers, .type3 .answers{
     display: flex;
     justify-content: center;
 }
 
-.type0 label{
+.type3 label{
     position: absolute;
     justify-content: center;
 }
 
-.type0 .answerInput{
+.type3 .answerInput{
     width: 100%;
     text-align: center;
 }
 
-.type0 .answer{
+.type0 .answer, .type3 .answer{
     width: 30%;
     margin: 0;
     position: relative;
     height: 50px;
     margin: 5px;
-}
-
-.type0 .answerBox {
-    position: absolute;
-    top: 5px;
-    left: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .dis{
     display: none;
 }
 
-.yes{
+.type0 .yes, .type3 .yes{
     border: 3px solid var(--blue);
     border-radius: var(--radius);
 }
 
-.no{
+.type0 .no, .type3 .no{
     border: 3px solid var(--red);
     border-radius: var(--radius);
 }
 
+.type0 .no p{
+    width: calc(100% - 10px);
+    font-size: 20px;
+    font-weight: 600;
+    text-align: center;
+    background-color: var(--red);
+    border-radius: 13px;
+    padding: 8px 0;
+    color: white;
+}
+
+.type0 .yes p{
+    width: calc(100% - 10px);
+    font-size: 20px;
+    font-weight: 600;
+    text-align: center;
+    background-color: var(--blue);
+    border-radius: 13px;
+    padding: 8px 0;
+    color: white;
+}
+
+.pretty{
+    margin: 3px;
+}
+
+.type3 .pretty{
+    width: calc(100% - 10px);
+    height: 40px;
+    text-align: center;
+    margin: 0;
+}
+
+
 #qId input[type=checkbox]{
     display: none;
+}
+
+.type3 label::before, .type3 label::after{
+    display: none !important; 
+}
+
+.type3 label{
+    text-indent: 0 !important;
+    font-size: 20px !important;
+    font-weight: 600 !important;
+    padding: 10px 0 !important;
+    color: var(--gray);
+}
+
+.type3 .yes .color{
+    width: 100%;
+    text-align: center;
+    background-color: var(--blue);
+    border-radius: 13px;
+    color: white;
+}
+
+.type3 .no .color{
+    width: 100%;
+    text-align: center;
+    background-color: var(--red);
+    border-radius: 13px;
+    color: white;
+}
+
+.focus{
+    border: 1px solid var(--blue);
+    box-shadow: 0px 0px 0px 2px var(--blue);
+    -webkit-box-shadow: 0px 0px 0px 2px var(--blue);
+}
+
+.settings{
+    width: 20%;
+    min-height: 100px;
+    position: fixed;
+    right: 0;
+}
+
+.centerForm{
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.questionSettings, .formSettings{
+    width: 100%;
+    min-height: 100px;
+    -webkit-box-shadow: var(--shadow);
+    -moz-box-shadow: var(--shadow);
+    box-shadow: var(--shadow); 
+    border-radius: var(--radius);
+    margin-bottom: 20px;
+    background-color: white;
+}
+
+.settings h3{
+    padding: 10px;
+    font-weight: 500;
+    font-size: 20px;
+}
+
+.addQuestion{
+    box-sizing: border-box;
+    width: 100%;
+    display: flex;
+    border-radius: var(--radius);
+    align-items: center;
+    justify-content: center;
+    background-color: var(--blue);
+    cursor: pointer;
+}
+
+.addQuestion i{
+    color: white;
+    font-size: 40px;
+}
+
+.addQuestion h3{
+    color: white;
+    font-size: 20px;
 }

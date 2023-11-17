@@ -1,28 +1,27 @@
 
+
+//Funkce pro auto scalovani textarea
 function autoGrow(element) {
     element.style.height = "5px";
     element.style.height = (element.scrollHeight) + "px";
 }
 
-function divCheckBox(id,yesNo) {
-    let yesNoInvert;
-    if(yesNo == "yes"){
-        yesNoInvert = "no";
-    }else{
-        yesNoInvert = "yes";
-    }
-    
-    if($("."+yesNoString+" .yesNoCheckbox"+id).checked){
-        $(".yesNoDiv3"+id+"."+yesNoString).toggleClass("checked");
-        $(".yesNoDiv3"+id+"."+yesNoInvert).removeClass("checked");
-    }else{
-        $(".yesNoDiv3"+id+"."+yesNoString).removeClass("checked");
-        $(".yesNoDiv3"+id+"."+yesNoInvert).toggleClass("checked");
-    }
+
+//funcle pro focus na ot8zku nebo formular
+let focusQuestion
+function focus(element){
+    $(focusQuestion).removeClass("focus")
+    $(element).addClass("focus")
+    focusQuestion = element;
+    console.log(focusQuestion)
 }
 
-
+//ready funkce
 $(document).ready(function(){
+    $(".question").click(function(){
+        focus(this)
+    });
+
     let json = '{"id":8,"name":"New form","user":1,"settings":{"3":{"key":"color","value":"red"},"4":{"key":"bg","value":"black"}},"questions":{"6":{"heading":"Mas rad Babise?","description":"STBaka","type":{"id":5,"number":1,"name":"Yes\/No quiz","description":"A quiz in which the user can only tick yes or no and only one is correct."},"media":[],"settings":{"3":{"key":"color","value":"blue"}},"answers":{"4":{"name":"ne","correctness":"1"}}}}}'
 
     json = JSON.parse(json);
@@ -78,22 +77,18 @@ function generateAnswer(id,name,correctness,type){
     let html = ""
 
     if(type == 0){
-        
-    }else if(type == 1){
         html = `
-        <div class="answer" id="A${id}">
-            <div class="pretty p-icon p-round p-smooth p-bigger p-locked answerBox">
-                <input type="checkbox" />
-                <div class="state p-primary">
-                    <i class="icon mdi mdi-check"></i>
-                    <label></label>
-                </div>
-            </div>
-            <input type="text" class="answerInput" placeholder="Enter answer" value="${name}">
-            <i class="mdi mdi-close delete"></i>
-        </div>
+        
         `
-    }
+    }else if(type == 1){
+
+    }else if(type == 2){
+
+    }else if(type == 3){
+
+    }else if(type == 4){
+
+    }   
     
     return html
 }
