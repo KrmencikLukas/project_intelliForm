@@ -85,6 +85,42 @@
                         <input type="text" class="answerInput" placeholder="Enter answer">
                         <i class="mdi mdi-close delete"></i>
                     </div>
+
+                    <div class="answer" >
+                        <div class="pretty p-icon p-round p-smooth p-bigger answerBox">
+                            <input type="checkbox">
+                            <div class="state p-primary">
+                                <i class="icon mdi mdi-check"></i>
+                                <label></label>
+                            </div>
+                        </div>
+                        <input type="text" class="answerInput" placeholder="Enter answer">
+                        <i class="mdi mdi-close delete"></i>
+                    </div>
+
+                    <div class="answer" >
+                        <div class="pretty p-icon p-round p-smooth p-bigger answerBox">
+                            <input type="checkbox">
+                            <div class="state p-primary">
+                                <i class="icon mdi mdi-check"></i>
+                                <label></label>
+                            </div>
+                        </div>
+                        <input type="text" class="answerInput" placeholder="Enter answer">
+                        <i class="mdi mdi-close delete"></i>
+                    </div>
+
+                    <div class="answer" >
+                        <div class="pretty p-icon p-round p-smooth p-bigger answerBox">
+                            <input type="checkbox">
+                            <div class="state p-primary">
+                                <i class="icon mdi mdi-check"></i>
+                                <label></label>
+                            </div>
+                        </div>
+                        <input type="text" class="answerInput" placeholder="Enter answer">
+                        <i class="mdi mdi-close delete"></i>
+                    </div>
                 </div>
             </div>
 
@@ -100,16 +136,6 @@
                     <textarea class="description" rows="1" placeholder="Enter description" oninput="autoGrow(this)"></textarea>
                 </div>
                 <div class="answers">
-<<<<<<< Updated upstream
-                    <div class="answer yes yesNoDiv3">
-                        <input type="checkbox" class="dis yesNoCheckbox3" oninput="divCheckbox(3,'yes')">
-                        <p class="answerInput">Yes</p>
-                    </div>
-
-                    <div class="answer no yesNoDiv3">
-                        <input type="checkbox" class="dis yesNoCheckbox3" oninput="divCheckbox(3,'no')">
-                        <p class="answerInput">No</p>
-=======
  
                     <div class="answer yes">
                         <div class="pretty p-default p-round">
@@ -127,7 +153,6 @@
                                 <label class="yesNoLabel">No</label>
                             </div>
                         </div>
->>>>>>> Stashed changes
                     </div>
                 </div>    
             </div>
