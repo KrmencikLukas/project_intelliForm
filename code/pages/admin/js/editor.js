@@ -4,8 +4,21 @@ function autoGrow(element) {
     element.style.height = (element.scrollHeight) + "px";
 }
 
-function divCheckBox() {
+function divCheckBox(id,yesNo) {
+    let yesNoInvert;
+    if(yesNo == "yes"){
+        yesNoInvert = "no";
+    }else{
+        yesNoInvert = "yes";
+    }
     
+    if($("."+yesNoString+" .yesNoCheckbox"+id).checked){
+        $(".yesNoDiv3"+id+"."+yesNoString).toggleClass("checked");
+        $(".yesNoDiv3"+id+"."+yesNoInvert).removeClass("checked");
+    }else{
+        $(".yesNoDiv3"+id+"."+yesNoString).removeClass("checked");
+        $(".yesNoDiv3"+id+"."+yesNoInvert).toggleClass("checked");
+    }
 }
 
 
@@ -17,6 +30,9 @@ $(document).ready(function(){
     console.log(json)
 
     //$(".form").html(generateForm(json));
+
+
+    checkboxToRadio(3,0,1)
 });
 
 
@@ -82,4 +98,39 @@ function generateAnswer(id,name,correctness,type){
     }
     
     return html
+}
+
+function checkboxToRadio(qId,min,max){
+
+    let checkboxes = {}
+
+    numberOfChecked = 0;
+    console.log("#qId"+qId+" .answer")
+
+    $("#qId"+qId+" input[type=checkbox]").each(function() {
+
+        checkboxes[qId] = []
+
+        $(this).change(function() {
+
+            if($(this).is(':checked')){
+                checkboxes[qId].push(this)
+                if(numberOfChecked == max){
+                    $(this).prop('checked', false);
+                }else{
+                    numberOfChecked++
+                }
+            }else{
+                if(numberOfChecked == min){
+                    $(this).prop('checked', true);
+                }else{
+                    checkboxes[qId].splice(checkboxes[qId].indexOf(this), 1) 
+                    numberOfChecked--
+                }
+            }
+
+            console.log(numberOfChecked)
+            console.log(checkboxes)
+        })
+    })
 }
