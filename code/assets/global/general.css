@@ -45,7 +45,6 @@ input:focus{
     -moz-box-shadow: var(--shadow);
     box-shadow: var(--shadow); 
     height: 100px;
-    z-index: 200000000000;
     background-color: white;
     pointer-events: all;
 }
@@ -58,6 +57,7 @@ input:focus{
     display: flex;
     flex-direction: column;
     pointer-events: none;
+    z-index: 1000;
 }
 #HeaderLeft, #HeaderRight {
     display: flex;

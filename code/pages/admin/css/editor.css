@@ -1,14 +1,10 @@
 #content{
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    flex-direction: row;
+    justify-content: space-between;
     padding-top: 50px;
-    height: 85vh;
+    min-height: 85vh;
     box-sizing: border-box;
-}
-
-.answerBox{
-    margin-right: 17px;
 }
 
 .yesNoLabel{
@@ -39,11 +35,13 @@
     box-sizing: border-box;
     padding: 30px;
     margin-bottom: 20px;
+    position: relative;
+    padding-top: 40px;
 }
 
 .questionHeading{
     width: 100%;
-    font-size: 30px;
+    font-size: 25px;
     border: none;
     outline: none;
     background-color: transparent;
@@ -83,7 +81,8 @@
     border: none;
     outline: none;
     font-size: 20px;
-    width: calc(100% - 65px);
+    width: calc(100% - 65px); 
+    margin-left: 15px;
 }
 
 .delete{
@@ -100,49 +99,287 @@
     font-family: var(--fontSpecial);
 }
 
-.type0 .answers{
+.type0 .answers, .type3 .answers{
     display: flex;
     justify-content: center;
 }
 
-.type0 label{
+.type3 label{
     position: absolute;
     justify-content: center;
 }
 
-.type0 .answerInput{
+.type3 .answerInput{
     width: 100%;
     text-align: center;
 }
 
-.type0 .answer{
+.type0 .answer, .type3 .answer{
     width: 30%;
     margin: 0;
     position: relative;
     height: 50px;
     margin: 5px;
-}
-
-.type0 .answerBox {
-    position: absolute;
-    top: 5px;
-    left: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .dis{
     display: none;
 }
 
-.yes{
+.type0 .yes, .type3 .yes{
     border: 3px solid var(--blue);
     border-radius: var(--radius);
 }
 
-.no{
+.type0 .no, .type3 .no{
     border: 3px solid var(--red);
     border-radius: var(--radius);
 }
 
+.type0 .no p{
+    width: calc(100% - 10px);
+    font-size: 20px;
+    font-weight: 600;
+    text-align: center;
+    background-color: var(--red);
+    border-radius: 13px;
+    padding: 8px 0;
+    color: white;
+}
+
+.type0 .yes p{
+    width: calc(100% - 10px);
+    font-size: 20px;
+    font-weight: 600;
+    text-align: center;
+    background-color: var(--blue);
+    border-radius: 13px;
+    padding: 8px 0;
+    color: white;
+}
+
+.pretty{
+    margin: 3px;
+}
+
+.type3 .pretty{
+    width: calc(100% - 10px);
+    height: 40px;
+    text-align: center;
+    margin: 0;
+}
+
+
 #qId input[type=checkbox]{
     display: none;
+}
+
+.type3 label::before, .type3 label::after{
+    display: none !important; 
+}
+
+.type3 label{
+    text-indent: 0 !important;
+    font-size: 20px !important;
+    font-weight: 600 !important;
+    padding: 10px 0 !important;
+    color: var(--gray);
+}
+
+.type3 .yes .color{
+    width: 100%;
+    text-align: center;
+    background-color: var(--blue);
+    border-radius: 13px;
+    color: white;
+}
+
+.type3 .no .color{
+    width: 100%;
+    text-align: center;
+    background-color: var(--red);
+    border-radius: 13px;
+    color: white;
+}
+
+.focus{
+    border: 1px solid var(--blue);
+    box-shadow: 0px 0px 0px 2px var(--blue);
+    -webkit-box-shadow: 0px 0px 0px 2px var(--blue);
+}
+
+.settings{
+    width: 20%;
+    min-height: 100px;
+    position: fixed;
+    right: 0;
+}
+
+.centerForm{
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.questionSettings, .formSettings, .save{
+    width: 100%;
+    min-height: 100px;
+    -webkit-box-shadow: var(--shadow);
+    -moz-box-shadow: var(--shadow);
+    box-shadow: var(--shadow); 
+    border-radius: var(--radius);
+    margin-bottom: 20px;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+}
+
+.settings h3{
+    padding: 10px;
+    font-weight: 500;
+    font-size: 20px;
+}
+
+.addQuestion{
+    box-sizing: border-box;
+    width: 100%;
+    display: flex;
+    border-radius: var(--radius);
+    align-items: center;
+    justify-content: center;
+    background-color: var(--blue);
+    cursor: pointer;
+}
+
+.addQuestion i{
+    color: white;
+    font-size: 40px;
+}
+
+.addQuestion h3{
+    color: white;
+    font-size: 20px;
+}
+
+.window{
+    background-color: white;
+    width: 50%;
+    min-height: 200px;
+    -webkit-box-shadow: var(--shadow);
+    -moz-box-shadow: var(--shadow);
+    box-shadow: var(--shadow); 
+    border-radius: var(--radius);
+}
+
+.windowContainer{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    backdrop-filter: blur(10px);
+    z-index: 2000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.chooseType h3{
+    font-size: 20px;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.chooseType{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
+.chooseType select{
+    width: 50%;
+    margin-top: 10px;
+    padding: 10px;
+    border-radius: var(--radius);
+    outline: none;
+    margin-bottom: 20px;
+}
+
+.chooseTypeContainer{
+    display: none;
+}
+
+.chooseType .buttons{
+    display: flex;
+}
+
+.chooseType a{
+    margin: 5px;
+    color: white;
+    padding: 10px;
+    width: 100px;
+    text-align: center;
+    border-radius: var(--radius);
+    cursor: pointer;
+}
+
+.chooseType .add{
+    background-color: var(--blue);
+}
+
+.chooseType .close{
+    background-color: var(--red);
+}
+
+.newAnswer{
+    display: flex;
+    justify-content: center;
+    border: 3px dashed var(--blue);
+    border-radius: var(--radius);
+    color: var(--blue);
+    align-items: center;
+    cursor: pointer;
+}
+
+.newAnswer i {
+    font-size: 25px;
+}
+
+.question .absolute{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.question .absolute i{
+    color: var(--red);
+    font-size: 30px;
+    cursor: pointer;
+}
+
+.question .absolute select{
+    width: 180px;
+    border-radius: var(--radius);
+    outline: none;
+    padding: 5px;
+    margin-right: 10px;
+}
+
+.saveForm{
+    background-color: var(--blue);
+    width: 60%;
+    margin: 0 auto;
+    padding: 10px;
+    color: white;
+    font-weight: 600;
+    border-radius: var(--radius);
+    text-align: center;
+    cursor: pointer;
 }

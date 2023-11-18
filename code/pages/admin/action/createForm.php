@@ -18,6 +18,8 @@
         
         $id = $DBlib->insertData("form", $insertArr);
 
+        //$id = $DBlib->insertData("form_settings", ["key" => ]);
+
         header("Location: ../editor.php?id=".$id);
 
     }else{

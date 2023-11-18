@@ -13,12 +13,12 @@
 
             //zjištění jaký je aktuální type
             $QuestionID = ["id" => $id];
-            $oldType=$DBlib->fetchDataWithCondition("question", "type_id", "id=:id", $QuestionID);
+            $oldType =  idToNumber($DBlib->fetchDataWithCondition("question", "type_id", "id=:id", $QuestionID)[0]["type_id"]);
 
             //změna typu v tabulce question
             $QuestionType=[
                 "id" => $id,
-                "type_id" => $type,
+                "type_id" => numberToId($type),
             ];
             $DBlib->updateData("question",$QuestionType,"id = :id");
 
@@ -29,7 +29,7 @@
             $DBlib->deleteDataWithCondition("question_settings","question_id = :id",$QuestionSettingsInfo);
 
             // a vytvoření nového nastavení podle default_settings
-            $getDefault = [":id" => $type];
+            $getDefault = [":id" => numberToId($type)];
             $defaultKey=$DBlib->fetchDataWithCondition("default_settings", "`key`", "type_id=:id", $getDefault);
             $defaultValue=$DBlib->fetchDataWithCondition("default_settings", "value", "type_id=:id", $getDefault);
 
@@ -49,23 +49,8 @@
             }
 
             //modifikace odpovědí, které jsou ovlivněny změnou typu otázky
-            if ((($oldType[0]["type_id"]=="0")||($oldType[0]["type_id"]=="3"))&&(($type=="0")||($type=="3"))) {
-                $Answers=[
-                    ":id" => $id,
-                ];
-                $sql = "UPDATE `answer` SET `correctness`=0 WHERE `question_id`=:id";
+            if ($type=="0") {
 
-                $sql = $db->prepare($sql);
-                $sql->execute($Answers);
-            } elseif ((($oldType[0]["type_id"]=="1")||($oldType[0]["type_id"]=="2")||($oldType[0]["type_id"]=="4"))&&(($type=="1")||($type=="2")||($type=="4"))){
-                $Answers=[
-                    ":id" => $id,
-                ];
-                $sql = "UPDATE `answer` SET `correctness`=0 WHERE `question_id`=:id";
-
-                $sql = $db->prepare($sql);
-                $sql->execute($Answers);
-            } elseif ((($oldType[0]["type_id"]=="1")||($oldType[0]["type_id"]=="2")||($oldType[0]["type_id"]=="4"))&&(($type=="0")||($type=="3"))){
                 $Answers=[
                     "id" => $id,
                 ];
@@ -74,20 +59,60 @@
                 $questionAnswers=[
                     "question_id" => $id,
                     "name" => "Yes",
-                    "correctness" => "0",
                 ];
                 $DBlib->insertData("answer", $questionAnswers);
                 $questionAnswers=[
                     "question_id" => $id,
                     "name" => "No",
-                    "correctness" => "0",
                 ];
                 $DBlib->insertData("answer", $questionAnswers);
-            } elseif ((($oldType[0]["type_id"]=="0")||($oldType[0]["type_id"]=="3"))&&(($type=="1")||($type=="2")||($type=="4"))) {
+
+            } elseif (($type=="1")||($type=="2")){
+
+                $DBlib->updateDataNormal("answer", ["correctness" => NULL], ["id" => $id], "question_id = :id");
+
+            } elseif ($type=="3"){
                 $Answers=[
                     "id" => $id,
                 ];
                 $DBlib->deleteDataWithCondition("answer","question_id = :id",$Answers);
+
+                $questionAnswers=[
+                    "question_id" => $id,
+                    "name" => "Yes",
+                    "correctness" => 1,
+                ];
+                $DBlib->insertData("answer", $questionAnswers);
+                $questionAnswers=[
+                    "question_id" => $id,
+                    "name" => "No",
+                    "correctness" => 0,
+                ];
+                $DBlib->insertData("answer", $questionAnswers);
+
+            } elseif ($type=="4"){
+                $type4Answers = $DBlib->fetchDataWithCondition("answer", "*", "question_id = :id", [":id" => $id]);
+                if(count($type4Answers) > 0){
+                    $isCorrectness = false;
+                    foreach($type4Answers as $key => $value){
+                        if($value["correctness"] == 1){
+                            $isCorrectness = true;
+                        }
+                    }
+                    if(!$isCorrectness){
+
+                        $DBlib->updateDataNormal("answer", ["correctness" => 0], ["id" => $id], "question_id = :id");
+
+                        $data = [
+                            ":id" => $type4Answers[0]["id"] 
+                        ];
+
+                        $sql = "UPDATE `answer` SET `correctness`= 1 WHERE `id`=:id";
+
+                        $sql = $db->prepare($sql);
+                        $sql->execute($data);
+                    }
+                }
             }
             
             echo 1;
@@ -96,5 +121,16 @@
         }
     }else{
         echo 0;
+    }
+
+
+    function numberToId($type){
+        global $DBlib;
+        return $DBlib->fetchDataWithCondition("question_type", "id", "number = :type", [":type" => $type])[0]["id"];
+    }
+
+    function idToNumber($id){
+        global $DBlib;
+        return $DBlib->fetchDataWithCondition("question_type", "number", "id = :id", [":id" => $id])[0]["number"];
     }
 ?>

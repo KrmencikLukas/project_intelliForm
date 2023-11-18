@@ -7,8 +7,8 @@
 
    //defaultní hodnoty
    //
-    $heading="Enter question name...";
-    $desc="Enter question description...";
+    $heading="";
+    $desc="";
    //
 
     //Načtení id a type z POST
@@ -21,7 +21,7 @@
                 "heading" => $heading,
                 "description" => $desc,
                 "form_id" => $id,
-                "type_id" => $type,
+                "type_id" => $DBlib->fetchDataWithCondition("question_type", "id", "number = :type", [":type" => $type])[0]["id"],
             ];
             $questionID=$DBlib->insertData("question", $questionAttributes);
 
