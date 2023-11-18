@@ -359,6 +359,7 @@
 .question .absolute i{
     color: var(--red);
     font-size: 30px;
+    cursor: pointer;
 }
 
 .question .absolute select{

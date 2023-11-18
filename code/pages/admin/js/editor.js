@@ -13,10 +13,9 @@ function focus(element){
     $(focusQuestion).removeClass("focus")
     $(element).addClass("focus")
     focusQuestion = element;
-    console.log(focusQuestion)
 }
 
-function afterEdit(){
+function afterLoad(){
     //nacteni pole z PHP
     questionTypes = JSON.parse(questionTypes)
 
@@ -24,40 +23,117 @@ function afterEdit(){
     $(".chooseType .close").click(function(){
         $(".chooseTypeContainer").fadeOut(300);
     });
+    
+     //tlacitko ADD v okne pro typ otazky
+    $("body").on("click",".chooseType .add",function(){
+        $(".chooseTypeContainer").fadeOut(300);
+        type = $(".chooseType select").val()
+
+        $.ajax({
+            type: 'POST',
+            url: 'action/createQuestion.php',
+            data: {"id": formId, "type": type},
+            success: function(data) {
+                json = JSON.parse(data);
+                if(json != 0){
+                    loadForm()
+                }
+            },
+        });
+
+    });
+
+    //Delete otazky
+    $("body").on("click",".question .deleteButton",function(){
+        let questionId = parseInt(this.id.split('deleteForm')[1])
+
+        $.ajax({
+            type: 'POST',
+            url: 'action/deleteQuestion.php',
+            data: {"id": questionId},
+            success: function(response) {
+                if(response != 0){
+                    loadForm()
+                }
+            },
+        });
+
+    });
+
+    //Create odpovedi
+    $("body").on("click",".newAnswer",function(){
+        let questionId = parseInt(this.id.split('createAnswer')[1])
+
+        console.log(questionId)
+
+        $.ajax({
+            type: 'POST',
+            url: 'action/createAnswer.php',
+            data: {"questionId": questionId},
+            success: function(response) {
+                console.log(response)
+                if(response != 0){
+                    loadForm()
+                }
+            },
+        });
+
+    });
+
+    //Delete odpovedi
+    $("body").on("click",".answer .delete",function(){
+        let answerId = parseInt(this.id.split('deleteAnswer')[1])
+
+        console.log(answerId)
+
+        $.ajax({
+            type: 'POST',
+            url: 'action/deleteAnswer.php',
+            data: {"id": answerId},
+            success: function(response) {
+                console.log(response)
+                if(response != 0){
+                    loadForm()
+                }
+            },
+        });
+
+    });
 
     //vytvorit novou otazku
-    $(".addQuestion").click(function(){
+    $("body").on("click",".addQuestion",function(){
         $(".chooseTypeContainer").fadeIn(300);
         $(".chooseTypeContainer").css("display", "flex");
     });
 
+    //fucus na jednotlive otazky
+    $("body").on("click",".question",function(){
+        focus(this)
+    });
+}
+
+function loadForm(){
     let json = ""
 
     $.ajax({
         type: 'POST',
         url: 'action/readForm.php',
-        data: {id: 25},
+        data: {id: formId},
         success: function(data) {
-            json = JSON.parse(data);
             console.log(json)
-            $(".form").html(generateForm(json));
+            json = JSON.parse(data);
+            if(json != 0){
+                $(".form").html(generateForm(json));
+            }
         },
-    });
-
-/*
-    let json = '{"id":25,"name":"Politicka anketa","user":1,"settings":[],"questions":{"68":{"heading":"Mas rad Fialu","description":"Premiera Ceske republiky","type":{"id":1,"number":0,"name":"Yes\/No poll","description":"Poll where the user can only answer yes, no or abstain."},"media":[],"settings":[],"answers":{"72":{"name":"Yes","correctness":null},"73":{"name":"No","correctness":null}}},"69":{"heading":"Kdo z techto prezidentu je\/byl podle vas nejlepsi?","description":"Je to velice dulezite","type":{"id":3,"number":1,"name":"Own options poll","description":"Poll where you can set an unlimited number of options. And you can allow the user to check the number of options you choose."},"media":[],"settings":[],"answers":{"74":{"name":"Petr Pavel","correctness":null},"75":{"name":"Milos Zeman","correctness":null},"76":{"name":"Vaclav Klaus","correctness":null}}},"70":{"heading":"Zvol podle tebe nejlepsiho kandidata","description":"Kdyby jsi mohl znovu volit","type":{"id":4,"number":2,"name":"Upvote\/Downvote poll","description":"Poll where you can set an unlimited number of options. And you can allow the user to check your chosen number of upvotes and downvotes."},"media":[],"settings":[],"answers":{"77":{"name":"Jaroslav Basta","correctness":null},"78":{"name":"Danuse Nerudova","correctness":null},"79":{"name":"Petr Pavel","correctness":null},"80":{"name":"Andrej Babis","correctness":null}}},"71":{"heading":"Je Petr Pavel aktualni prezident ?R","description":"Je to eazy","type":{"id":5,"number":3,"name":"Yes\/No quiz","description":"A quiz in which the user can only tick yes or no and only one is correct."},"media":[],"settings":[],"answers":{"81":{"name":"Yes","correctness":"1"},"82":{"name":"No","correctness":"0"}}},"72":{"heading":"Vyberte strany co jsou ve vladni koalici","description":"Nejsou tam vsechny","type":{"id":6,"number":4,"name":"Own options quiz","description":"A quiz where you can set how many of your own answers you want."},"media":[],"settings":[],"answers":{"83":{"name":"ODS","correctness":"1"},"84":{"name":"SPD","correctness":"0"},"85":{"name":"STAN","correctness":"1"},"86":{"name":"ANO","correctness":"0"}}}}}'
-*/
-
-    //fucus na jednotlive otazky
-    $(".question").click(function(){
-        focus(this)
     });
 }
 
 
 //ready funkce
 $(document).ready(function(){
-    afterEdit();
+    afterLoad();
+    loadForm()
 });
 
 
@@ -97,14 +173,13 @@ function generateQuestion(id,heading,description,type,settings,answers){
     let answersHtml = ""
     for (let key in answers){
         value = answers[key]
-        console.log(value);
         answersHtml += generateAnswer(key,value.name,value.correctness,type.number)
     }
 
     let newAnswer = ""
     if(type.number != 0 && type.number != 3){
         newAnswer = `
-            <div class="newAnswer">
+            <div class="newAnswer" id="createAnswer${id}">
                 <i class="mdi mdi-plus"></i>
                 <h3>Add answer</h3>
             </div>
@@ -117,7 +192,7 @@ function generateQuestion(id,heading,description,type,settings,answers){
             <select id="mySelect" name="mySelect">
                 ${questionTypesHtml}
             </select>
-            <i class="mdi mdi-trash-can-outline" id="deleteForm${id}"></i>
+            <i class="mdi mdi-trash-can-outline deleteButton" id="deleteForm${id}"></i>
         </div>
         <input type="text" class="questionHeading" placeholder="Enter question" value="${heading}">
         <div class="descriptionContainer">
@@ -156,7 +231,7 @@ function generateAnswer(id,name,correctness,type){
                     </div>
                 </div>
                 <input type="text" class="answerInput" placeholder="Enter answer" value='${name}'>
-                <i class="mdi mdi-close delete" id="DA${id}"></i>
+                <i class="mdi mdi-close delete" id="deleteAnswer${id}"></i>
             </div>
         `
 
@@ -178,7 +253,7 @@ function generateAnswer(id,name,correctness,type){
                     </div>
                 </div>
                 <input type="text" class="answerInput" placeholder="Enter answer" value="${name}">
-                <i class="mdi mdi-close delete" id="DA${id}"></i>
+                <i class="mdi mdi-close delete" id="deleteAnswer${id}"></i>
             </div>
         `
     }else if(type == 3){
@@ -217,7 +292,7 @@ function generateAnswer(id,name,correctness,type){
                     </div>
                 </div>
                 <input type="text" class="answerInput" placeholder="Enter answer" value="${name}">
-                <i class="mdi mdi-close delete"></i>
+                <i class="mdi mdi-close delete" id="deleteAnswer${id}"></i>
             </div>
         `
     }   

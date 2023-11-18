@@ -4,21 +4,40 @@ include("../../assets/lib/php/db.php");
 include("../../assets/lib/php/DBlibrary.php");
 
 $DBlib = new DatabaseFunctions($db);
+session_start();
 
-/*
+//provizorni nacteni uzivatele
+$_SESSION["user"] = 1;
+
 if(isset($_GET["id"])){
-
+    if(is_numeric($_GET["id"])){
+        if(isset($_SESSION["user"])){
+            if($_SESSION["user"] == $DBlib->fetchDataWithCondition("form", "user_id", "id = :id", [":id" => $_GET["id"]])[0]["user_id"]){
+                $questionTypesRaw = $DBlib->fetchDataFromDB("question_type","*");
+        
+                $questionTypes = [];
+                foreach($questionTypesRaw as $value){
+                    $questionTypes[$value["number"]] = $value["name"];
+                };
+    
+                $questionTypesHtml = "";
+                foreach($questionTypes as $key => $value) {
+                    $questionTypesHtml .= '<option value="'.$key.'">'.$value.'</option>';
+                }
+    
+            }else{
+                header("Location: ../error.php");
+            }
+        }else{
+            header("Location: ../user/login/login.php");
+        }
+    }else{
+        header("Location: ../error.php");
+    }
 }else{
     header("Location: ../error.php");
 }
 
-*/
-$questionTypesRaw = $DBlib->fetchDataFromDB("question_type","*");
-
-$questionTypes = [];
-foreach($questionTypesRaw as $value){
-    $questionTypes[$value["number"]] = $value["name"];
-};
 
 ?>
 <!DOCTYPE html>
@@ -32,7 +51,10 @@ foreach($questionTypesRaw as $value){
     <link rel="stylesheet" href="../../assets/lib/css/pretty-checkbox/dist/pretty-checkbox.min.css">
     <link rel="stylesheet" href="../../assets/global/general.css">
     <link rel="stylesheet" href="css/editor.css">
-    <script>let questionTypes = '<?php echo json_encode($questionTypes) ?>';</script>
+    <script>
+        let questionTypes = '<?php echo json_encode($questionTypes) ?>';
+        let formId = '<?php echo $_GET["id"] ?>';
+    </script>
     <script src="js/editor.js"></script>
 </head>
 <body>
