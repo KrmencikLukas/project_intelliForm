@@ -35,11 +35,13 @@
     box-sizing: border-box;
     padding: 30px;
     margin-bottom: 20px;
+    position: relative;
+    padding-top: 40px;
 }
 
 .questionHeading{
     width: 100%;
-    font-size: 30px;
+    font-size: 25px;
     border: none;
     outline: none;
     background-color: transparent;
@@ -259,4 +261,110 @@
 .addQuestion h3{
     color: white;
     font-size: 20px;
+}
+
+.window{
+    background-color: white;
+    width: 50%;
+    min-height: 200px;
+    -webkit-box-shadow: var(--shadow);
+    -moz-box-shadow: var(--shadow);
+    box-shadow: var(--shadow); 
+    border-radius: var(--radius);
+}
+
+.windowContainer{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    backdrop-filter: blur(10px);
+    z-index: 2000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.chooseType h3{
+    font-size: 20px;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.chooseType{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
+.chooseType select{
+    width: 50%;
+    margin-top: 10px;
+    padding: 10px;
+    border-radius: var(--radius);
+    outline: none;
+    margin-bottom: 20px;
+}
+
+.chooseTypeContainer{
+    display: none;
+}
+
+.chooseType .buttons{
+    display: flex;
+}
+
+.chooseType a{
+    margin: 5px;
+    color: white;
+    padding: 10px;
+    width: 100px;
+    text-align: center;
+    border-radius: var(--radius);
+    cursor: pointer;
+}
+
+.chooseType .add{
+    background-color: var(--blue);
+}
+
+.chooseType .close{
+    background-color: var(--red);
+}
+
+.newAnswer{
+    display: flex;
+    justify-content: center;
+    border: 3px dashed var(--blue);
+    border-radius: var(--radius);
+    color: var(--gray);
+    align-items: center;
+    cursor: pointer;
+}
+
+.newAnswer i {
+    font-size: 25px;
+}
+
+.question .absolute{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.question .absolute i{
+    color: var(--red);
+    font-size: 30px;
+}
+
+.question .absolute select{
+    width: 180px;
+    border-radius: var(--radius);
+    outline: none;
+    padding: 5px;
+    margin-right: 10px;
 }

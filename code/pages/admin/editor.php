@@ -5,12 +5,20 @@ include("../../assets/lib/php/DBlibrary.php");
 
 $DBlib = new DatabaseFunctions($db);
 
+/*
+if(isset($_GET["id"])){
+
+}else{
+    header("Location: ../error.php");
+}
+
+*/
 $questionTypesRaw = $DBlib->fetchDataFromDB("question_type","*");
 
 $questionTypes = [];
 foreach($questionTypesRaw as $value){
     $questionTypes[$value["number"]] = $value["name"];
-}
+};
 
 ?>
 <!DOCTYPE html>
@@ -24,9 +32,26 @@ foreach($questionTypesRaw as $value){
     <link rel="stylesheet" href="../../assets/lib/css/pretty-checkbox/dist/pretty-checkbox.min.css">
     <link rel="stylesheet" href="../../assets/global/general.css">
     <link rel="stylesheet" href="css/editor.css">
+    <script>let questionTypes = '<?php echo json_encode($questionTypes) ?>';</script>
     <script src="js/editor.js"></script>
 </head>
 <body>
+    <div class="windowContainer chooseTypeContainer">
+        <div class="window chooseType">
+            <h3>Choose question type</h3>
+            <select>
+                <?php echo $questionTypesHtml ?>
+            </select>
+            <div class="questionPreview">
+
+            </div>
+            <div class="buttons">
+                <a class="close">Close</a>
+                <a class="add">Add</a>
+            </div>
+        </div>
+    </div>
+
     <?php 
         $PageSpecific = "<input type='text' class='formName' id='formName' placeholder='Enter form name'>";
         $location = "Editor";
@@ -36,8 +61,16 @@ foreach($questionTypesRaw as $value){
     <div id="content">
         <div class="centerForm">
             <div class="form">
-
                 <div class="question type0" id="qId5">
+
+                    <div class="absolute">
+                        <select id="mySelect" name="mySelect">
+                            <?php echo $questionTypesHtml ?>
+                        </select>
+                        <i class="mdi mdi-trash-can-outline" id="deleteForm5"></i>
+                    </div>
+
+                    
                     <input type="text" class="questionHeading" placeholder="Enter question">
                     <div class="descriptionContainer">
                         <textarea class="description" rows="1" placeholder="Enter description" oninput="autoGrow(this)"></textarea>
@@ -59,6 +92,12 @@ foreach($questionTypesRaw as $value){
 
 
                 <div class="question" id="qId6">
+                    <div class="absolute">
+                        <select id="mySelect" name="mySelect">
+                            <?php echo $questionTypesHtml ?>
+                        </select>
+                        <i class="mdi mdi-trash-can-outline" id="deleteForm5"></i>
+                    </div>
                     <input type="text" class="questionHeading" placeholder="Enter question">
                     <div class="descriptionContainer">
                         <textarea class="description" rows="1" placeholder="Enter description" oninput="autoGrow(this)"></textarea>
@@ -86,6 +125,10 @@ foreach($questionTypesRaw as $value){
                             </div>
                             <input type="text" class="answerInput" placeholder="Enter answer">
                             <i class="mdi mdi-close delete"></i>
+                        </div>
+                        <div class="newAnswer">
+                            <i class="mdi mdi-plus"></i>
+                            <h3>Add answer</h3>
                         </div>
                     </div>
                 </div>
@@ -97,6 +140,12 @@ foreach($questionTypesRaw as $value){
 
                 
                 <div class="question" id="qId6">
+                    <div class="absolute">
+                        <select id="mySelect" name="mySelect">
+                            <?php echo $questionTypesHtml ?>
+                        </select>
+                        <i class="mdi mdi-trash-can-outline" id="deleteForm5"></i>
+                    </div>
                     <input type="text" class="questionHeading" placeholder="Enter question">
                     <div class="descriptionContainer">
                         <textarea class="description" rows="1" placeholder="Enter description" oninput="autoGrow(this)"></textarea>
@@ -139,6 +188,10 @@ foreach($questionTypesRaw as $value){
                             <input type="text" class="answerInput" placeholder="Enter answer">
                             <i class="mdi mdi-close delete"></i>
                         </div>
+                        <div class="newAnswer">
+                            <i class="mdi mdi-plus"></i>
+                            <h3>Add answer</h3>
+                        </div>
                     </div>
                 </div>
 
@@ -148,6 +201,12 @@ foreach($questionTypesRaw as $value){
 
 
                 <div class="question type3" id="qId7">
+                    <div class="absolute">
+                        <select id="mySelect" name="mySelect">
+                            <?php echo $questionTypesHtml ?>
+                        </select>
+                        <i class="mdi mdi-trash-can-outline" id="deleteForm5"></i>
+                    </div>  
                     <input type="text" class="questionHeading" placeholder="Enter question">
                     <div class="descriptionContainer">
                         <textarea class="description" rows="1" placeholder="Enter description" oninput="autoGrow(this)"></textarea>
@@ -184,6 +243,12 @@ foreach($questionTypesRaw as $value){
 
 
                 <div class="question" id="qId8">
+                    <div class="absolute">
+                        <select id="mySelect" name="mySelect">
+                            <?php echo $questionTypesHtml ?>
+                        </select>
+                        <i class="mdi mdi-trash-can-outline" id="deleteForm5"></i>
+                    </div>
                     <input type="text" class="questionHeading" placeholder="Enter question">
                     <div class="descriptionContainer">
                         <textarea class="description" rows="1" placeholder="Enter description" oninput="autoGrow(this)"></textarea>
@@ -211,6 +276,10 @@ foreach($questionTypesRaw as $value){
                             </div>
                             <input type="text" class="answerInput" placeholder="Enter answer">
                             <i class="mdi mdi-close delete"></i>
+                        </div>
+                        <div class="newAnswer">
+                            <i class="mdi mdi-plus"></i>
+                            <h3>Add answer</h3>
                         </div>
                     </div>
                 </div>
