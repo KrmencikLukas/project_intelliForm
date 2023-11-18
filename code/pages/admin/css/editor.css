@@ -225,7 +225,7 @@
     align-items: center;
 }
 
-.questionSettings, .formSettings{
+.questionSettings, .formSettings, .save{
     width: 100%;
     min-height: 100px;
     -webkit-box-shadow: var(--shadow);
@@ -234,6 +234,8 @@
     border-radius: var(--radius);
     margin-bottom: 20px;
     background-color: white;
+    display: flex;
+    flex-direction: column;
 }
 
 .settings h3{
@@ -339,7 +341,7 @@
     justify-content: center;
     border: 3px dashed var(--blue);
     border-radius: var(--radius);
-    color: var(--gray);
+    color: var(--blue);
     align-items: center;
     cursor: pointer;
 }
@@ -368,4 +370,16 @@
     outline: none;
     padding: 5px;
     margin-right: 10px;
+}
+
+.saveForm{
+    background-color: var(--blue);
+    width: 60%;
+    margin: 0 auto;
+    padding: 10px;
+    color: white;
+    font-weight: 600;
+    border-radius: var(--radius);
+    text-align: center;
+    cursor: pointer;
 }

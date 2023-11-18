@@ -51,9 +51,11 @@ if(isset($_GET["id"])){
     <link rel="stylesheet" href="../../assets/lib/css/pretty-checkbox/dist/pretty-checkbox.min.css">
     <link rel="stylesheet" href="../../assets/global/general.css">
     <link rel="stylesheet" href="css/editor.css">
+    <script src="../../assets/lib/js/general.js"></script>
     <script>
         let questionTypes = '<?php echo json_encode($questionTypes) ?>';
         let formId = '<?php echo $_GET["id"] ?>';
+        let user = '<?php echo $_SESSION["user"] ?>';
     </script>
     <script src="js/editor.js"></script>
 </head>
@@ -318,6 +320,10 @@ if(isset($_GET["id"])){
             </div>
             <div class="questionSettings">
                 <h3>Question settings</h3>
+            </div>
+            <div class="save">
+                <h3>Save</h3>
+                <span class="saveForm">Save All</span>
             </div>
         </div>
     </div>

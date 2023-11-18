@@ -36,7 +36,7 @@ function afterLoad(){
             success: function(data) {
                 json = JSON.parse(data);
                 if(json != 0){
-                    loadForm()
+                    saveForm()
                 }
             },
         });
@@ -53,7 +53,7 @@ function afterLoad(){
             data: {"id": questionId},
             success: function(response) {
                 if(response != 0){
-                    loadForm()
+                    saveForm()
                 }
             },
         });
@@ -73,7 +73,7 @@ function afterLoad(){
             success: function(response) {
                 console.log(response)
                 if(response != 0){
-                    loadForm()
+                    saveForm()
                 }
             },
         });
@@ -93,7 +93,7 @@ function afterLoad(){
             success: function(response) {
                 console.log(response)
                 if(response != 0){
-                    loadForm()
+                    saveForm()
                 }
             },
         });
@@ -110,6 +110,96 @@ function afterLoad(){
     $("body").on("click",".question",function(){
         focus(this)
     });
+
+    //Zmnena typu otazky
+    $("body").on("change",".typeSelect",function(){
+        let questionId = parseInt(this.id.split('typeSelect')[1])
+        var type = $(this).val();
+
+        $.ajax({
+            type: 'POST',
+            url: 'action/changeType.php',
+            data: {"id": questionId, "type": type},
+            success: function(response) {
+                console.log(response)
+                if(response != 0){
+                    saveForm("correctness")
+                }
+            },
+        });
+    });
+
+
+    //Save formu
+    $("body").on("click",".saveForm",function(){
+        saveForm()
+    });
+}
+
+//Save formu
+function saveForm(without){
+    let aJson = {}
+
+    $(".answer").each(function(index, element) {
+        let answerId = parseInt(element.id.split('A')[1])
+
+        aJson[answerId] = {};
+        
+        if($(element).is(".typeA0")){
+            aJson[answerId]["name"] = $("#"+element.id+" p").text()
+
+        }else if($(element).is(".typeA3")){
+            aJson[answerId]["name"] = $("#"+element.id+" .p-off label").text()
+
+        }else {
+            aJson[answerId]["name"] = $("#"+element.id+" .answerInput").val()
+        }
+
+        if(without != "correctness"){
+            if($(element).is(".typeA3")){
+                aJson[answerId]["correctness"] = $("#"+element.id+" input[type='radio']").prop("checked");
+    
+            }else if($(element).is(".typeA4")){
+                aJson[answerId]["correctness"] = $("#"+element.id+" input[type='checkbox']").prop("checked");
+            }
+        }
+
+    });
+
+    let qJson = {}
+
+    $(".question").each(function(index, element) {
+        let questionId = parseInt(element.id.split('Q')[1])
+        
+        qJson[questionId] = {
+            "heading": $("#"+element.id+" .questionHeading").val(),
+            "description": $("#"+element.id+" .description").val(),
+            "answers": aJson,
+            "settings": [],
+        }
+    });
+
+    let json = {
+        "id": formId,
+        "name": $("#formName").val(),
+        "user": user,
+        "questions": qJson,
+        "settings": []
+    }
+
+    console.log(json)
+
+
+    $.ajax({
+        type: 'POST',
+        url: 'action/updateForm.php',
+        data: {"data": JSON.stringify(json)},
+        success: function(response) {
+            if(response != 0){
+                loadForm()
+            }
+        },
+    });
 }
 
 function loadForm(){
@@ -120,7 +210,6 @@ function loadForm(){
         url: 'action/readForm.php',
         data: {id: formId},
         success: function(data) {
-            console.log(json)
             json = JSON.parse(data);
             if(json != 0){
                 $(".form").html(generateForm(json));
@@ -189,7 +278,7 @@ function generateQuestion(id,heading,description,type,settings,answers){
     let html = `
     <div class="question type${type["number"]}" id="Q${id}">
         <div class="absolute">
-            <select id="mySelect" name="mySelect">
+            <select id="typeSelect${id}" class='typeSelect'>
                 ${questionTypesHtml}
             </select>
             <i class="mdi mdi-trash-can-outline deleteButton" id="deleteForm${id}"></i>
@@ -205,6 +294,10 @@ function generateQuestion(id,heading,description,type,settings,answers){
     </div>
 
     `
+    if(type["number"] == 4){
+        html += `<script> checkboxToRadio(${id},1,Infinity) </script>`
+    }
+    
 
     return html 
 }
@@ -216,13 +309,13 @@ function generateAnswer(id,name,correctness,type){
 
     if(type == 0){
         html += `
-            <div class="answer ${name.toLowerCase()}" id="A${id}">
+            <div class="answer ${name.toLowerCase()} typeA${type}" id="A${id}">
                 <p>${name}</p>
             </div>
         `
     }else if(type == 1){
         html += `
-            <div class="answer" id="A${id}">
+            <div class="answer typeA${type}" id="A${id}">
                 <div class="pretty p-icon p-round p-smooth p-bigger p-locked answerBox">
                     <input type="checkbox" />
                     <div class="state p-primary">
@@ -237,7 +330,7 @@ function generateAnswer(id,name,correctness,type){
 
     }else if(type == 2){
         html += `
-            <div class="answer" id="A${id}">
+            <div class="answer typeA${type}" id="A${id}">
                 <div class="pretty p-icon p-round p-smooth p-bigger p-locked p-toggle answerBox">
                     <input type="checkbox" />
                     <div class="state p-off">
@@ -264,7 +357,7 @@ function generateAnswer(id,name,correctness,type){
         }
 
         html += `
-            <div class="answer ${name.toLowerCase()}" id="A${id}">
+            <div class="answer ${name.toLowerCase()} typeA${type}" id="A${id}">
                 <div class="pretty p-toggle p-plain">
                     <input type="radio" name="radio1" ${checked}>
                     <div class="state p-off">
@@ -283,7 +376,7 @@ function generateAnswer(id,name,correctness,type){
         }
 
         html += `
-            <div class="answer" id="A${id}">
+            <div class="answer typeA${type}" id="A${id}">
                 <div class="pretty p-icon p-round p-smooth p-bigger answerBox">
                     <input type="checkbox" ${checked}>
                     <div class="state p-primary">
