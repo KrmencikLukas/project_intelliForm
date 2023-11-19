@@ -36,7 +36,7 @@
     </div>
     <div id="Sidebar">
         <div class="sidebarIn">
-            <a href="">
+            <a href="../">
                 <div class="SidebarIcon" id="SidebarHome"></div>
                 <p class="IconText">Home</p>
             </a>

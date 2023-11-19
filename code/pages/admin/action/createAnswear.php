@@ -13,7 +13,7 @@
 
         echo json_encode($id);
     }else{
-        header("Location: ../../error.php");
+        echo json_encode(0);
     }
 
 ?>
