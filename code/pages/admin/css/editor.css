@@ -5,6 +5,11 @@
     padding-top: 50px;
     min-height: 85vh;
     box-sizing: border-box;
+    
+}
+
+body{
+    background-color: var(--form-background);
 }
 
 .yesNoLabel{
@@ -23,6 +28,9 @@
     width: 85%;
     border-radius: var(--radius);
     padding: 30px;
+    min-height: 500px;
+    margin-bottom: 50px;
+    background-color: var(--form-color);
 }
 
 .question{
@@ -37,6 +45,7 @@
     margin-bottom: 20px;
     position: relative;
     padding-top: 40px;
+    background-color: white;
 }
 
 .questionHeading{
@@ -49,6 +58,7 @@
     padding-bottom: 3px;
     border-bottom: 1px solid var(--gray);
     font-weight: 500;
+    font-family: var(--form-font);
 }
 
 .description{
@@ -57,6 +67,7 @@
     border: none;
     resize: vertical;
     font-size: 15px;
+    font-family: var(--form-font);
 }
 
 .descriptionContainer{
@@ -83,6 +94,7 @@
     font-size: 20px;
     width: calc(100% - 65px); 
     margin-left: 15px;
+    font-family: var(--form-font);
 }
 
 .delete{
@@ -150,6 +162,10 @@
     color: white;
 }
 
+.type0 p{
+    font-family: var(--form-font);
+}
+
 .type0 .yes p{
     width: calc(100% - 10px);
     font-size: 20px;
@@ -187,6 +203,7 @@
     font-weight: 600 !important;
     padding: 10px 0 !important;
     color: var(--gray);
+    font-family: var(--form-font);
 }
 
 .type3 .yes .color{
@@ -231,17 +248,21 @@
     -webkit-box-shadow: var(--shadow);
     -moz-box-shadow: var(--shadow);
     box-shadow: var(--shadow); 
-    border-radius: var(--radius);
+    border-radius: var(--radius) 0 0 var(--radius);
     margin-bottom: 20px;
     background-color: white;
     display: flex;
     flex-direction: column;
+    padding-bottom: 20px;
 }
 
 .settings h3{
     padding: 10px;
     font-weight: 500;
     font-size: 20px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid var(--light-gray);
+    margin-bottom: 5px;
 }
 
 .addQuestion{
@@ -382,4 +403,45 @@
     border-radius: var(--radius);
     text-align: center;
     cursor: pointer;
+    margin-top: 10px;
+    transition: 300ms;
+}
+
+.set{
+    display: flex;
+    border-bottom: 1px solid var(--light-gray);
+    margin: 0 30px;
+    padding: 5px 0;
+}
+
+.set p {
+}
+
+.set .pretty{
+    font-size: 15px;
+    margin-left: auto;
+    margin-right: 15px;
+}
+
+.set input[type=color]{
+    margin-left: auto;
+    width: 30px;
+    height: 20px;
+    border: none;
+    background-color: var(--gray-line);
+    border-radius: 5px;
+}
+
+.set select{
+    margin-left: auto;
+    width: 100px;
+    height: 20px;
+    border: none;
+    border: 1px solid var(--gray-line);
+    border-radius: 5px;
+    outline: none;
+}
+
+#lastSaveTime {
+    margin-left: auto;
 }

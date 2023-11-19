@@ -4,7 +4,7 @@
     $DBlib = new DatabaseFunctions($db);
 
     //Načtení id z POST
-    $_POST["id"] = 25;
+    //$_POST["id"] = 25;
 
     if(isset($_POST["id"])){
         $id = $_POST["id"];
@@ -88,10 +88,7 @@
         global $DBlib;
         $type = $DBlib->fetchDataWithCondition("question_type", "*", "id=:id",[":id"=>$id])[0];
         return [
-            "id" => $type["id"],
             "number" => $type["number"],
-            "name" => $type["name"],
-            "description" => $type["description"],
         ];
     }
 
