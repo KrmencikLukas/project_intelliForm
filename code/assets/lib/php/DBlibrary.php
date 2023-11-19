@@ -59,7 +59,7 @@
         */
 
         //SELECT
-        public function fetchaDataFromDB($table, $Something){
+        public function fetchDataFromDB($table, $Something){
             $sql = "SELECT $Something FROM $table";
             $sql_com =$this->pdo->prepare($sql);
             $sql_com->execute();
@@ -174,6 +174,33 @@
             updateData("Menus",$insertArr,"id = :id");
         */
 
+        function updateDataNormal($table, $data = [], $definition, $condition) {
+
+            $setClauses = [];
+            
+            foreach ($data as $key => $value) {
+                $setClauses[] = "$key = :$key";
+            }
+
+            $data1 = array_merge($data, $definition);
+            
+            $setClause = implode(', ', $setClauses);
+            
+            $sql = "UPDATE $table SET $setClause WHERE $condition";
+            
+            $sql_com = $this->pdo->prepare($sql);
+            
+            if ($sql_com === false) {
+                return false;
+            }
+            
+            $sql_com->execute($data1);
+            return $sql_com->rowCount(); 
+        }
+
+
+
+
         //DELETE
         public function deleteDataWithCondition($table, $condition, $params = []) {
             $sql = "DELETE FROM $table WHERE $condition";
@@ -197,7 +224,7 @@
                     "Price" => $Price,
                     "id" => $UpdateId
                 ];
-            deleteDataWithCondition("Menus",$insertArr,"id = :id")
+            deleteDataWithCondition("Menus","id = :id",$insertArr) 
         */
         public function deleteAllData($table) {
             $sql = "DELETE FROM $table";

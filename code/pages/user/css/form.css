@@ -1,0 +1,135 @@
+#content{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 50px;
+    height: 85vh;
+    box-sizing: border-box;
+}
+
+.answerBox{
+    margin-right: 17px;
+}
+
+.form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    -webkit-box-shadow: var(--shadow);
+    -moz-box-shadow: var(--shadow);
+    box-shadow: var(--shadow); 
+    max-width: 900px;
+    width: 85%;
+    border-radius: var(--radius);
+    padding: 30px;
+    min-height: 70%;
+}
+
+.question{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 1px solid var(--light-gray);
+    width: 100%;
+    border-radius: var(--radius);
+    box-sizing: border-box;
+    padding: 30px;
+    margin-bottom: 20px;
+}
+
+.questionHeading{
+    width: 100%;
+    font-size: 30px;
+    border: none;
+    outline: none;
+    background-color: transparent;
+    padding-top: 10px;
+    padding-bottom: 3px;
+    border-bottom: 1px solid var(--gray);
+    font-weight: 500;
+}
+
+.description{
+    outline: none;
+    width: 100%;
+    border: none;
+    resize: vertical;
+    font-size: 15px;
+}
+
+.descriptionContainer{
+    width: 100%;
+    padding-top: 10px;
+    padding-bottom: 3px;
+    border-bottom: 1px solid var(--light-gray);
+}
+
+.answers{
+    width: 95%;
+    margin-top: 20px;
+}
+
+.answer {
+    display: flex;
+    align-items: center;
+    margin-bottom: 13px; 
+}
+
+.answerInput{
+    border: none;
+    outline: none;
+    font-size: 20px;
+    width: calc(100% - 65px);
+}
+
+.delete{
+    color: var(--red);
+    font-size: 30px;
+    cursor: pointer;
+    margin-left: auto;
+}
+
+.formName{
+    text-align: center;
+    font-size: 30px;
+    border: none;
+    font-family: var(--fontSpecial);
+}
+
+.type0 .answers{
+    display: flex;
+    justify-content: center;
+}
+
+.type0 .answerInput{
+    width: 100%;
+    text-align: center;
+}
+
+.type0 .answer{
+    width: 30%;
+    margin: 0;
+    position: relative;
+    height: 50px;
+    margin: 5px;
+}
+
+.type0 .answerBox {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+}
+
+.dis{
+    display: none;
+}
+
+.yes{
+    border: 3px solid var(--blue);
+    border-radius: var(--radius);
+}
+
+.no{
+    border: 3px solid var(--red);
+    border-radius: var(--radius);
+}
