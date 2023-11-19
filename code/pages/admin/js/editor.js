@@ -1,4 +1,7 @@
-
+//definice promenych
+let lastSave
+let needSave
+let lastSaveTime = 0
 
 //Funkce pro auto scalovani textarea
 function autoGrow(element) {
@@ -15,7 +18,67 @@ function focus(element){
     focusQuestion = element;
 }
 
+
+//Autosave funkce
+
+let autoSaveInterval
+let autoSave
+
+function setAutoSave(){
+    let autoSave = $("#autoSave").val();
+    clearInterval(autoSaveInterval);
+    if(autoSave != "none"){
+        autoSave = parseInt(autoSave) * 1000
+        console.log("interval change")
+
+        autoSaveInterval = setInterval(function(){
+            if(needSave){
+                console.log("saving")
+                saveForm()
+            }
+        },autoSave)
+    }
+}
+
+
+
 function afterLoad(){
+
+    //cas od posledniho ulozeni
+    setInterval(function(){
+        lastSaveTime++
+        let s
+        if(lastSaveTime == 1){
+            s = "second"
+        }else{
+            s = "seconds"
+        }
+        $("#lastSaveTime").text(" "+lastSaveTime+" "+s+" ago.")
+        
+    },1000)
+
+    //Voláni autosave funkce
+    setAutoSave()
+
+    $("#autoSave").change(function() {
+        setAutoSave()
+    });
+
+    //Je potreba ulozeni
+    setInterval(function(){
+        if(JSON.stringify(lastSave) == JSON.stringify(generateJson())){
+            $(".save .saveForm").css("background-color", "var(--gray-line)");
+            $(".save .saveForm").css("color", "var(--light-gray)");
+            $(".save .saveForm").css("pointer-events", "none");
+            needSave = false
+        }else{
+            $(".save .saveForm").css("background-color", "var(--blue)");
+            $(".save .saveForm").css("color", "white");
+            $(".save .saveForm").css("pointer-events", "auto");
+            needSave = true
+        }
+    },1000)
+
     //nacteni pole z PHP
     questionTypes = JSON.parse(questionTypes)
 
@@ -36,7 +99,9 @@ function afterLoad(){
             success: function(data) {
                 json = JSON.parse(data);
                 if(json != 0){
+                    //muze byt optimalizovano
                     saveForm()
+                    loadForm()
                 }
             },
         });
@@ -53,7 +118,9 @@ function afterLoad(){
             data: {"id": questionId},
             success: function(response) {
                 if(response != 0){
+                    //muze byt optimalizovano
                     saveForm()
+                    loadForm()
                 }
             },
         });
@@ -73,7 +140,9 @@ function afterLoad(){
             success: function(response) {
                 console.log(response)
                 if(response != 0){
+                    //muze byt optimalizovano
                     saveForm()
+                    loadForm()
                 }
             },
         });
@@ -93,7 +162,9 @@ function afterLoad(){
             success: function(response) {
                 console.log(response)
                 if(response != 0){
+                    //muze byt optimalizovano
                     saveForm()
+                    loadForm()
                 }
             },
         });
@@ -124,6 +195,7 @@ function afterLoad(){
                 console.log(response)
                 if(response != 0){
                     saveForm("correctness")
+                    loadForm()
                 }
             },
         });
@@ -134,10 +206,46 @@ function afterLoad(){
     $("body").on("click",".saveForm",function(){
         saveForm()
     });
+
+
+    //zmena vizualu formu
+    $("#formBackgroundColor").on("input", function() {
+        $("html").css("--form-background", $(this).val());
+    });
+
+    $("#formColor").on("input", function() {
+        $("html").css("--form-color", $(this).val());
+    });
+
+    $("#formFont").on("input", function() {
+        $("html").css("--form-font", $(this).val() + ", sans-serif");
+    });
 }
+
 
 //Save formu
 function saveForm(without){
+
+    json = generateJson(without)
+
+    $.ajax({
+        type: 'POST',
+        url: 'action/updateForm.php',
+        data: {"data": JSON.stringify(json)},
+        success: function(response) {
+            if(response != 0){
+                lastSave = generateJson()
+                lastSaveTime = 0
+                $(".save .saveForm").css("background-color", "var(--gray-line)");
+                $(".save .saveForm").css("color", "var(--light-gray)");
+                $(".save .saveForm").css("pointer-events", "none");
+                needSave = false
+            }
+        },
+    });
+}
+
+function generateJson(without){
     let aJson = {}
 
     $(".answer").each(function(index, element) {
@@ -187,21 +295,25 @@ function saveForm(without){
         "settings": []
     }
 
-    console.log(json)
+    settingsArray = [
+        ["#anonymous","anonymous",$("#anonymous").prop("checked") ? 1 : 0],
+        ["#formBackgroundColor","background color",$("#formBackgroundColor").val()],
+        ["#formColor","color",$("#formColor").val()],
+        ["#formFont","font",$("#formFont").val()],
+    ]
 
+    for(let i = 0; i < settingsArray.length; i++){
+        json["settings"][parseInt($(settingsArray[i][0]).attr("class").split('fSet')[1])] = {
+            key: settingsArray[i][1],
+            value: settingsArray[i][2],
+        }
+    }
 
-    $.ajax({
-        type: 'POST',
-        url: 'action/updateForm.php',
-        data: {"data": JSON.stringify(json)},
-        success: function(response) {
-            if(response != 0){
-                loadForm()
-            }
-        },
-    });
+    return json;
 }
 
+
+//nacteni formu
 function loadForm(){
     let json = ""
 
@@ -213,6 +325,9 @@ function loadForm(){
             json = JSON.parse(data);
             if(json != 0){
                 $(".form").html(generateForm(json));
+                $("html").css("--form-background", $("#formBackgroundColor").val());
+                $("html").css("--form-color", $("#formColor").val());
+                $("html").css("--form-font", $("#formFont").val() + ", sans-serif");
             }
         },
     });
@@ -227,8 +342,39 @@ $(document).ready(function(){
 
 
 
+
+//generovani formulare
 function generateForm(json){
     let html = ""
+
+    console.log(json["settings"])
+
+    for(let key in json["settings"]){
+        value = json["settings"][key]
+        if(value["key"] == "anonymous"){
+            $("#anonymous").addClass("fSet"+key);
+            if(value["value"] == "0"){
+                $("#anonymous").prop("checked", false)
+            }else{
+                $("#anonymous").prop("checked", true)
+            }
+        }
+
+        if(value["key"] == "background color"){
+            $("#formBackgroundColor").addClass("fSet"+key);
+            $("#formBackgroundColor").val(value["value"]);
+        }
+
+        if(value["key"] == "color"){
+            $("#formColor").addClass("fSet"+key);
+            $("#formColor").val(value["value"]);
+        }
+
+        if(value["key"] == "font"){
+            $("#formFont").addClass("fSet"+key);
+            $("#formFont").val(value["value"]);
+        }
+    }
 
     $("#formName").val(json.name);
 
