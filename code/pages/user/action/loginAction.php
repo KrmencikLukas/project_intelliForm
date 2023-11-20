@@ -54,7 +54,13 @@
         }
         $Exists2 = $pdo->countByPDOWithCondition("user","*","email = :email AND password = :password", $params);
         if($Exists2 == 1){
-            header("location:../signup/signup.php");
+            $res = $pdo->fetchDataWithCondition("user","*","email = :email AND password = :password",$params);
+            foreach($res as $val){
+                $_SESSION["user"] = $val["id"];
+            }
+            if( $_SESSION["user"] != null){
+                header("location: ../../admin/Dashboard/Dashboard.php");
+            }
         }
 
     }

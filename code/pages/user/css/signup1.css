@@ -91,6 +91,7 @@ button{
     color: white;
     text-align: center;
     border: none;
+    cursor: pointer;
 }
 #HaveAccount{
     font-size: 18px;

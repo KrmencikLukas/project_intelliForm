@@ -71,11 +71,18 @@
         public function fetchDataWithCondition($table, $columns, $condition, $params = []) {
             $sql = "SELECT $columns FROM $table WHERE $condition";
             $sql_com = $this->pdo->prepare($sql);
-            
+        
             if ($sql_com === false) {
                 return false;
             }
-            $sql_com->execute($params);
+        
+            // Bind parameters with data types
+            foreach ($params as $paramName => $paramValue) {
+                $paramType = is_int($paramValue) ? PDO::PARAM_INT : PDO::PARAM_STR;
+                $sql_com->bindValue($paramName, $paramValue, $paramType);
+            }
+        
+            $sql_com->execute();
             $results = $sql_com->fetchAll(PDO::FETCH_ASSOC);
         
             return $results;
