@@ -2,8 +2,22 @@
     //Pred includem mužete nastavit proměnné $location a $PageSpecific
     //Do $location jen prostý string s informací, kde se uživatel nacházi
     //Do $PageSpecific se může dát html kód toho, co se má zobrazit v headru mezi logem a user ikonou
+    
 ?>
+    <div id="backgroundOverlay" class="hidden">
 
+        <div class="preview-container">
+            <div id="Arrow"></div>
+            <div id="backWrap">
+                <span id="close">&times;</span>
+            </div>
+            <div id="profile">
+                <img src="">
+            </div>
+            <div id="links"></div>
+        </div>
+
+    </div>
 <div id="HeaderAndSidebar">
     <div id="header">
         <div id="HeaderLeft">
@@ -24,7 +38,6 @@
                     echo $PageSpecific;
                 }
                 //sem si přes $PageSpecific můžete dát co chete, pokud chcete
-
                 $userIconPath = '/../img/icons/user.svg';
             ?>
         </div>
@@ -36,9 +49,9 @@
     </div>
     <div id="Sidebar">
         <div class="sidebarIn">
-            <a href="../">
+          <a href="<?php echo absolutePath('/../../pages/admin/Dashboard/Dashboard.php') ?>" target="_self">
                 <div class="SidebarIcon" id="SidebarHome"></div>
-                <p class="IconText">Home</p>
+                <p class="IconText" >Home</p>
             </a>
             <a href="">
                 <div class="SidebarIcon" id="SidebarNewForm"></div>

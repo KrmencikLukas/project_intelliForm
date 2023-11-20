@@ -52,6 +52,7 @@ if(isset($_GET["id"])){
     <link rel="stylesheet" href="../../assets/global/general.css">
     <link rel="stylesheet" href="css/editor.css">
     <script src="../../assets/lib/js/general.js"></script>
+    <script src="../../assets/lib/js/profileMenu.js"></script>
     <script>
         let questionTypes = '<?php echo json_encode($questionTypes) ?>';
         let formId = '<?php echo $_GET["id"] ?>';

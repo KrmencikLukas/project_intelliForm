@@ -44,19 +44,7 @@ function timeAgo2(timestamp, identifier, keyword) {
       elements[i].innerHTML = result;
     }
   }
-  function sortDivsByUploadDate(div, data) {
-    var parentDiv = $(div);
-    var childDivs = parentDiv.children('div');
-  
-    childDivs.sort(function (a, b) {
-        var dateA = new Date($(a).data(data));
-        var dateB = new Date($(b).data(data));
-  
-        return dateB - dateA; 
-    });
-  
-    parentDiv.html(childDivs);
-  }
+
   
 
 $(document).ready(function(){
@@ -124,7 +112,6 @@ $(document).ready(function(){
               timeAgo2([e.timestamp], identifier, "Last edited");
             });
           } else if(searchData.length === 0 && Search !== ""){
-            // Display a message when there are no search results
             $("#forms").html("<p id='NoSearch'>No search results</p>");
           }
         }
@@ -134,7 +121,6 @@ $(document).ready(function(){
     isSearchInputEmpty = Search === "";
 
     if(isSearchInputEmpty){
-
       $("#forms").html(originalHtml);
       $("#more").css("display", "flex");
     }
