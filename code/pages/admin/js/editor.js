@@ -10,14 +10,18 @@ function autoGrow(element) {
 }
 
 
-//funcle pro focus na ot8zku nebo formular
-let focusQuestion
+//funcle pro focus na otazku
+let focusQuestion = "none"
 function focus(element){
     $(focusQuestion).removeClass("focus")
     $(element).addClass("focus")
     focusQuestion = element;
+    $(".formSettings").fadeOut(500,function(){
+        $(".questionSettings").fadeIn(500)
+        $(".questionSettings").css("display", "flex");
+    })
+    
 }
-
 
 //Autosave funkce
 
@@ -182,6 +186,22 @@ function afterLoad(){
         focus(this)
     });
 
+    //odstarneni focusu
+    $(document).on('click', function(event) {
+        var clickedElement = $(event.target);
+    
+        var myDiv = $('.question');
+    
+        if (!clickedElement.is(myDiv) && !myDiv.has(clickedElement).length) {
+            $(focusQuestion).removeClass("focus")
+            focusQuestion = "none"
+            $(".questionSettings").fadeOut(500,function(){
+                $(".formSettings").fadeIn(500)
+                $(".formSettings").css("display", "flex");
+            })
+        }
+      });
+
     //Zmnena typu otazky
     $("body").on("change",".typeSelect",function(){
         let questionId = parseInt(this.id.split('typeSelect')[1])
@@ -331,6 +351,10 @@ function loadForm(){
             }
         },
     });
+
+    if(focusQuestion != "none"){
+        $(element).addClass("focus")
+    }
 }
 
 
@@ -403,6 +427,51 @@ function generateQuestion(id,heading,description,type,settings,answers){
         }else{
             questionTypesHtml += '<option value="'+key+'">'+questionTypes[key]+'</option>'
         }
+    }
+
+    for (var key in settings) {
+        let input = ""
+        let checkedCHB = ""
+
+        if(settings[key]["key"] == "Background color" || settings[key]["key"] == "Text color"){
+            input = `<input type="color" id="QS${key}" value="${settings[key]["value"]}">`
+
+        }else if(settings[key]["key"] == "Mandatory" || settings[key]["key"] == "Public vote count"){
+            
+            if(settings[key]["value"] == "1"){
+                checkedCHB = "checked"
+            }
+            input = `
+            <div class="pretty p-switch p-fill">
+                <input type="checkbox" id="QS${key}" ${checkedCHB}/>
+                <div class="state p-primary">
+                    <label></label>
+                </div>
+            </div>
+            `
+        }else if(settings[key]["key"] == "Mandatory" || settings[key]["key"] == "Public vote count"){
+            
+            if(settings[key]["value"] == "1"){
+                checkedCHB = "checked"
+            }
+            input = `
+            <div class="pretty p-switch p-fill">
+                <input type="checkbox" id="QS${key}" ${checkedCHB}/>
+                <div class="state p-primary">
+                    <label></label>
+                </div>
+            </div>
+            `
+        }
+
+
+        console.log(settings[key])
+        $(".questionSettingsDiv").append(`
+        <div class="set">
+            <p>${settings[key]["key"]}</p>
+            
+        </div> 
+        `);
     }
 
     let answersHtml = ""

@@ -127,6 +127,9 @@ if(isset($_GET["id"])){
             </div>
             <div class="questionSettings">
                 <h3>Question settings</h3>
+                <div class="questionSettingsDiv">
+
+                </div>
             </div>
             <div class="save">
                 <h3>Save</h3>
