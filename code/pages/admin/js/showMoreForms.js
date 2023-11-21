@@ -70,7 +70,18 @@ $(document).ready(function(){
             let data = JSON.parse(response)
             console.log(data)
             data.forEach(e => {
-            $("#forms").append(`<div class="form"><h2>${e.name}</h2><div class='date'></div><div class="actions"><a><span class="mdi mdi-earth"></span></span></a><a><span class="mdi mdi-file-edit"></span></a> <a><span class="mdi mdi-delete del"></span></a></div></div>`);
+            $("#forms").append(`                        
+            <a href='../editor.php?id=${e.id}' target='_self'>
+              <div class='form'>
+                <h2>${e.name}</h2>
+                <div class='date'></div>
+                <div class='actions'>
+                    <p><span class='mdi mdi-earth'></span></p>
+                    <p><span class='mdi mdi-delete del'></span></p>
+                </div>
+              </div>
+            </a>`
+            );
                 const identifier = '.form:last-child .date';
                 timeAgo2([e.timestamp], identifier, "Last edited")
             });
@@ -107,7 +118,18 @@ $(document).ready(function(){
 
           if (searchData.length > 0) {
             searchData.forEach(e => {
-              $("#forms").append(`<div class="form"><h2>${e.name}</h2><div class='date'></div><div class="actions"><a><span class="mdi mdi-earth"></span></span></a><a><span class="mdi mdi-file-edit"></span></a> <a><span class="mdi mdi-delete del"></span></a></div></div>`);
+              $("#forms").append(`                        
+              <a href='../editor.php?id=${e.id}' target='_self'>
+                <div class='form'>
+                  <h2>${e.name}</h2>
+                  <div class='date'></div>
+                  <div class='actions'>
+                      <p><span class='mdi mdi-earth'></span></p>
+                      <p><span class='mdi mdi-delete del'></span></p>
+                  </div>
+              </div>
+            </a>`
+          );
               const identifier = '.form:last-child .date';
               timeAgo2([e.timestamp], identifier, "Last edited");
             });

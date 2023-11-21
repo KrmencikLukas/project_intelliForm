@@ -282,49 +282,84 @@ display: none;
 }
 
 .preview-container{
-width: 180px;
-height: 100px;
-z-index: 1001;
-position: relative;
-text-align: center;
-border-radius: 12px; 
-margin-top: 110px;
-display: flex;
-background-color: white;
-flex-flow: column wrap;
--webkit-box-shadow: var(--shadow);
--moz-box-shadow: var(--shadow);
-box-shadow: var(--shadow); 
+    width: 180px;
+    min-height: 120px;
+    z-index: 1001;
+    position: relative;
+    text-align: center;
+    border-radius: 12px; 
+    margin-top: 110px;
+    display: flex;
+    background-color: white;
+    flex-flow: column wrap;
+    -webkit-box-shadow: var(--shadow);
+    -moz-box-shadow: var(--shadow);
+    box-shadow: var(--shadow); 
 }
 #Arrow{
-width: 30px;
-height: 20px;
-align-self: center;
-background-color: white;
-clip-path: polygon(50% 69%, 0 0, 100% 0);
-position: absolute;
-top: -15px;
-transform: rotate(180deg);
+    width: 30px;
+    height: 20px;
+    align-self: center;
+    background-color: white;
+    clip-path: polygon(50% 69%, 0 0, 100% 0);
+    position: absolute;
+    top: -15px;
+    transform: rotate(180deg);
 }
 
 #close{
-font-size: 24px;
-cursor: pointer;
-width: 7%;
-height: 28px;
-margin: 5px;
-justify-content: center;
-align-items: center;
-border-radius: 8px;
-margin-right: 8px;
+    font-size: 24px;
+    cursor: pointer;
+    width: 20px;
+    color: white;
+    display: flex;
+    height: 24px;
+    margin: 5px;
+    background-color: var(--red);
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
+    margin-right: 8px;
 }
 #close p{
-
+margin-top: -2px;
 }
 #backWrap{
-display: flex;
-width: 100%;
-flex-direction: row;
-justify-content: flex-end;
-height: 25px;
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    justify-content: flex-end;
+    height: 25px;
+}
+#profile{
+    width: 100%;
+    min-height: 30px;
+    display: flex;
+    flex-flow:column nowrap;
+    align-items: center;
+    margin-top: -10px;
+
+}
+#profile img{
+ width: 50px;
+ height: 50px;
+ object-fit: cover;
+ border-radius: 50%;
+ background-color: white;
+ 
+}
+#links{
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    justify-content: space-evenly;
+}
+.settings , .logout{
+    font-size: 38px;
+}
+.settings{
+    color: var(--gray);
+}
+.logout{
+    color: var(--red);
 }

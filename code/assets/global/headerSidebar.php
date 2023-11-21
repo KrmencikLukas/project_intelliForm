@@ -2,7 +2,6 @@
     //Pred includem mužete nastavit proměnné $location a $PageSpecific
     //Do $location jen prostý string s informací, kde se uživatel nacházi
     //Do $PageSpecific se může dát html kód toho, co se má zobrazit v headru mezi logem a user ikonou
-    
 ?>
     <div id="backgroundOverlay" class="hidden">
 
@@ -12,9 +11,14 @@
                 <span id="close">&times;</span>
             </div>
             <div id="profile">
-                <img src="">
+                <img src="" alt='pf img' id="pfPic">
+                <h2></h2>
+                <p></p>
             </div>
-            <div id="links"></div>
+            <div id="links">
+                <a href="" target="_self"><span class="mdi mdi-account-cog settings"></span></a>
+                <a href="" target="_self"><span class="mdi mdi-logout logout"></span></a>
+            </div>
         </div>
 
     </div>
