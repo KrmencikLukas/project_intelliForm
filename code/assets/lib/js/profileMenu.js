@@ -18,7 +18,7 @@ function setMenuPosition(Menu, CenterDiv, container) {
 $(document).ready(function(){
     var CurrentUserId = JSON.parse(user);
     var UserPic = $(".UserIcon").attr("src")
-    if(CurrentUserId){
+   
       $(".UserIcon").on("click", function(){
         // $.ajax({
         //   url: "../../../assets/global/profileMenu.php",
@@ -41,7 +41,7 @@ $(document).ready(function(){
             }
           });
       })
-    }
+    
     
     setMenuPosition(".preview-container",".UserIcon","#backgroundOverlay");
 
