@@ -256,6 +256,10 @@ body{
     padding-bottom: 20px;
 }
 
+.save{
+    transition: 300ms;
+}
+
 .settings h3{
     padding: 10px;
     font-weight: 500;
