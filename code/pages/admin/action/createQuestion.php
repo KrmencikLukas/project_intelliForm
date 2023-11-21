@@ -7,26 +7,27 @@
 
    //defaultní hodnoty
    //
-    $heading="Enter question name...";
-    $desc="Enter question description...";
+    $heading="";
+    $desc="";
    //
 
     //Načtení id a type z POST
     if((isset($_POST["id"]))&&(isset($_POST["type"]))){
         $id = $_POST["id"];
         $type = $_POST["type"];
+        $typeId = $DBlib->fetchDataWithCondition("question_type", "id", "number = :type", [":type" => $type])[0]["id"];
         if((is_numeric($id))&&(is_numeric($type))){
             //vytvoření otázky
             $questionAttributes=[
                 "heading" => $heading,
                 "description" => $desc,
                 "form_id" => $id,
-                "type_id" => $type,
+                "type_id" => $typeId,
             ];
             $questionID=$DBlib->insertData("question", $questionAttributes);
 
             //zjištění defaultních hodnot
-            $getDefault = [":id" => $type];
+            $getDefault = [":id" => $typeId];
             $defaultKey=$DBlib->fetchDataWithCondition("default_settings", "`key`", "type_id=:id", $getDefault);
             $defaultValue=$DBlib->fetchDataWithCondition("default_settings", "value", "type_id=:id", $getDefault);
 
@@ -46,19 +47,23 @@
             }
 
             //když ano/ne otázka, vytvoření odpovědí ano/ne
-            $DatabaseQuestionType = $DBlib->fetchDataWithCondition("question_type", "name", "number = :id", $getDefault);
-            
-            if (($DatabaseQuestionType[0]["name"]=="Yes/No quiz")||($DatabaseQuestionType[0]["name"]=="Yes/No poll")) {
+            if ($type == 0 || $type == 3) {
+                if($type == 3){
+                    $correctness = 1;
+                }else{
+                    $correctness = 0;
+                }
+                    
                 $questionAnswers=[
                     "question_id" => intval($questionID),
                     "name" => "Yes",
-                    "correctness" => "0",
+                    "correctness" => $correctness,
                 ];
                 $DBlib->insertData("answer", $questionAnswers);
                 $questionAnswers=[
                     "question_id" => intval($questionID),
                     "name" => "No",
-                    "correctness" => "0",
+                    "correctness" => 0,
                 ];
                 $DBlib->insertData("answer", $questionAnswers);
             }

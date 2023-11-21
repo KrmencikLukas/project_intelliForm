@@ -4,7 +4,7 @@
     include("../../../assets/lib/php/DBlibrary.php");
     $DBlib = new DatabaseFunctions($db);
 
-    //$_SESSION["user"] = 1;
+    $_SESSION["user"] = 1;
 
     if(isset($_SESSION["user"])){
         
@@ -17,6 +17,12 @@
         ];
         
         $id = $DBlib->insertData("form", $insertArr);
+
+        $DBlib->insertData("form_settings", ["key" => "anonymous", "value" => "0", "form_id" => $id]);
+        $DBlib->insertData("form_settings", ["key" => "background color", "value" => "#ffffff", "form_id" => $id]);
+        $DBlib->insertData("form_settings", ["key" => "color", "value" => "#ffffff", "form_id" => $id]);
+        $DBlib->insertData("form_settings", ["key" => "font", "value" => "Inter Tight", "form_id" => $id]);
+        
 
         header("Location: ../editor.php?id=".$id);
 

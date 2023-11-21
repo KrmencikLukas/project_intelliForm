@@ -1,7 +1,7 @@
 <?php
     
-    include("../../../assets/lib/php/db.php");
-    include("../../../assets/lib/php/DBlibrary.php");
+    include_once("../../../assets/lib/php/db.php");
+    include_once("../../../assets/lib/php/DBlibrary.php");
 
     $DBlib = new DatabaseFunctions($db);
 

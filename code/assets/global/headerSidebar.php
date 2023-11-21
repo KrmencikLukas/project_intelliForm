@@ -2,8 +2,31 @@
     //Pred includem mužete nastavit proměnné $location a $PageSpecific
     //Do $location jen prostý string s informací, kde se uživatel nacházi
     //Do $PageSpecific se může dát html kód toho, co se má zobrazit v headru mezi logem a user ikonou
-?>
 
+    include_once(__DIR__."/../lib/php/db.php");
+    include_once(__DIR__."/../lib/php/DBlibrary.php");
+
+    $DBlib = new DatabaseFunctions($db);
+?>
+    <div id="backgroundOverlay" class="hidden">
+
+        <div class="preview-container">
+            <div id="Arrow"></div>
+            <div id="backWrap">
+                <span id="close">&times;</span>
+            </div>
+            <div id="profile">
+                <img src="" alt='pf img' id="pfPic">
+                <h2></h2>
+                <p></p>
+            </div>
+            <div id="links">
+                <a href="" target="_self"><span class="mdi mdi-account-cog settings"></span></a>
+                <a href="" target="_self"><span class="mdi mdi-logout logout"></span></a>
+            </div>
+        </div>
+
+    </div>
 <div id="HeaderAndSidebar">
     <div id="header">
         <div id="HeaderLeft">
@@ -24,7 +47,6 @@
                     echo $PageSpecific;
                 }
                 //sem si přes $PageSpecific můžete dát co chete, pokud chcete
-
                 $userIconPath = '/../img/icons/user.svg';
             ?>
         </div>
@@ -36,9 +58,9 @@
     </div>
     <div id="Sidebar">
         <div class="sidebarIn">
-            <a href="">
+          <a href="<?php echo absolutePath('/../../pages/admin/Dashboard/Dashboard.php') ?>" target="_self">
                 <div class="SidebarIcon" id="SidebarHome"></div>
-                <p class="IconText">Home</p>
+                <p class="IconText" >Home</p>
             </a>
             <a href="">
                 <div class="SidebarIcon" id="SidebarNewForm"></div>

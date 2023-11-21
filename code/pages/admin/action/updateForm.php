@@ -28,14 +28,19 @@
                 }
     
                 foreach($json["questions"] as $key => $value){
-                    $DBlib->updateData("question",["heading" => $value["heading"],"description" => $value["description"],"type_id" => $value["type"]["id"],"id" => $key],"id = :id");
+                    $DBlib->updateData("question",["heading" => $value["heading"],"description" => $value["description"],"id" => $key],"id = :id");
     
                     foreach($value["settings"] as $key2 => $value2){
                         $DBlib->updateData("question_settings",["value" => $value2["value"],"id" => $key2],"id = :id");
                     }
     
                     foreach($value["answers"] as $key2 => $value2){
-                        $DBlib->updateData("answer",["name" => $value2["name"],"correctness" => $value2["correctness"],"id" => $key2],"id = :id");
+                        if(isset($value2["correctness"])){
+                            $DBlib->updateData("answer",["name" => $value2["name"],"correctness" => $value2["correctness"],"id" => $key2],"id = :id");
+                        }else{
+                            $DBlib->updateData("answer",["name" => $value2["name"],"id" => $key2],"id = :id");
+                        }
+
                     }
                 }
                 echo 1;
