@@ -93,6 +93,7 @@
     justify-content: space-between;
     height: 100px;
     margin: 8px;
+    margin-left: 0px;
     border: 1px solid var(--gray);
 }
 .form h2{
@@ -103,12 +104,18 @@
 .del{
     color: var(--red);
 }
-.actions a span{
+.actions span{
     font-size: 30px;
     margin: 5px;
 }
 .actions{
+    display: flex;
     margin-right: 20px;
+}
+#forms a{
+    width: 100%;
+    text-decoration: none;
+    color: var(--gray);
 }
 #more{
 

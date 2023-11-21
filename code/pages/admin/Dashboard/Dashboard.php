@@ -43,17 +43,18 @@
             <a href="../action/createForm.php" target="_self" id="Create">Create new</a>
             <div id="forms">
                 <?php
-                    foreach ($forms as $val){
+                    foreach ($forms as $val) {
                         echo "
-                        <div class='form'>
-                            <h2>".$val["name"]."</h2>
-                            <div>".timeAgo($val["timestamp"], "Last edited")."</div>
-                            <div class='actions'>
-                                <a><span class='mdi mdi-earth'></span></span></a>
-                                <a><span class='mdi mdi-file-edit'></span></a> 
-                                <a><span class='mdi mdi-delete del'></span></a>
+                        <a href='../editor.php?id=" . $val["id"] . "' target='_self'>
+                            <div class='form'>
+                                <h2>" . $val["name"] . "</h2>
+                                <div>" . timeAgo($val["timestamp"], "Last edited") . "</div>
+                                <div class='actions'>
+                                    <p><span class='mdi mdi-earth'></span></p>
+                                    <p><span class='mdi mdi-delete del'></span></p>
+                                </div>
                             </div>
-                        </div>
+                        </a>
                         ";
                     }
                 ?>
@@ -63,7 +64,6 @@
                     echo '<button id="more">Show more</button>';
                 } 
             ?>
-
         </div>
     </div>
 </body>
