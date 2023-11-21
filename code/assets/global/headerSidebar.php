@@ -2,6 +2,11 @@
     //Pred includem mužete nastavit proměnné $location a $PageSpecific
     //Do $location jen prostý string s informací, kde se uživatel nacházi
     //Do $PageSpecific se může dát html kód toho, co se má zobrazit v headru mezi logem a user ikonou
+
+    include_once(__DIR__."/../lib/php/db.php");
+    include_once(__DIR__."/../lib/php/DBlibrary.php");
+
+    $DBlib = new DatabaseFunctions($db);
 ?>
     <div id="backgroundOverlay" class="hidden">
 
