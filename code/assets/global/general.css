@@ -353,6 +353,10 @@ margin-top: -2px;
     flex-flow: row nowrap;
     align-items: center;
     justify-content: space-evenly;
+    width: 90%;
+    align-self: center;
+    border-top: 1px solid  rgb(227, 226, 224);
+
 }
 .settings , .logout{
     font-size: 38px;

@@ -4,7 +4,6 @@
     include("../../../assets/lib/php/DBlibrary.php");
     $DBlib = new DatabaseFunctions($db);
 
-    //$_SESSION["user"] = 1;
 
     if(isset($_SESSION["user"])){
         
@@ -23,6 +22,7 @@
         header("Location: ../editor.php?id=".$id);
 
     }else{
+
         header("Location: ../../error.php");
     }
 
