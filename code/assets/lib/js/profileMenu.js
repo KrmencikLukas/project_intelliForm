@@ -20,16 +20,16 @@ $(document).ready(function(){
     var UserPic = $(".UserIcon").attr("src")
     if(CurrentUserId){
       $(".UserIcon").on("click", function(){
-        $.ajax({
-          url: "../../../assets/global/profileMenu.php",
-          type: "POST",
-          data: {userID:  CurrentUserId},
-          success: function(resp){
-            data = JSON.parse(resp)
-            $("#profile h2").html(data.name +"&nbsp;&nbsp;" + data.surname);
-            $("#profile p").html(data.email);
-          }
-        })
+        // $.ajax({
+        //   url: "../../../assets/global/profileMenu.php",
+        //   type: "POST",
+        //   data: {userID:  CurrentUserId},
+        //   success: function(resp){
+        //     data = JSON.parse(resp)
+        //     $("#profile h2").html(data.name +"&nbsp;&nbsp;" + data.surname);
+        //     $("#profile p").html(data.email);
+        //   }
+        // })
         $("#Preview").removeClass("hidden");
         $(".UserIcon").addClass("hov")
         $("#pfPic").attr("src", UserPic)
