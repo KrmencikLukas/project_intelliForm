@@ -121,7 +121,10 @@
         
         //INSERT
         public function insertData($table, $data = []) {
-            $columns = implode(', ', array_keys($data));
+            $columns = implode(', ', array_map(function($column) {
+                return "`$column`";
+            }, array_keys($data)));
+
             $placeholders = ':' . implode(', :', array_keys($data));
             
             $sql = "INSERT INTO $table ($columns) VALUES ($placeholders)";
