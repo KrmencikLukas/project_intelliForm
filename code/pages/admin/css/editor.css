@@ -398,6 +398,7 @@ body{
 }
 
 .saveForm{
+    font-size: 15px;
     background-color: var(--blue);
     width: 60%;
     margin: 0 auto;
@@ -419,6 +420,7 @@ body{
 }
 
 .set p {
+    font-size: 15px;
 }
 
 .set .pretty{

@@ -1,9 +1,37 @@
+@import url("../../../assets/global/vars.css");
+.formHeading, p, .questionHeading {
+    font-family: var(--fontRegular);
+}
+.formHeading {
+    width: 100%;
+    font-size: 35px;
+    border: none;
+    outline: none;
+    padding-top: 10px;
+    padding-bottom: 3px;
+    border-bottom: 1px solid var(--gray);
+    font-weight: 500;
+}
+h2, p {
+    margin: 0;
+}
+.formDescriptionContainer{
+    width: 100%;
+    padding-top: 10px;
+    padding-bottom: 3px;
+}
+.emailAdress {
+    background-color: #eeeeee;
+    color: #427ce6;
+    border-radius: 3px;
+    padding: 4px;
+}
 #content{
     display: flex;
     flex-direction: column;
     align-items: center;
     padding-top: 50px;
-    height: 85vh;
+    min-height: 85vh;
     box-sizing: border-box;
 }
 
