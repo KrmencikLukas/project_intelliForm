@@ -40,20 +40,19 @@
                     $answerIDs=$DBlib->fetchDataWithCondition("answer", "id", "question_id = :id", $questionID);
                     $answers=$DBlib->fetchDataWithCondition("answer", "*", "question_id = :id", $questionID);
                     
-                    if (($questions[$i]["type_id"]==0)||($questions[$i]["type_id"]==3)) {
+                    if (($questions[$i]["type_id"]==1)||($questions[$i]["type_id"]==5)) {
                         $echoForm=$echoForm.'<div class="question type0">';
                     } else {
                         $echoForm=$echoForm.'<div class="question">';
                     }
-                    
                     $echoForm=$echoForm.'<h2 class="questionHeading">'.$questions[$i]["heading"].'</h2><div class="descriptionContainer"><p class="description">'.$questions[$i]["description"].'</p></div><div class="answers">';
 
                     for ($x=0; $x < count($answerIDs); $x++) { 
-                        if (($questions[$i]["type_id"]==0)||($questions[$i]["type_id"]==3)) {
+                        if (($questions[$i]["type_id"]==1)||($questions[$i]["type_id"]==5)) {
                             if ($x==0) {
-                                $echoForm=$echoForm.'<div class="answer yes"><input type="checkbox" class="dis"><p class="answerInput">Yes</p>';
+                                $echoForm=$echoForm.'<div class="answer yes"><div class="pretty p-toggle p-plain"><input type="radio" name="radio1" checked=""><div class="state p-off"><label>Yes</label></div><div class="state p-on"><label class="color">Yes</label></div></div>';
                             } else {
-                                $echoForm=$echoForm.'<div class="answer no"><input type="checkbox" class="dis"><p class="answerInput">No</p>';
+                                $echoForm=$echoForm.'<div class="answer no"><div class="pretty p-toggle p-plain"><input type="radio" name="radio1"><div class="state p-off"><label>No</label></div><div class="state p-on"><label class="color">No</label></div></div>';
                             }
                             
                         } else {
@@ -106,7 +105,7 @@
                             $answerIDs=$DBlib->fetchDataWithCondition("answer", "id", "question_id = :id", $questionID);
                             $answers=$DBlib->fetchDataWithCondition("answer", "*", "question_id = :id", $questionID);
                             
-                            if (($questions[$i]["type_id"]==0)||($questions[$i]["type_id"]==3)) {
+                            if (($questions[$i]["type_id"]==1)||($questions[$i]["type_id"]==5)) {
                                 $echoForm=$echoForm.'<div class="question type0">';
                             } else {
                                 $echoForm=$echoForm.'<div class="question">';
@@ -115,11 +114,11 @@
                             $echoForm=$echoForm.'<h2 class="questionHeading">'.$questions[$i]["heading"].'</h2><div class="descriptionContainer"><p class="description">'.$questions[$i]["description"].'</p></div><div class="answers">';
 
                             for ($x=0; $x < count($answerIDs); $x++) { 
-                                if (($questions[$i]["type_id"]==0)||($questions[$i]["type_id"]==3)) {
+                                if (($questions[$i]["type_id"]==1)||($questions[$i]["type_id"]==5)) {
                                     if ($x==0) {
-                                        $echoForm=$echoForm.'<div class="answer yes"><input type="checkbox" class="dis"><p class="answerInput">Yes</p>';
+                                        $echoForm=$echoForm.'<div class="answer yes"><div class="pretty p-toggle p-plain"><input type="radio" name="radio1" checked=""><div class="state p-off"><label>Yes</label></div><div class="state p-on"><label class="color">Yes</label></div></div>';
                                     } else {
-                                        $echoForm=$echoForm.'<div class="answer no"><input type="checkbox" class="dis"><p class="answerInput">No</p>';
+                                        $echoForm=$echoForm.'<div class="answer no"><div class="pretty p-toggle p-plain"><input type="radio" name="radio1"><div class="state p-off"><label>No</label></div><div class="state p-on"><label class="color">No</label></div></div>';
                                     }
                                     
                                 } else {
@@ -156,8 +155,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?=$FormName[0]["name"]?> | Intelifom</title>
     <link href="https://cdn.jsdelivr.net/npm/@mdi/font@5.x/css/materialdesignicons.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="../assets/lib/css/pretty-checkbox/dist/pretty-checkbox.min.css">
-    <link rel="stylesheet" href="../assets/global/general.css">
+    <link rel="stylesheet" href="../../assets/lib/css/pretty-checkbox/dist/pretty-checkbox.min.css">
     <link rel="stylesheet" href="css/form.css">
     <style><?=$echoCSS?></style>
 </head>
@@ -165,6 +163,8 @@
     <div id="content">
         <div class="form">
             <?=$echoForm?>
+            <input type="submit" value="Submit" name="submit" id="submit">
+            <span class="material-icons">send</span>
         </div>
     </div>
 </body>
