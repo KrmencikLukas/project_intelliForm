@@ -3,15 +3,14 @@
     include("../../../assets/lib/php/DBlibrary.php");
     include("../../../assets/lib/php/general.php");
     session_start();
-    $db = new DatabaseFunctions($db);
+    $pdo = new DatabaseFunctions($db);
     
     $user = $_SESSION['user'] ?? null;
     $params = [
         ":id"=> $user
     ];
-    var_dump($_SESSION);
-    $forms = $db->fetchDataWithCondition("form", "*","user_id = :id ORDER BY timestamp DESC LIMIT 4", $params);
-    $countForms = $db->countByPDOWithCondition("form", "*","user_id = :id ", $params);
+    $forms = $pdo->fetchDataWithCondition("form", "*","user_id = :id ORDER BY timestamp DESC LIMIT 4", $params);
+    $countForms = $pdo->countByPDOWithCondition("form", "*","user_id = :id ", $params);
 ?>
 <!DOCTYPE html>
 <html lang="en">
