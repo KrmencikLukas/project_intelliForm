@@ -13,6 +13,8 @@ function autoGrow(element) {
 //funcle pro focus na otazku
 let focusQuestion = "none"
 function focus(element){
+    let questionId = element.id.split('Q')[1]
+    generateQuestionSettings(questionSettingsJson[questionId])
     $(focusQuestion).removeClass("focus")
     $(element).addClass("focus")
     focusQuestion = element;
@@ -33,11 +35,9 @@ function setAutoSave(){
     clearInterval(autoSaveInterval);
     if(autoSave != "none"){
         autoSave = parseInt(autoSave) * 1000
-        console.log("interval change")
 
         autoSaveInterval = setInterval(function(){
             if(needSave){
-                console.log("saving")
                 saveForm()
             }
         },autoSave)
@@ -135,14 +135,11 @@ function afterLoad(){
     $("body").on("click",".newAnswer",function(){
         let questionId = parseInt(this.id.split('createAnswer')[1])
 
-        console.log(questionId)
-
         $.ajax({
             type: 'POST',
             url: 'action/createAnswer.php',
             data: {"questionId": questionId},
             success: function(response) {
-                console.log(response)
                 if(response != 0){
                     //muze byt optimalizovano
                     saveForm()
@@ -157,14 +154,11 @@ function afterLoad(){
     $("body").on("click",".answer .delete",function(){
         let answerId = parseInt(this.id.split('deleteAnswer')[1])
 
-        console.log(answerId)
-
         $.ajax({
             type: 'POST',
             url: 'action/deleteAnswer.php',
             data: {"id": answerId},
             success: function(response) {
-                console.log(response)
                 if(response != 0){
                     //muze byt optimalizovano
                     saveForm()
@@ -212,7 +206,6 @@ function afterLoad(){
             url: 'action/changeType.php',
             data: {"id": questionId, "type": type},
             success: function(response) {
-                console.log(response)
                 if(response != 0){
                     saveForm("correctness")
                     loadForm()
@@ -371,8 +364,6 @@ $(document).ready(function(){
 function generateForm(json){
     let html = ""
 
-    console.log(json["settings"])
-
     for(let key in json["settings"]){
         value = json["settings"][key]
         if(value["key"] == "anonymous"){
@@ -417,11 +408,13 @@ function generateForm(json){
     return html
 }
 
+let questionSettingsJson = {}
+
 function generateQuestion(id,heading,description,type,settings,answers){
 
     questionTypesHtml = ""
 
-    for (var key in questionTypes) {
+    for (let key in questionTypes) {
         if(key == type.number){
             questionTypesHtml += '<option value="'+key+'" selected>'+questionTypes[key]+'</option>'
         }else{
@@ -429,50 +422,7 @@ function generateQuestion(id,heading,description,type,settings,answers){
         }
     }
 
-    for (var key in settings) {
-        let input = ""
-        let checkedCHB = ""
-
-        if(settings[key]["key"] == "Background color" || settings[key]["key"] == "Text color"){
-            input = `<input type="color" id="QS${key}" value="${settings[key]["value"]}">`
-
-        }else if(settings[key]["key"] == "Mandatory" || settings[key]["key"] == "Public vote count"){
-            
-            if(settings[key]["value"] == "1"){
-                checkedCHB = "checked"
-            }
-            input = `
-            <div class="pretty p-switch p-fill">
-                <input type="checkbox" id="QS${key}" ${checkedCHB}/>
-                <div class="state p-primary">
-                    <label></label>
-                </div>
-            </div>
-            `
-        }else if(settings[key]["key"] == "Mandatory" || settings[key]["key"] == "Public vote count"){
-            
-            if(settings[key]["value"] == "1"){
-                checkedCHB = "checked"
-            }
-            input = `
-            <div class="pretty p-switch p-fill">
-                <input type="checkbox" id="QS${key}" ${checkedCHB}/>
-                <div class="state p-primary">
-                    <label></label>
-                </div>
-            </div>
-            `
-        }
-
-
-        console.log(settings[key])
-        $(".questionSettingsDiv").append(`
-        <div class="set">
-            <p>${settings[key]["key"]}</p>
-            ${input}
-        </div> 
-        `);
-    }
+    questionSettingsJson[id] = settings
 
     let answersHtml = ""
     for (let key in answers){
@@ -515,6 +465,55 @@ function generateQuestion(id,heading,description,type,settings,answers){
     
 
     return html 
+}
+
+function generateQuestionSettings(settings){
+    
+    $(".questionSettingsDiv").html("")
+
+    for (let key in settings) {
+
+        let input = ""
+        let checkedCHB = ""
+
+        if(settings[key]["key"] == "Background color" || settings[key]["key"] == "Text color"){
+            input = `<input type="color" id="QS${key}" value="${settings[key]["value"]}">`
+
+        }else if(settings[key]["key"] == "Mandatory" || settings[key]["key"] == "Public vote count"){
+            
+            if(settings[key]["value"] == "1"){
+                checkedCHB = "checked"
+            }
+            input = `
+            <div class="pretty p-switch p-fill">
+                <input type="checkbox" id="QS${key}" ${checkedCHB}/>
+                <div class="state p-primary">
+                    <label></label>
+                </div>
+            </div>
+            `
+        }else if(settings[key]["key"] == "Mandatory" || settings[key]["key"] == "Public vote count"){
+            
+            if(settings[key]["value"] == "1"){
+                checkedCHB = "checked"
+            }
+            input = `
+            <div class="pretty p-switch p-fill">
+                <input type="checkbox" id="QS${key}" ${checkedCHB}/>
+                <div class="state p-primary">
+                    <label></label>
+                </div>
+            </div>
+            `
+        }
+
+        $(".questionSettingsDiv").append(`
+        <div class="set">
+            <p>${settings[key]["key"]}</p>
+            ${input}
+        </div> 
+        `);
+    }
 }
 
 function generateAnswer(id,name,correctness,type){
