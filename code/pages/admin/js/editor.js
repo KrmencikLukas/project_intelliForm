@@ -469,7 +469,7 @@ function generateQuestion(id,heading,description,type,settings,answers){
         $(".questionSettingsDiv").append(`
         <div class="set">
             <p>${settings[key]["key"]}</p>
-            
+            ${input}
         </div> 
         `);
     }
