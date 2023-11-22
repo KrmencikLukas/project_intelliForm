@@ -6,8 +6,7 @@ include("../../assets/lib/php/DBlibrary.php");
 $DBlib = new DatabaseFunctions($db);
 session_start();
 
-//provizorni nacteni uzivatele
-$_SESSION["user"] = 1;
+$_SESSION['user'] = 1;
 
 if(isset($_GET["id"])){
     if(is_numeric($_GET["id"])){
