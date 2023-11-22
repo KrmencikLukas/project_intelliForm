@@ -9,6 +9,7 @@
     $params = [
         ":id"=> $user
     ];
+    var_dump($_SESSION);
     $forms = $db->fetchDataWithCondition("form", "*","user_id = :id ORDER BY timestamp DESC LIMIT 4", $params);
     $countForms = $db->countByPDOWithCondition("form", "*","user_id = :id ", $params);
 ?>
@@ -24,6 +25,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="../js/showMoreForms.js"></script>
     <script src="../../../assets/lib/js/profileMenu.js"></script>
+    <script src="../js/FormActions.js"></script>
     <script>
         var countForm = <?= json_encode($countForms)?>;
         var user = <?= json_encode($user)?>
