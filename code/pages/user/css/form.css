@@ -1,5 +1,5 @@
 @import url("../../../assets/global/vars.css");
-.formHeading, p, .questionHeading {
+.formHeading, p, .questionHeading, label {
     font-family: var(--fontRegular);
 }
 .formHeading {
@@ -165,13 +165,11 @@ h2, p {
 .type0 .yes, .type0 .yes{
     border: 3px solid var(--blue);
     border-radius: var(--radius);
-    font-family: var(--fontRegular);
 }
 
 .type0 .no, .type0 .no{
     border: 3px solid var(--red);
     border-radius: var(--radius);
-    font-family: var(--fontRegular);
 }
 
 .type0 .no p{
@@ -184,7 +182,6 @@ h2, p {
     padding: 8px 0;
     color: white;
 }
-
 .type0 .yes p{
     width: calc(100% - 10px);
     font-size: 20px;
@@ -222,7 +219,6 @@ h2, p {
     font-weight: 600 !important;
     padding: 10px 0 !important;
     color: var(--gray);
-    font-family: var(--form-font);
 }
 
 .type0 .yes .color{
@@ -289,8 +285,8 @@ h2, p {
 }
 
 #submit{
-    height: 45px;
     border: none;
+    height: 45px;
     box-sizing: border-box;
     width: 100%;
     display: flex;
@@ -300,9 +296,28 @@ h2, p {
     background-color: var(--blue);
     cursor: pointer;
     color: white;
-    font-size: 28px;
+    font-size: 20px;
+    background-image: url("../../../assets/img/icons/send.svg"); 
+    background-repeat: no-repeat; 
+    background-position: calc(50% + 50px) 50%;
+    background-position-y: center; 
+    background-size: 28px;
 }
-
+#submit:hover {
+    animation-name: send;
+    animation-duration: 1s;
+    transition: ease-in-out;
+    animation-fill-mode: backwards;
+    animation-iteration-count: infinite;
+}
+@keyframes send {
+    0% {background-position: calc(50% + 50px) 50%;}
+    20% {background-position: calc(50% + 60px) 50%;}
+    30% {background-position: calc(50% + 55px) 50%;}
+    40% {background-position: calc(50% + 60px) 50%;}
+    80% {background-position: calc(50% + 50px) 50%;}
+    100% {background-position: calc(50% + 50px) 50%;}
+}
 .window{
     background-color: white;
     width: 50%;

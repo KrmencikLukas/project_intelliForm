@@ -3,7 +3,7 @@
     include("../../assets/lib/php/DBlibrary.php");
     $DBlib = new DatabaseFunctions($db);
 
-    //http://project.lukaskrmencik.cz/S/code/pages/user/form.php?id=73&guestId=1&code=suprkod
+    //http://project.lukaskrmencik.cz/S/code/pages/user/form.php?id=82&guestId=1&code=suprkod
 
 
     $id=$_GET["id"] ?? null;
@@ -22,7 +22,7 @@
                     if ($formCSSkey[$i]["key"]=="color") {
                         $echoCSS=$echoCSS.".form {background-color:".$formCSSvalue[$i]["value"]."}";
                     }
-                    if ($formCSSkey[$i]["key"]=="background") {
+                    if ($formCSSkey[$i]["key"]=="background color") {
                         $echoCSS=$echoCSS."body {background-color:".$formCSSvalue[$i]["value"]."}";
                     }
                 }
@@ -87,7 +87,7 @@
                             if ($formCSSkey[$i]["key"]=="color") {
                                 $echoCSS=$echoCSS.".form {background-color:".$formCSSvalue[$i]["value"]."}";
                             }
-                            if ($formCSSkey[$i]["key"]=="background") {
+                            if ($formCSSkey[$i]["key"]=="background color") {
                                 $echoCSS=$echoCSS."body {background-color:".$formCSSvalue[$i]["value"]."}";
                             }
                         }
@@ -164,7 +164,6 @@
         <div class="form">
             <?=$echoForm?>
             <input type="submit" value="Submit" name="submit" id="submit">
-            <span class="material-icons">send</span>
         </div>
     </div>
 </body>
