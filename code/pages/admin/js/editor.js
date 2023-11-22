@@ -18,10 +18,16 @@ function focus(element){
     $(focusQuestion).removeClass("focus")
     $(element).addClass("focus")
     focusQuestion = element;
-    $(".formSettings").fadeOut(500,function(){
-        $(".questionSettings").fadeIn(500)
-        $(".questionSettings").css("display", "flex");
-    })
+
+    $('.formSettings').css('transform', 'translate(100%, 0)');
+    setTimeout(function() {
+        $('.formSettings').css('display', 'none');
+        $('.questionSettings').css('display', 'flex');
+        setTimeout(function() {
+            $('.questionSettings').css('transform', 'translate(0, 0)');
+        },5)
+    },500)
+
     
 }
 
@@ -182,17 +188,24 @@ function afterLoad(){
 
     //odstarneni focusu
     $(document).on('click', function(event) {
-        var clickedElement = $(event.target);
+        let clickedElement = $(event.target);
     
-        var myDiv = $('.question');
+        let myDiv = $('.question');
+        let div2 = $('.questionSettings');
     
-        if (!clickedElement.is(myDiv) && !myDiv.has(clickedElement).length) {
+        console.log(clickedElement)
+
+        if (!clickedElement.is(myDiv) && !clickedElement.is(div2) && !myDiv.has(clickedElement).length) {
             $(focusQuestion).removeClass("focus")
             focusQuestion = "none"
-            $(".questionSettings").fadeOut(500,function(){
-                $(".formSettings").fadeIn(500)
-                $(".formSettings").css("display", "flex");
-            })
+            $('.questionSettings').css('transform', 'translate(100%, 0)');
+            setTimeout(function() {
+                $('.questionSettings').css('display', 'none');
+                $('.formSettings').css('display', 'flex');
+                setTimeout(function() {
+                    $('.formSettings').css('transform', 'translate(0, 0)');
+                },5)
+            },700)
         }
       });
 

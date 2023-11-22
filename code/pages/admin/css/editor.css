@@ -254,6 +254,12 @@ body{
     display: flex;
     flex-direction: column;
     padding-bottom: 20px;
+    transition: 500ms;
+}
+
+.questionSettings{
+    transform: translate(100%, 0);
+    display: none;
 }
 
 .save{
