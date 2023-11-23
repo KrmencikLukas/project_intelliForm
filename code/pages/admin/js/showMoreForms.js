@@ -77,7 +77,7 @@ $(document).ready(function(){
                   <h2>${e.name}</h2>
                   <div class='date${i + count}'></div>
                   <div class='actions'>
-                    <p><span class='mdi mdi-earth'></span></p>
+                    ${e.public === 1 ? "<p><span class='mdi mdi-chart-bar bar'></span></p><p><span class='mdi mdi-earth-plus'></span></p>" : "<p><span class='mdi mdi-earth'></span></p>"}
                     <p><span class='mdi mdi-delete del'></span></p>
                   </div>
                 </div>
@@ -110,6 +110,8 @@ $(document).ready(function(){
       }
     }
   })
+  
+
   $("#SearchForm").on("input", function(){
     var Search = $(this).val();
     var userId = JSON.parse(user);
@@ -134,8 +136,8 @@ $(document).ready(function(){
                   <h2>${e.name}</h2>
                   <div class='date'></div>
                   <div class='actions'>
-                      <p><span class='mdi mdi-earth'></span></p>
-                      <p><span class='mdi mdi-delete del'></span></p>
+                    ${e.public === 1 ? "<p><span class='mdi mdi-chart-bar bar'></span></p><p><span class='mdi mdi-earth-plus'></span></p>" : "<p><span class='mdi mdi-earth'></span></p>"}
+                    <p><span class='mdi mdi-delete del'></span></p>
                   </div>
               </div>
             </a>`
@@ -150,12 +152,38 @@ $(document).ready(function(){
         }
       });
     }
-
     isSearchInputEmpty = Search === "";
 
     if(isSearchInputEmpty){
-      
-      $("#forms").html(originalHtml);
+      $.ajax({
+        url: "../action/returnFormsDel.php",
+        type: "POST",
+        data: { userID: userId, count: 4},
+        success:function(response){
+
+          $("#forms").empty()
+          var data = JSON.parse(response)
+
+          data.forEach(e => {
+            $("#forms").append(`                        
+            <a href='../editor.php?id=${e.id}' target='_self'>
+              <div class='form'>
+                <h2>${e.name}</h2>
+                <div class='date'></div>
+                <div class='actions'>
+                  ${e.public === 1 ? "<p><span class='mdi mdi-chart-bar bar'></span></p><p><span class='mdi mdi-earth-plus'></span></p>" : "<p><span class='mdi mdi-earth'></span></p>"}
+                  <p><span class='mdi mdi-delete del'></span></p>
+                </div>
+                </div>
+              </a>`
+            );
+            const timestamps = data.map(e => e.timestamp);
+            const identifier = '.form .date';
+            timeAgo2(timestamps, identifier, "Last edited");
+            
+          }); 
+        }
+      })
       $("#more").css("display", "flex");
     }
   });

@@ -2,10 +2,16 @@
     include("../../../assets/lib/php/db.php");
     include("../../../assets/lib/php/DBlibrary.php");
     include("../../../assets/lib/php/general.php");
+
     session_start();
     $pdo = new DatabaseFunctions($db);
     
+    if(!isset($_SESSION['user'])){
+        header("location: ../../user/login/login.php");
+    }
+
     $user = $_SESSION['user'] ?? null;
+
     $params = [
         ":id"=> $user
     ];
@@ -45,15 +51,25 @@
             <div id="forms">
                 <?php
                     foreach ($forms as $val) {
+                        if($val["public"] == 1){
+                            $actions = " <div class='actions'>
+                            <p><span class='mdi mdi-chart-bar bar'></span></p>
+                            <p><span class='mdi mdi-earth-plus'></span></p>
+                            <p><span class='mdi mdi-delete del'></span></p>
+                            </div>
+                            ";
+                        }else{
+                            $actions = " <div class='actions'>
+                            <p><span class='mdi mdi-earth'></span></p>
+                            <p><span class='mdi mdi-delete del'></span></p>
+                            </div>";
+                        }
                         echo "
                         <a href='../editor.php?id=" . $val["id"] . "' target='_self'>
                             <div class='form'>
                                 <h2>" . $val["name"] . "</h2>
                                 <div>" . timeAgo($val["timestamp"], "Last edited") . "</div>
-                                <div class='actions'>
-                                    <p><span class='mdi mdi-earth'></span></p>
-                                    <p><span class='mdi mdi-delete del'></span></p>
-                                </div>
+                                ".$actions."
                             </div>
                         </a>
                         ";

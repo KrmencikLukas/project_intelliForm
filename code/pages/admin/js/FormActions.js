@@ -44,6 +44,26 @@ $(document).ready(function(){
 
     console.log('Extracted id:', idValue);
 });
+
+$("#forms").on("click", ".mdi-earth-plus", function(e) {
+  e.preventDefault();
+  e.stopPropagation();
+  
+  var anchorId = $(this).closest('a').attr('href').match(/(?:[?&])id=([^&]+)/);
+  var idValue = anchorId ? anchorId[1] : null;
+
+  console.log('Extracted id:', idValue);
+});
+
+  $("#forms").on("click", ".bar", function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    
+    var anchorId = $(this).closest('a').attr('href').match(/(?:[?&])id=([^&]+)/);
+    var idValue = anchorId ? anchorId[1] : null;
+
+    console.log('Extracted id:', idValue);
+  })
   $("#forms").on("click",".del", function(e){        
     e.preventDefault()
  
@@ -53,7 +73,6 @@ $(document).ready(function(){
     var DBcount = JSON.parse(countForm);
     var userId = JSON.parse(user);
     var count = $("#forms .form").length;
-    console.log(count)
     
     $.ajax({
       url:"../action/deleteForm.php",
@@ -73,7 +92,6 @@ $(document).ready(function(){
               success:function(response){
 
                 $("#forms").empty()
-                console.log(response)
                 var data = JSON.parse(response)
 
                 data.forEach(e => {
@@ -83,7 +101,7 @@ $(document).ready(function(){
                       <h2>${e.name}</h2>
                       <div class='date'></div>
                       <div class='actions'>
-                        <p><span class='mdi mdi-earth'></span></p>
+                        ${e.public === 1 ? "<p><span class='mdi mdi-chart-bar bar'></span></p><p><span class='mdi mdi-earth-plus'></span></p>" : "<p><span class='mdi mdi-earth'></span></p>"}
                         <p><span class='mdi mdi-delete del'></span></p>
                       </div>
                       </div>
