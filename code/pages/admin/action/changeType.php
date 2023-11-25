@@ -3,6 +3,8 @@
     include("../../../assets/lib/php/db.php");
     include("../../../assets/lib/php/DBlibrary.php");
 
+    session_start();
+
     $DBlib = new DatabaseFunctions($db);
 
     //Načtení id a type z POST
@@ -11,10 +13,10 @@
         $id = $_POST["id"];
         $type = $_POST["type"];
 
-        if($_SESSION["user"] == $DBlib->fetchDataWithCondition("form", "user_id", "id = :id", [
+        if(($_SESSION["user"] ?? NULL) == $DBlib->fetchDataWithCondition("form", "user_id", "id = :id", [
             ":id" => $DBlib->fetchDataWithCondition("question", "form_id", "id = :id", [":id" => $id])[0]["form_id"],
         ])[0]["user_id"]){
-            
+
             if((is_numeric($id))&&(is_numeric($type))){
 
                 //zjištění jaký je aktuální type

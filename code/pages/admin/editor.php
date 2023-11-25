@@ -6,13 +6,11 @@ include("../../assets/lib/php/DBlibrary.php");
 $DBlib = new DatabaseFunctions($db);
 session_start();
 
-$_SESSION['user'] = 1;
-
 if(isset($_GET["id"])){
     if(is_numeric($_GET["id"])){
         if(isset($_SESSION["user"])){
             if($DBlib->countByPDOWithCondition("form", "id","id = :id", [":id" => $_GET["id"]])){
-                if($_SESSION["user"] == $DBlib->fetchDataWithCondition("form", "user_id", "id = :id", [":id" => $_GET["id"]])[0]["user_id"]){
+                if(($_SESSION["user"] ?? NULL) == $DBlib->fetchDataWithCondition("form", "user_id", "id = :id", [":id" => $_GET["id"]])[0]["user_id"]){
                     $questionTypesRaw = $DBlib->fetchDataFromDB("question_type","*");
             
                     $questionTypes = [];
