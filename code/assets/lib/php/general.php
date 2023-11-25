@@ -25,7 +25,7 @@
         } elseif ($minutes > 0) {
         $result = "$keyword $minutes minute" . ($minutes > 1 ? 's' : '') . ' ago';
         } else {
-        $result = "$keyword $seconds second" . ($seconds > 1 ? 's' : '') . ' ago';
+        $result = "A few seconds ago";
         }
     
         return "<p>".$result."</p>";

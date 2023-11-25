@@ -138,3 +138,6 @@
     color: var(--gray);
     margin-top: 60px;
 }
+.bar{
+    color: var(--gray);
+}

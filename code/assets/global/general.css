@@ -358,10 +358,10 @@ margin-top: -2px;
     border-top: 1px solid  rgb(227, 226, 224);
 
 }
-.settings , .logout{
+.settingsIcon , .logout{
     font-size: 38px;
 }
-.settings{
+.settingsIcon{
     color: var(--gray);
 }
 .logout{
