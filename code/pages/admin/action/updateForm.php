@@ -31,6 +31,7 @@
                     $DBlib->updateData("question",["heading" => $value["heading"],"description" => $value["description"],"id" => $key],"id = :id");
     
                     foreach($value["settings"] as $key2 => $value2){
+                        var_dump($value["settings"]);
                         $DBlib->updateData("question_settings",["value" => $value2["value"],"id" => $key2],"id = :id");
                     }
     

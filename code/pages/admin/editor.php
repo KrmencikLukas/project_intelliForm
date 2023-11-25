@@ -11,19 +11,23 @@ $_SESSION['user'] = 1;
 if(isset($_GET["id"])){
     if(is_numeric($_GET["id"])){
         if(isset($_SESSION["user"])){
-            if($_SESSION["user"] == $DBlib->fetchDataWithCondition("form", "user_id", "id = :id", [":id" => $_GET["id"]])[0]["user_id"]){
-                $questionTypesRaw = $DBlib->fetchDataFromDB("question_type","*");
+            if($DBlib->countByPDOWithCondition("form", "id","id = :id", [":id" => $_GET["id"]])){
+                if($_SESSION["user"] == $DBlib->fetchDataWithCondition("form", "user_id", "id = :id", [":id" => $_GET["id"]])[0]["user_id"]){
+                    $questionTypesRaw = $DBlib->fetchDataFromDB("question_type","*");
+            
+                    $questionTypes = [];
+                    foreach($questionTypesRaw as $value){
+                        $questionTypes[$value["number"]] = $value["name"];
+                    };
         
-                $questionTypes = [];
-                foreach($questionTypesRaw as $value){
-                    $questionTypes[$value["number"]] = $value["name"];
-                };
-    
-                $questionTypesHtml = "";
-                foreach($questionTypes as $key => $value) {
-                    $questionTypesHtml .= '<option value="'.$key.'">'.$value.'</option>';
+                    $questionTypesHtml = "";
+                    foreach($questionTypes as $key => $value) {
+                        $questionTypesHtml .= '<option value="'.$key.'">'.$value.'</option>';
+                    }
+        
+                }else{
+                    header("Location: ../error.php");
                 }
-    
             }else{
                 header("Location: ../error.php");
             }

@@ -14,7 +14,7 @@ function autoGrow(element) {
 let focusQuestion = "none"
 function focus(element){
     let questionId = element.id.split('Q')[1]
-    generateQuestionSettings(questionSettingsJson[questionId])
+    generateQuestionSettings(questionSettingsJson[questionId],questionId)
     $(focusQuestion).removeClass("focus")
     $(element).addClass("focus")
     focusQuestion = element;
@@ -190,12 +190,16 @@ function afterLoad(){
     $(document).on('click', function(event) {
         let clickedElement = $(event.target);
     
-        let myDiv = $('.question');
+        let div1 = $('.question');
         let div2 = $('.questionSettings');
+        let div3 = $('.save');
     
-        console.log(clickedElement)
 
-        if (!clickedElement.is(myDiv) && !clickedElement.is(div2) && !myDiv.has(clickedElement).length) {
+        if (
+            (!clickedElement.is(div1) && !div1.has(clickedElement).length) &&
+            (!clickedElement.is(div2) && !div2.has(clickedElement).length) &&
+            (!clickedElement.is(div3) && !div3.has(clickedElement).length)
+        ) {
             $(focusQuestion).removeClass("focus")
             focusQuestion = "none"
             $('.questionSettings').css('transform', 'translate(100%, 0)');
@@ -309,7 +313,7 @@ function generateJson(without){
             "heading": $("#"+element.id+" .questionHeading").val(),
             "description": $("#"+element.id+" .description").val(),
             "answers": aJson,
-            "settings": [],
+            "settings": JSON.parse(JSON.stringify(questionSettingsJson[questionId])),
         }
     });
 
@@ -318,7 +322,7 @@ function generateJson(without){
         "name": $("#formName").val(),
         "user": user,
         "questions": qJson,
-        "settings": []
+        "settings": {}
     }
 
     settingsArray = [
@@ -334,7 +338,6 @@ function generateJson(without){
             value: settingsArray[i][2],
         }
     }
-
     return json;
 }
 
@@ -354,13 +357,13 @@ function loadForm(){
                 $("html").css("--form-background", $("#formBackgroundColor").val());
                 $("html").css("--form-color", $("#formColor").val());
                 $("html").css("--form-font", $("#formFont").val() + ", sans-serif");
+
+                if(focusQuestion != "none"){
+                    $("#"+focusQuestion.id).addClass("focus")
+                }
             }
         },
     });
-
-    if(focusQuestion != "none"){
-        $(element).addClass("focus")
-    }
 }
 
 
@@ -453,8 +456,19 @@ function generateQuestion(id,heading,description,type,settings,answers){
         `
     }
 
+    let backgroundColor
+    let color
+
+    for(key in settings){
+        if(settings[key]["key"] == "Background color"){
+            backgroundColor = settings[key]["value"]
+        }else if(settings[key]["key"] == "Text color"){
+            color = settings[key]["value"]
+        }
+    }
+
     let html = `
-    <div class="question type${type["number"]}" id="Q${id}">
+    <div class="question type${type["number"]}" id="Q${id}" style="background-color: ${backgroundColor}; color: ${color};'">
         <div class="absolute">
             <select id="typeSelect${id}" class='typeSelect'>
                 ${questionTypesHtml}
@@ -475,12 +489,12 @@ function generateQuestion(id,heading,description,type,settings,answers){
     if(type["number"] == 4){
         html += `<script> checkboxToRadio(${id},1,Infinity) </script>`
     }
-    
+  
 
     return html 
 }
 
-function generateQuestionSettings(settings){
+function generateQuestionSettings(settings,id){
     
     $(".questionSettingsDiv").html("")
 
@@ -489,44 +503,72 @@ function generateQuestionSettings(settings){
         let input = ""
         let checkedCHB = ""
 
-        if(settings[key]["key"] == "Background color" || settings[key]["key"] == "Text color"){
-            input = `<input type="color" id="QS${key}" value="${settings[key]["value"]}">`
+        if(settings[key]["key"] == "Mandatory" || settings[key]["key"] == "Public vote count"){
+            
+            if(settings[key]["value"] == "1"){
+                checkedCHB = "checked"
+            }
+            input = `
+            <div class="pretty p-switch p-fill">
+                <input type="checkbox" id="QS${key}" ${checkedCHB}/>
+                <div class="state p-primary">
+                    <label></label>
+                </div>
+            </div>
+            `
+            insertSettings(input,settings[key]["key"])
 
-        }else if(settings[key]["key"] == "Mandatory" || settings[key]["key"] == "Public vote count"){
-            
-            if(settings[key]["value"] == "1"){
-                checkedCHB = "checked"
+            $("#QS"+key).on("input", function() {
+                questionSettingsJson[id][key]["value"] = $(this).prop("checked") ? 1 : 0
+            });
+
+
+        }else if(settings[key]["key"] == "Background color" || settings[key]["key"] == "Text color"){
+            insertSettings(`<input type="color" id="QS${key}" value="${settings[key]["value"]}">`,settings[key]["key"])
+
+            if(settings[key]["key"] == "Background color"){
+                $("#QS"+key).on("input", function() {
+                    $("#Q"+id).css("background-color", $(this).val())
+                    questionSettingsJson[id][key]["value"] = $(this).val()
+                });
+            }else{
+                $("#QS"+key).on("input", function() {
+                    $("#Q"+id).css("color", $(this).val());
+                    questionSettingsJson[id][key]["value"] = $(this).val()
+                });
             }
+
+
+        }else if(
+        settings[key]["key"] == "Min upvotes"
+        || settings[key]["key"] == "Max upvotes"
+        || settings[key]["key"] == "Min downvotes"
+        || settings[key]["key"] == "Max downvotes"
+        || settings[key]["key"] == "Min votes"
+        || settings[key]["key"] == "Max votes"
+        ){
             input = `
-            <div class="pretty p-switch p-fill">
-                <input type="checkbox" id="QS${key}" ${checkedCHB}/>
-                <div class="state p-primary">
-                    <label></label>
-                </div>
-            </div>
+            <input type="number" id="QS${key}" value="${settings[key]["value"]}">
             `
-        }else if(settings[key]["key"] == "Mandatory" || settings[key]["key"] == "Public vote count"){
-            
-            if(settings[key]["value"] == "1"){
-                checkedCHB = "checked"
-            }
-            input = `
-            <div class="pretty p-switch p-fill">
-                <input type="checkbox" id="QS${key}" ${checkedCHB}/>
-                <div class="state p-primary">
-                    <label></label>
-                </div>
-            </div>
-            `
+
+            insertSettings(input,settings[key]["key"])
+
+            $("#QS"+key).on("input", function() {
+                questionSettingsJson[id][key]["value"] = $(this).val()
+            });
         }
 
-        $(".questionSettingsDiv").append(`
-        <div class="set">
-            <p>${settings[key]["key"]}</p>
-            ${input}
-        </div> 
-        `);
+
     }
+}
+
+function insertSettings(input,id){
+    $(".questionSettingsDiv").append(`
+    <div class="set">
+        <p>${id}</p>
+        ${input}
+    </div> 
+    `);
 }
 
 function generateAnswer(id,name,correctness,type){
