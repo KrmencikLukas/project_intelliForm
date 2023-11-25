@@ -13,13 +13,21 @@ function autoGrow(element) {
 //funcle pro focus na otazku
 let focusQuestion = "none"
 function focus(element){
+    let questionId = element.id.split('Q')[1]
+    generateQuestionSettings(questionSettingsJson[questionId],questionId)
     $(focusQuestion).removeClass("focus")
     $(element).addClass("focus")
     focusQuestion = element;
-    $(".formSettings").fadeOut(500,function(){
-        $(".questionSettings").fadeIn(500)
-        $(".questionSettings").css("display", "flex");
-    })
+
+    $('.formSettings').css('transform', 'translate(100%, 0)');
+    setTimeout(function() {
+        $('.formSettings').css('display', 'none');
+        $('.questionSettings').css('display', 'flex');
+        setTimeout(function() {
+            $('.questionSettings').css('transform', 'translate(0, 0)');
+        },5)
+    },500)
+
     
 }
 
@@ -33,11 +41,9 @@ function setAutoSave(){
     clearInterval(autoSaveInterval);
     if(autoSave != "none"){
         autoSave = parseInt(autoSave) * 1000
-        console.log("interval change")
 
         autoSaveInterval = setInterval(function(){
             if(needSave){
-                console.log("saving")
                 saveForm()
             }
         },autoSave)
@@ -135,14 +141,11 @@ function afterLoad(){
     $("body").on("click",".newAnswer",function(){
         let questionId = parseInt(this.id.split('createAnswer')[1])
 
-        console.log(questionId)
-
         $.ajax({
             type: 'POST',
             url: 'action/createAnswer.php',
             data: {"questionId": questionId},
             success: function(response) {
-                console.log(response)
                 if(response != 0){
                     //muze byt optimalizovano
                     saveForm()
@@ -157,14 +160,11 @@ function afterLoad(){
     $("body").on("click",".answer .delete",function(){
         let answerId = parseInt(this.id.split('deleteAnswer')[1])
 
-        console.log(answerId)
-
         $.ajax({
             type: 'POST',
             url: 'action/deleteAnswer.php',
             data: {"id": answerId},
             success: function(response) {
-                console.log(response)
                 if(response != 0){
                     //muze byt optimalizovano
                     saveForm()
@@ -188,17 +188,28 @@ function afterLoad(){
 
     //odstarneni focusu
     $(document).on('click', function(event) {
-        var clickedElement = $(event.target);
+        let clickedElement = $(event.target);
     
-        var myDiv = $('.question');
+        let div1 = $('.question');
+        let div2 = $('.questionSettings');
+        let div3 = $('.save');
     
-        if (!clickedElement.is(myDiv) && !myDiv.has(clickedElement).length) {
+
+        if (
+            (!clickedElement.is(div1) && !div1.has(clickedElement).length) &&
+            (!clickedElement.is(div2) && !div2.has(clickedElement).length) &&
+            (!clickedElement.is(div3) && !div3.has(clickedElement).length)
+        ) {
             $(focusQuestion).removeClass("focus")
             focusQuestion = "none"
-            $(".questionSettings").fadeOut(500,function(){
-                $(".formSettings").fadeIn(500)
-                $(".formSettings").css("display", "flex");
-            })
+            $('.questionSettings').css('transform', 'translate(100%, 0)');
+            setTimeout(function() {
+                $('.questionSettings').css('display', 'none');
+                $('.formSettings').css('display', 'flex');
+                setTimeout(function() {
+                    $('.formSettings').css('transform', 'translate(0, 0)');
+                },5)
+            },700)
         }
       });
 
@@ -212,7 +223,6 @@ function afterLoad(){
             url: 'action/changeType.php',
             data: {"id": questionId, "type": type},
             success: function(response) {
-                console.log(response)
                 if(response != 0){
                     saveForm("correctness")
                     loadForm()
@@ -303,7 +313,7 @@ function generateJson(without){
             "heading": $("#"+element.id+" .questionHeading").val(),
             "description": $("#"+element.id+" .description").val(),
             "answers": aJson,
-            "settings": [],
+            "settings": JSON.parse(JSON.stringify(questionSettingsJson[questionId])),
         }
     });
 
@@ -312,7 +322,7 @@ function generateJson(without){
         "name": $("#formName").val(),
         "user": user,
         "questions": qJson,
-        "settings": []
+        "settings": {}
     }
 
     settingsArray = [
@@ -328,7 +338,6 @@ function generateJson(without){
             value: settingsArray[i][2],
         }
     }
-
     return json;
 }
 
@@ -348,13 +357,13 @@ function loadForm(){
                 $("html").css("--form-background", $("#formBackgroundColor").val());
                 $("html").css("--form-color", $("#formColor").val());
                 $("html").css("--form-font", $("#formFont").val() + ", sans-serif");
+
+                if(focusQuestion != "none"){
+                    $("#"+focusQuestion.id).addClass("focus")
+                }
             }
         },
     });
-
-    if(focusQuestion != "none"){
-        $(element).addClass("focus")
-    }
 }
 
 
@@ -370,8 +379,6 @@ $(document).ready(function(){
 //generovani formulare
 function generateForm(json){
     let html = ""
-
-    console.log(json["settings"])
 
     for(let key in json["settings"]){
         value = json["settings"][key]
@@ -417,11 +424,13 @@ function generateForm(json){
     return html
 }
 
+let questionSettingsJson = {}
+
 function generateQuestion(id,heading,description,type,settings,answers){
 
     questionTypesHtml = ""
 
-    for (var key in questionTypes) {
+    for (let key in questionTypes) {
         if(key == type.number){
             questionTypesHtml += '<option value="'+key+'" selected>'+questionTypes[key]+'</option>'
         }else{
@@ -429,50 +438,7 @@ function generateQuestion(id,heading,description,type,settings,answers){
         }
     }
 
-    for (var key in settings) {
-        let input = ""
-        let checkedCHB = ""
-
-        if(settings[key]["key"] == "Background color" || settings[key]["key"] == "Text color"){
-            input = `<input type="color" id="QS${key}" value="${settings[key]["value"]}">`
-
-        }else if(settings[key]["key"] == "Mandatory" || settings[key]["key"] == "Public vote count"){
-            
-            if(settings[key]["value"] == "1"){
-                checkedCHB = "checked"
-            }
-            input = `
-            <div class="pretty p-switch p-fill">
-                <input type="checkbox" id="QS${key}" ${checkedCHB}/>
-                <div class="state p-primary">
-                    <label></label>
-                </div>
-            </div>
-            `
-        }else if(settings[key]["key"] == "Mandatory" || settings[key]["key"] == "Public vote count"){
-            
-            if(settings[key]["value"] == "1"){
-                checkedCHB = "checked"
-            }
-            input = `
-            <div class="pretty p-switch p-fill">
-                <input type="checkbox" id="QS${key}" ${checkedCHB}/>
-                <div class="state p-primary">
-                    <label></label>
-                </div>
-            </div>
-            `
-        }
-
-
-        console.log(settings[key])
-        $(".questionSettingsDiv").append(`
-        <div class="set">
-            <p>${settings[key]["key"]}</p>
-            
-        </div> 
-        `);
-    }
+    questionSettingsJson[id] = settings
 
     let answersHtml = ""
     for (let key in answers){
@@ -490,8 +456,19 @@ function generateQuestion(id,heading,description,type,settings,answers){
         `
     }
 
+    let backgroundColor
+    let color
+
+    for(key in settings){
+        if(settings[key]["key"] == "Background color"){
+            backgroundColor = settings[key]["value"]
+        }else if(settings[key]["key"] == "Text color"){
+            color = settings[key]["value"]
+        }
+    }
+
     let html = `
-    <div class="question type${type["number"]}" id="Q${id}">
+    <div class="question type${type["number"]}" id="Q${id}" style="background-color: ${backgroundColor}; color: ${color};'">
         <div class="absolute">
             <select id="typeSelect${id}" class='typeSelect'>
                 ${questionTypesHtml}
@@ -512,9 +489,86 @@ function generateQuestion(id,heading,description,type,settings,answers){
     if(type["number"] == 4){
         html += `<script> checkboxToRadio(${id},1,Infinity) </script>`
     }
-    
+  
 
     return html 
+}
+
+function generateQuestionSettings(settings,id){
+    
+    $(".questionSettingsDiv").html("")
+
+    for (let key in settings) {
+
+        let input = ""
+        let checkedCHB = ""
+
+        if(settings[key]["key"] == "Mandatory" || settings[key]["key"] == "Public vote count"){
+            
+            if(settings[key]["value"] == "1"){
+                checkedCHB = "checked"
+            }
+            input = `
+            <div class="pretty p-switch p-fill">
+                <input type="checkbox" id="QS${key}" ${checkedCHB}/>
+                <div class="state p-primary">
+                    <label></label>
+                </div>
+            </div>
+            `
+            insertSettings(input,settings[key]["key"])
+
+            $("#QS"+key).on("input", function() {
+                questionSettingsJson[id][key]["value"] = $(this).prop("checked") ? 1 : 0
+            });
+
+
+        }else if(settings[key]["key"] == "Background color" || settings[key]["key"] == "Text color"){
+            insertSettings(`<input type="color" id="QS${key}" value="${settings[key]["value"]}">`,settings[key]["key"])
+
+            if(settings[key]["key"] == "Background color"){
+                $("#QS"+key).on("input", function() {
+                    $("#Q"+id).css("background-color", $(this).val())
+                    questionSettingsJson[id][key]["value"] = $(this).val()
+                });
+            }else{
+                $("#QS"+key).on("input", function() {
+                    $("#Q"+id).css("color", $(this).val());
+                    questionSettingsJson[id][key]["value"] = $(this).val()
+                });
+            }
+
+
+        }else if(
+        settings[key]["key"] == "Min upvotes"
+        || settings[key]["key"] == "Max upvotes"
+        || settings[key]["key"] == "Min downvotes"
+        || settings[key]["key"] == "Max downvotes"
+        || settings[key]["key"] == "Min votes"
+        || settings[key]["key"] == "Max votes"
+        ){
+            input = `
+            <input type="number" id="QS${key}" value="${settings[key]["value"]}">
+            `
+
+            insertSettings(input,settings[key]["key"])
+
+            $("#QS"+key).on("input", function() {
+                questionSettingsJson[id][key]["value"] = $(this).val()
+            });
+        }
+
+
+    }
+}
+
+function insertSettings(input,id){
+    $(".questionSettingsDiv").append(`
+    <div class="set">
+        <p>${id}</p>
+        ${input}
+    </div> 
+    `);
 }
 
 function generateAnswer(id,name,correctness,type){
