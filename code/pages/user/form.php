@@ -32,39 +32,7 @@
                 $questionIDs=$DBlib->fetchDataWithCondition("question", "id", "form_id = :id", $formID);
                 $questions=$DBlib->fetchDataWithCondition("question", "*", "form_id = :id", $formID);
 
-                for ($i=0; $i < count($questionIDs); $i++) { 
-                    $answerIDs="";
-                    $answers="";
-                    $questionID = [ "id" => $questions[$i]["id"]];
-
-                    $answerIDs=$DBlib->fetchDataWithCondition("answer", "id", "question_id = :id", $questionID);
-                    $answers=$DBlib->fetchDataWithCondition("answer", "*", "question_id = :id", $questionID);
-                    
-                    if (($questions[$i]["type_id"]==1)||($questions[$i]["type_id"]==5)) {
-                        $echoForm=$echoForm.'<div class="question type0">';
-                    } else {
-                        $echoForm=$echoForm.'<div class="question">';
-                    }
-                    $echoForm=$echoForm.'<h2 class="questionHeading">'.$questions[$i]["heading"].'</h2><div class="descriptionContainer"><p class="description">'.$questions[$i]["description"].'</p></div><div class="answers">';
-
-                    for ($x=0; $x < count($answerIDs); $x++) { 
-                        if (($questions[$i]["type_id"]==1)||($questions[$i]["type_id"]==5)) {
-                            if ($x==0) {
-                                $echoForm=$echoForm.'<div class="answer yes"><div class="pretty p-toggle p-plain"><input type="radio" name="radio1" checked=""><div class="state p-off"><label>Yes</label></div><div class="state p-on"><label class="color">Yes</label></div></div>';
-                            } else {
-                                $echoForm=$echoForm.'<div class="answer no"><div class="pretty p-toggle p-plain"><input type="radio" name="radio1"><div class="state p-off"><label>No</label></div><div class="state p-on"><label class="color">No</label></div></div>';
-                            }
-                            
-                        } else {
-                            $echoForm=$echoForm.'<div class="answer"><div class="pretty p-icon p-round p-smooth p-bigger p-locked answerBox"><input type="checkbox"><div class="state p-primary"><i class="icon mdi mdi-check"></i><label></label></div></div>';
-                            $echoForm=$echoForm.'<p class="answerDesc">'.$answers[$x]["name"].'</p>';
-                        }
-                        
-                        $echoForm=$echoForm.'</div>';
-                    }
-                    
-                    $echoForm=$echoForm.'</div></div>';
-                }
+                
             } else {
                 if ((!empty($_GET["guestId"]))&&(!empty($_GET["code"]))&&(is_numeric($_GET["guestId"]))) {
                     
@@ -97,44 +65,46 @@
                         $questionIDs=$DBlib->fetchDataWithCondition("question", "id", "form_id = :id", $formID);
                         $questions=$DBlib->fetchDataWithCondition("question", "*", "form_id = :id", $formID);
 
-                        for ($i=0; $i < count($questionIDs); $i++) { 
-                            $answerIDs="";
-                            $answers="";
-                            $questionID = [ "id" => $questions[$i]["id"]];
-
-                            $answerIDs=$DBlib->fetchDataWithCondition("answer", "id", "question_id = :id", $questionID);
-                            $answers=$DBlib->fetchDataWithCondition("answer", "*", "question_id = :id", $questionID);
-                            
-                            if (($questions[$i]["type_id"]==1)||($questions[$i]["type_id"]==5)) {
-                                $echoForm=$echoForm.'<div class="question type0">';
-                            } else {
-                                $echoForm=$echoForm.'<div class="question">';
-                            }
-                            
-                            $echoForm=$echoForm.'<h2 class="questionHeading">'.$questions[$i]["heading"].'</h2><div class="descriptionContainer"><p class="description">'.$questions[$i]["description"].'</p></div><div class="answers">';
-
-                            for ($x=0; $x < count($answerIDs); $x++) { 
-                                if (($questions[$i]["type_id"]==1)||($questions[$i]["type_id"]==5)) {
-                                    if ($x==0) {
-                                        $echoForm=$echoForm.'<div class="answer yes"><div class="pretty p-toggle p-plain"><input type="radio" name="radio1" checked=""><div class="state p-off"><label>Yes</label></div><div class="state p-on"><label class="color">Yes</label></div></div>';
-                                    } else {
-                                        $echoForm=$echoForm.'<div class="answer no"><div class="pretty p-toggle p-plain"><input type="radio" name="radio1"><div class="state p-off"><label>No</label></div><div class="state p-on"><label class="color">No</label></div></div>';
-                                    }
-                                    
-                                } else {
-                                    $echoForm=$echoForm.'<div class="answer"><div class="pretty p-icon p-round p-smooth p-bigger p-locked answerBox"><input type="checkbox"><div class="state p-primary"><i class="icon mdi mdi-check"></i><label></label></div></div>';
-                                    $echoForm=$echoForm.'<p class="answerDesc">'.$answers[$x]["name"].'</p>';
-                                }
-                                
-                                $echoForm=$echoForm.'</div>';
-                            }
-                            
-                            $echoForm=$echoForm.'</div></div>';
-                        }
+                        
 
                     } else {
                         header("Location: ../error.php");
                     }
+                    for ($i=0; $i < count($questionIDs); $i++) { 
+                        $answerIDs="";
+                        $answers="";
+                        $questionID = [ "id" => $questions[$i]["id"]];
+
+                        $answerIDs=$DBlib->fetchDataWithCondition("answer", "id", "question_id = :id", $questionID);
+                        $answers=$DBlib->fetchDataWithCondition("answer", "*", "question_id = :id", $questionID);
+                        
+                        if (($questions[$i]["type_id"]==1)||($questions[$i]["type_id"]==5)) {
+                            $echoForm=$echoForm.'<div class="question type0">';
+                        } else {
+                            $echoForm=$echoForm.'<div class="question">';
+                        }
+                        $echoForm=$echoForm.'<h2 class="questionHeading">'.$questions[$i]["heading"].'</h2><div class="descriptionContainer"><p class="description">'.$questions[$i]["description"].'</p></div><div class="answers">';
+                        var_dump($questions[$i]);
+                        for ($x=0; $x < count($answerIDs); $x++) { 
+                            if (($questions[$i]["type_id"]==1)||($questions[$i]["type_id"]==5)||($questions[$i]["type_id"]==4)) {
+                                if (($questions[$i]["type_id"]==1)||($questions[$i]["type_id"]==5)) {
+                                    $echoForm=$echoForm.'<div class="answer yes"><div class="pretty p-toggle p-plain"><input type="radio" name="radio1" checked=""><div class="state p-off"><label>Yes</label></div><div class="state p-on"><label class="color">Yes</label></div></div>';
+                                    $echoForm=$echoForm.'<div class="answer no"><div class="pretty p-toggle p-plain"><input type="radio" name="radio1"><div class="state p-off"><label>No</label></div><div class="state p-on"><label class="color">No</label></div></div>';
+                                } elseif ($questions[$i]["type_id"]==4) {
+                                    $echoForm=$echoForm.'<div class="answer typeA2"><div class="pretty p-icon p-round p-smooth p-bigger p-toggle answerBox"><input type="checkbox"><div class="state p-off"><i class="icon mdi mdi-arrow-up"></i><label></label></div></div><div class="pretty p-icon p-round p-smooth p-bigger p-toggle answerBox"><input type="checkbox"><div class="state p-off"><i class="icon mdi mdi-arrow-down"></i><label></label></div></div><p class="answerDesc">'.$answers[$x]["name"].'</p></div>';
+                                }
+                                
+                            } else {
+                                $echoForm=$echoForm.'<div class="answer"><div class="pretty p-icon p-round p-smooth p-bigger answerBox"><input type="checkbox"><div class="state p-primary"><i class="icon mdi mdi-check"></i><label></label></div></div>';
+                                $echoForm=$echoForm.'<p class="answerDesc">'.$answers[$x]["name"].'</p>';
+                            }
+                            
+                         //   $echoForm=$echoForm.'</div>';
+                        }
+                        
+                        $echoForm=$echoForm.'</div></div>';
+                    }
+                    $echoForm=$echoForm.'<input type="submit" value="Submit" name="submit" id="submit">';
                 } else {
                     header("Location: ../error.php");
                 }
@@ -163,7 +133,6 @@
     <div id="content">
         <div class="form">
             <?=$echoForm?>
-            <input type="submit" value="Submit" name="submit" id="submit">
         </div>
     </div>
 </body>

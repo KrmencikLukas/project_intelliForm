@@ -195,6 +195,7 @@ h2, p {
 
 .pretty{
     margin: 3px;
+    height: 16px;
 }
 
 .type0 .pretty{
@@ -203,7 +204,6 @@ h2, p {
     text-align: center;
     margin: 0;
 }
-
 
 #qId input[type=checkbox]{
     display: none;
@@ -274,7 +274,9 @@ h2, p {
 .save{
     transition: 300ms;
 }
-
+.answerDesc {
+    margin-left: 10px;
+}
 .settings h3{
     padding: 10px;
     font-weight: 500;
