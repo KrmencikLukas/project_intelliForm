@@ -1,4 +1,18 @@
 @import url("../../../assets/global/vars.css");
+.pretty input:checked~.state.p-success-o .icon,.pretty input:checked~.state.p-success-o .svg,.pretty input:checked~.state.p-success-o svg,.pretty.p-toggle.up .state.p-success-o .icon,.pretty.p-toggle.up .state.p-success-o .svg,.pretty.p-toggle.up .state.p-success-o svg {
+    color: var(--blue);
+    stroke: var(--blue);
+}
+.pretty input:checked~.state.p-success-o .icon,.pretty input:checked~.state.p-success-o .svg,.pretty input:checked~.state.p-success-o svg,.pretty.p-toggle.down .state.p-success-o .icon,.pretty.p-toggle.down .state.p-success-o .svg,.pretty.p-toggle.down .state.p-success-o svg {
+    color: var(--red);
+    stroke: var(--red);
+}
+.pretty input:checked~.state.p-success-o label:before, .pretty.p-switch input:checked~.state.p-success:before, .pretty.p-toggle.up .state.p-success-o label:before {
+    border-color: var(--blue);
+}
+.pretty input:checked~.state.p-success-o label:before, .pretty.p-switch input:checked~.state.p-success:before, .pretty.p-toggle.down .state.p-success-o label:before {
+    border-color: var(--red);
+}
 .formHeading, p, .questionHeading, label {
     font-family: var(--fontRegular);
 }
