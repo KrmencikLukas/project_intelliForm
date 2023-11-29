@@ -2,6 +2,7 @@
     include("../../../assets/lib/php/db.php");
     include("../../../assets/lib/php/DBlibrary.php");
     $DBlib = new DatabaseFunctions($db);
+    session_start();
 
     //Načtení id z POST
     //$_POST["id"] = 25;
@@ -9,22 +10,26 @@
     if(isset($_POST["id"])){
         $id = $_POST["id"];
         if(is_numeric($id)){
-            //Načtení formu z DB
-            $form = $DBlib->fetchDataWithCondition("form", "*", "id=:id",[":id"=>$id])[0];
 
-            //Složení JSONU
-            $json = [
-                "id" => $id,
-                "name" => $form["name"],
-                "user" => $form["user_id"],
-                "settings" => formSettings(),
-                "questions" => questions(),
-            ];
+            if(($_SESSION["user"] ?? NULL) == $DBlib->fetchDataWithCondition("form", "user_id", "id = :id", [":id" => $id])[0]["user_id"]){
+                //Načtení formu z DB
+                $form = $DBlib->fetchDataWithCondition("form", "*", "id=:id",[":id"=>$id])[0];
 
-            //Enkódování JSONU Z php pole a vypsání
-            echo json_encode($json);
-            //print_r($json);
-            
+                //Složení JSONU
+                $json = [
+                    "id" => $id,
+                    "name" => $form["name"],
+                    "user" => $form["user_id"],
+                    "settings" => formSettings(),
+                    "questions" => questions(),
+                ];
+
+                //Enkódování JSONU Z php pole a vypsání
+                echo json_encode($json);
+                //print_r($json);
+            }else{
+                echo 0;
+            }
         }else{
             echo 0;
         }
