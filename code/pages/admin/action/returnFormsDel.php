@@ -1,7 +1,6 @@
 <?php
     include("../../../assets/lib/php/db.php");
     include("../../../assets/lib/php/DBlibrary.php");
-    session_start();
 
     $userId = (int)$_POST["userID"] ?? null;
     $count = (int)$_POST["count"] ?? null;
@@ -14,7 +13,7 @@
             ":offset" => $count
         ];
 
-        $result = $pdo->fetchDataWithCondition("form","*", "user_id = :id ORDER BY timestamp DESC LIMIT :offset,4 ", $params);
+        $result = $pdo->fetchDataWithCondition("form","*", "user_id = :id ORDER BY timestamp DESC LIMIT :offset ", $params);
 
         echo json_encode($result);
     }

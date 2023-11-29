@@ -2,16 +2,21 @@
     include("../../../assets/lib/php/db.php");
     include("../../../assets/lib/php/DBlibrary.php");
     include("../../../assets/lib/php/general.php");
+
     session_start();
-    $db = new DatabaseFunctions($db);
+    $pdo = new DatabaseFunctions($db);
     
+    if(!isset($_SESSION['user'])){
+        header("location: ../../user/login/login.php");
+    }
+
     $user = $_SESSION['user'] ?? null;
+
     $params = [
         ":id"=> $user
     ];
-    var_dump($_SESSION);
-    $forms = $db->fetchDataWithCondition("form", "*","user_id = :id ORDER BY timestamp DESC LIMIT 4", $params);
-    $countForms = $db->countByPDOWithCondition("form", "*","user_id = :id ", $params);
+    $forms = $pdo->fetchDataWithCondition("form", "*","user_id = :id ORDER BY timestamp DESC LIMIT 4", $params);
+    $countForms = $pdo->countByPDOWithCondition("form", "*","user_id = :id ", $params);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -46,15 +51,25 @@
             <div id="forms">
                 <?php
                     foreach ($forms as $val) {
+                        if($val["public"] == 1){
+                            $actions = " <div class='actions'>
+                            <p><span class='mdi mdi-chart-bar bar'></span></p>
+                            <p><span class='mdi mdi-earth-plus'></span></p>
+                            <p><span class='mdi mdi-delete del'></span></p>
+                            </div>
+                            ";
+                        }else{
+                            $actions = " <div class='actions'>
+                            <p><span class='mdi mdi-earth'></span></p>
+                            <p><span class='mdi mdi-delete del'></span></p>
+                            </div>";
+                        }
                         echo "
                         <a href='../editor.php?id=" . $val["id"] . "' target='_self'>
                             <div class='form'>
                                 <h2>" . $val["name"] . "</h2>
                                 <div>" . timeAgo($val["timestamp"], "Last edited") . "</div>
-                                <div class='actions'>
-                                    <p><span class='mdi mdi-earth'></span></p>
-                                    <p><span class='mdi mdi-delete del'></span></p>
-                                </div>
+                                ".$actions."
                             </div>
                         </a>
                         ";

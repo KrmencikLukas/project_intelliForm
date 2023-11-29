@@ -3,10 +3,7 @@
     //Do $location jen prostý string s informací, kde se uživatel nacházi
     //Do $PageSpecific se může dát html kód toho, co se má zobrazit v headru mezi logem a user ikonou
 
-    include_once(__DIR__."/../lib/php/db.php");
-    include_once(__DIR__."/../lib/php/DBlibrary.php");
 
-    $DBlib = new DatabaseFunctions($db);
 ?>
     <div id="backgroundOverlay" class="hidden">
 
@@ -21,8 +18,8 @@
                 <p></p>
             </div>
             <div id="links">
-                <a href="" target="_self"><span class="mdi mdi-account-cog settings"></span></a>
-                <a href="" target="_self"><span class="mdi mdi-logout logout"></span></a>
+                <a href="" target="_self"><span class="mdi mdi-account-cog settingsIcon"></span></a>
+                <a href="<?php echo absolutePath("/logout.php")?>" target="_self"><span class="mdi mdi-logout logout"></span></a>
             </div>
         </div>
 

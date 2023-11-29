@@ -1,6 +1,7 @@
 <?php
     include("../../../assets/lib/php/db.php");
     include("../../../assets/lib/php/DBlibrary.php");
+    session_start();
 
     $userId = $_POST["userID"] ?? null;
     $search = $_POST["search"] ?? null;
