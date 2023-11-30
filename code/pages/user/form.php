@@ -88,7 +88,7 @@
                     $echoForm=$echoForm.'<div class="question">';
                 }
                 $echoForm=$echoForm.'<h2 class="questionHeading">'.$questions[$i]["heading"].'</h2><div class="descriptionContainer"><p class="description">'.$questions[$i]["description"].'</p></div><div class="answers">';
-                var_dump($questions[$i]);
+                
                 for ($x=0; $x < count($answerIDs); $x++) { 
                     if (($questions[$i]["type_id"]==1)||($questions[$i]["type_id"]==5)||($questions[$i]["type_id"]==4)) {
                         if (($questions[$i]["type_id"]==1)||($questions[$i]["type_id"]==5)) {
