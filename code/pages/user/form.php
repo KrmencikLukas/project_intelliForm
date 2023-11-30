@@ -26,6 +26,9 @@
                     if ($formCSSkey[$i]["key"]=="background color") {
                         $echoCSS=$echoCSS."body {background-color:".$formCSSvalue[$i]["value"]."}";
                     }
+                    if ($formCSSkey[$i]["key"]=="font") {
+                        $echoCSS=$echoCSS.".formHeading, p, .questionHeading, label {font-family:".$formCSSvalue[$i]["value"]."}";
+                    }
                 }
                 $echoForm='<div class="question"><h1 class="formHeading">'.$FormName[0]["name"].'</h1><div class="formDescriptionContainer"><p class="description">This form is anonymous. Your answers will not be linked to you in any way.</p></div></div>';
 
@@ -58,6 +61,9 @@
                             if ($formCSSkey[$i]["key"]=="background color") {
                                 $echoCSS=$echoCSS."body {background-color:".$formCSSvalue[$i]["value"]."}";
                             }
+                            if ($formCSSkey[$i]["key"]=="font") {
+                                $echoCSS=$echoCSS.".formHeading, p, .questionHeading, label {font-family:".$formCSSvalue[$i]["value"]."}";
+                            }
                         }
 
                         $echoForm='<div class="question"><h1 class="formHeading">'.$FormName[0]["name"].'</h1><div class="formDescriptionContainer"><p class="description">Your email adress <span class="emailAdress">'.$guestEmail[0]["email"].'</span> is going to be saved with your answers.</p></div></div>';
@@ -81,13 +87,25 @@
 
                 $answerIDs=$DBlib->fetchDataWithCondition("answer", "id", "question_id = :id", $questionID);
                 $answers=$DBlib->fetchDataWithCondition("answer", "*", "question_id = :id", $questionID);
+                $questionCSS=$DBlib->fetchDataWithCondition("question_settings", "*", "question_id = :id", $questionID);
+
+                if (isset($questionCSS)) {
+                    foreach ($questionCSS as $key => $value) {
+                        if (($value["question_id"]==$questions[$i]["id"])&&($value["key"]=="Background color")) {
+                            $echoCSS=$echoCSS.'.q'.$questions[$i]["id"].' {background-color:'.$value["value"].'}';
+                        }
+                        if (($value["question_id"]==$questions[$i]["id"])&&($value["key"]=="Text color")) {
+                            $echoCSS=$echoCSS.'.q'.$questions[$i]["id"].', .q'.$questions[$i]["id"].' div div div div label {color:'.$value["value"].'}';
+                        }
+                    }
+                }
                 
                 if (($questions[$i]["type_id"]==1)||($questions[$i]["type_id"]==5)) {
-                    $echoForm=$echoForm.'<div class="question type0">';
+                    $echoForm=$echoForm.'<div class="question type0 q'.$questions[$i]["id"].'">';
                 } else {
-                    $echoForm=$echoForm.'<div class="question">';
+                    $echoForm=$echoForm.'<div class="question q'.$questions[$i]["id"].'">';
                 }
-                $echoForm=$echoForm.'<h2 class="questionHeading">'.$questions[$i]["heading"].'</h2><div class="descriptionContainer"><p class="description">'.$questions[$i]["description"].'</p></div><div class="answers">';
+                $echoForm=$echoForm.'<h2 class="questionHeading">'.$questions[$i]["heading"].'</h2><div class="descriptionContainer"><p class="description">'.nl2br(str_replace(" ","&nbsp;",$questions[$i]["description"])).'</p></div><div class="answers">';
                 
                 for ($x=0; $x < count($answerIDs); $x++) { 
                     if (($questions[$i]["type_id"]==1)||($questions[$i]["type_id"]==5)||($questions[$i]["type_id"]==4)) {
@@ -103,7 +121,7 @@
                         
                     } else {
                         $echoForm=$echoForm.'<div class="answer"><div class="pretty p-icon p-round p-smooth p-bigger answerBox"><input type="checkbox"><div class="state p-primary"><i class="icon mdi mdi-check"></i><label></label></div></div>';
-                        $echoForm=$echoForm.'<p class="answerDesc">'.$answers[$x]["name"].'</p>';
+                        $echoForm=$echoForm.'<p class="answerDesc">'.$answers[$x]["name"].'</p></div>';
                     }
                     
                 
