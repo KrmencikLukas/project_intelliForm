@@ -38,9 +38,9 @@ if(isset($_GET["id"])){
 }else{
     header("Location: ../error.php");
 }
-
-
 ?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
