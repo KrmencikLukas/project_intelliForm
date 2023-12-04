@@ -42,6 +42,7 @@ h2, p {
     color: #427ce6;
     border-radius: 3px;
     padding: 4px;
+    border: none;
 }
 #content{
     display: flex;
