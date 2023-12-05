@@ -310,6 +310,7 @@ display: none;
 }
 
 #close{
+    z-index: 100;
     font-size: 24px;
     cursor: pointer;
     width: 20px;
