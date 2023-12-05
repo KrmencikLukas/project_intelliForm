@@ -15,6 +15,11 @@
 .pretty input:checked~.state.p-success-o label:before, .pretty.p-switch input:checked~.state.p-success:before, .pretty.p-toggle.down .state.p-success-o label:before {
     border-color: var(--red);
 }
+.mandatory {
+    width: 100%;
+    text-align: right;
+    height: 0;
+}
 .formHeading, p, .questionHeading, label {
     font-family: var(--fontRegular);
 }
