@@ -11,6 +11,10 @@ if(isset($_GET["id"])){
         if(isset($_SESSION["user"])){
             if($DBlib->countByPDOWithCondition("form", "id","id = :id", [":id" => $_GET["id"]])){
                 if(($_SESSION["user"] ?? NULL) == $DBlib->fetchDataWithCondition("form", "user_id", "id = :id", [":id" => $_GET["id"]])[0]["user_id"]){
+
+                    if(!isset($_GET["page"])){
+                        $_GET["page"] = "summary";
+                    }
         
                 }else{
                     header("Location: ../error.php");
@@ -36,6 +40,10 @@ if(isset($_GET["id"])){
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Statistics</title>
+    <script>
+        id = <?php echo $_GET["id"] ?>;
+        page = "<?php echo $_GET["page"] ?>";
+    </script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <link rel="stylesheet" href="../../assets/lib/css/pretty-checkbox/dist/pretty-checkbox.min.css">
     <link rel="stylesheet" href="../../assets/global/general.css">
@@ -47,9 +55,6 @@ if(isset($_GET["id"])){
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://unpkg.com/slim-select@latest/dist/slimselect.min.js"></script>
     <link href="../../assets/lib/css/slimSelect.css" rel="stylesheet"></link>
-    <script>
-        id = <?php echo $_GET["id"] ?>;
-    </script>
 </head>
 <body>
 
@@ -62,12 +67,12 @@ if(isset($_GET["id"])){
         <div class="container">
             <h2>Nazev formulare</h2>
             <div class="radio">
-                <input type="radio" id="summary" name="view" class="viewRadio" checked>
+                <input type="radio" id="summary" name="view" class="viewRadio" <?php echo ($_GET["page"] == "summary") ? "checked" : "" ?>>
                 <label for="summary">Summary</label>
-                <input type="radio" id="people" name="view" class="viewRadio">
+                <input type="radio" id="people" name="view" class="viewRadio" <?php echo ($_GET["page"] == "people") ? "checked" : "" ?>>
                 <label for="people">People</label>
-                <input type="radio" id="question" name="view" class="viewRadio">
-                <label for="question">Question</label>
+                <input type="radio" id="questions" name="view" class="viewRadio" <?php echo ($_GET["page"] == "questions") ? "checked" : "" ?>>
+                <label for="questions">Questions</label>
                 <div class="slider"></div>
             </div>
 
