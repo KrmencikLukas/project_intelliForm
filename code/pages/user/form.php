@@ -57,16 +57,16 @@
                 if (($questions[$i]["type_id"]==1)||($questions[$i]["type_id"]==5)||($questions[$i]["type_id"]==4)) {
                     if (($questions[$i]["type_id"]==1)||($questions[$i]["type_id"]==5)) {
                         if ($x==0) {
-                            $echoForm=$echoForm.'<div class="answer yes"><div class="pretty p-toggle p-plain"><input type="radio" name="'.$answers[$x]["id"].'" checked=""><div class="state p-off"><label>Yes</label></div><div class="state p-on"><label class="color">Yes</label></div></div></div>';
+                            $echoForm=$echoForm.'<div class="answer yes"><div class="pretty p-toggle p-plain"><input type="radio" name="'.$questions[$i]["id"].'" checked="" value="'.$answers[$x]["id"].'"><div class="state p-off"><label>Yes</label></div><div class="state p-on"><label class="color">Yes</label></div></div></div>';
                         } else {
-                            $echoForm=$echoForm.'<div class="answer no"><div class="pretty p-toggle p-plain"><input type="radio" name="'.$answers[$x]["id"].'"><div class="state p-off"><label>No</label></div><div class="state p-on"><label class="color">No</label></div></div></div>';
+                            $echoForm=$echoForm.'<div class="answer no"><div class="pretty p-toggle p-plain"><input type="radio" name="'.$questions[$i]["id"].'" value="'.$answers[$x]["id"].'"><div class="state p-off"><label>No</label></div><div class="state p-on"><label class="color">No</label></div></div></div>';
                         }
                     } elseif ($questions[$i]["type_id"]==4) {
-                        $echoForm=$echoForm.'<div class="answer typeA2"><div class="pretty p-icon p-round p-smooth p-bigger p-toggle up answerBox"><input type="checkbox" name="'.$answers[$x]["id"].'"><div class="state p-on p-success-o"><i class="icon mdi mdi-arrow-up"></i><label></label></div><div class="state p-off"><i class="icon mdi mdi-arrow-up"></i><label></label></div></div><div class="pretty p-icon p-round p-smooth p-bigger p-toggle down answerBox"><input type="checkbox"><div class="state p-on p-success-o"><i class="icon mdi mdi-arrow-down"></i><label></label></div><div class="state p-off"><i class="icon mdi mdi-arrow-down"></i><label></label></div></div><p class="answerDesc">'.$answers[$x]["name"].'</p></div>';
+                        $echoForm=$echoForm.'<div class="answer typeA2"><div class="pretty p-icon p-round p-smooth p-bigger p-toggle up answerBox"><input type="radio" name="%QUESTION%'.$questions[$i]["id"].'%*QUESTION%%ANSWER%'.$answers[$x]["id"].'%*ANSWER" value="1"><div class="state p-on p-success-o"><i class="icon mdi mdi-arrow-up"></i><label></label></div><div class="state p-off"><i class="icon mdi mdi-arrow-up"></i><label></label></div></div><div class="pretty p-icon p-round p-smooth p-bigger p-toggle down answerBox"><input type="radio" name="%QUESTION%'.$questions[$i]["id"].'%*QUESTION%%ANSWER%'.$answers[$x]["id"].'%*ANSWER" value="0"><div class="state p-on p-success-o"><i class="icon mdi mdi-arrow-down"></i><label></label></div><div class="state p-off"><i class="icon mdi mdi-arrow-down"></i><label></label></div></div><p class="answerDesc">'.$answers[$x]["name"].'</p></div>';
                     }
                     
                 } else {
-                    $echoForm=$echoForm.'<div class="answer"><div class="pretty p-icon p-round p-smooth p-bigger answerBox"><input type="checkbox" name="'.$answers[$x]["id"].'"><div class="state p-primary"><i class="icon mdi mdi-check"></i><label></label></div></div>';
+                    $echoForm=$echoForm.'<div class="answer"><div class="pretty p-icon p-round p-smooth p-bigger answerBox"><input type="checkbox" name="'.$questions[$i]["id"].'" value="'.$answers[$x]["id"].'"><div class="state p-primary"><i class="icon mdi mdi-check"></i><label></label></div></div>';
                     $echoForm=$echoForm.'<p class="answerDesc">'.$answers[$x]["name"].'</p></div>';
                 }
             }
@@ -112,7 +112,7 @@
             $questionIDs=$DBlib->fetchDataWithCondition("question", "id", "form_id = :id", $formID);
             $questions=$DBlib->fetchDataWithCondition("question", "*", "form_id = :id", $formID);
 
-            if ($anonymous[0]["value"]==1) {
+            if ((isset($anonymous[0]["value"]))&&($anonymous[0]["value"]==1)) {
                 //kontrola jestli je public
                 if ($public[0]["public"]==1) {
                     $echoCSS=SetFormCSS($formCSSkey, $formCSSvalue);
@@ -121,7 +121,7 @@
                     $echoForm=WriteForm ($questionIDs, $questions, $DBlib, $echoForm);
                     $echoCSS=$echoCSS.SetQuestionCSS ($questionIDs, $questions, $DBlib);
                     $actionAdress="id=".$id;
-                } else {
+                } else{
                     //kontrola jestli guest existuje
                     if ((!empty($_GET["guestId"]))&&(!empty($_GET["code"]))&&(is_numeric($_GET["guestId"]))) {
                     
