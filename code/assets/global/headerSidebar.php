@@ -28,7 +28,7 @@
     <div id="header">
         <div id="HeaderLeft">
             <div id="logo">
-                <span>Logo placeholder</span>
+                <?php absolutePath('/../../assets/img/logo/logo.svg') ?>
             </div>
             <?php
             if(isset($location)){
