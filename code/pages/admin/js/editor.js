@@ -109,9 +109,7 @@ function afterLoad(){
             success: function(data) {
                 json = JSON.parse(data);
                 if(json != 0){
-                    //muze byt optimalizovano
-                    saveForm()
-                    loadForm()
+                    console.log(loadForm(true))
                 }
             },
         });
@@ -128,9 +126,8 @@ function afterLoad(){
             data: {"id": questionId},
             success: function(response) {
                 if(response != 0){
-                    //muze byt optimalizovano
-                    saveForm()
-                    loadForm()
+                    $("#Q"+questionId).remove();
+                    delete questionSettingsJson[questionId];
                 }
             },
         });
@@ -166,9 +163,7 @@ function afterLoad(){
             data: {"id": answerId},
             success: function(response) {
                 if(response != 0){
-                    //muze byt optimalizovano
-                    saveForm()
-                    loadForm()
+                    $("#A"+answerId).remove();
                 }
             },
         });
