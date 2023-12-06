@@ -24,7 +24,7 @@
     }
 
     //funkce na vypisování formu
-    function WriteForm ($questionIDs, $questions, $DBlib, $echoForm){
+    function WriteForm ($questionIDs, $questions, $DBlib, $echoForm, $values){
         for ($i=0; $i < count($questionIDs); $i++) { 
             $answerIDs="";
             $answers="";
@@ -57,16 +57,42 @@
                 if (($questions[$i]["type_id"]==1)||($questions[$i]["type_id"]==5)||($questions[$i]["type_id"]==4)) {
                     if (($questions[$i]["type_id"]==1)||($questions[$i]["type_id"]==5)) {
                         if ($x==0) {
-                            $echoForm=$echoForm.'<div class="answer yes"><div class="pretty p-toggle p-plain"><input type="radio" name="'.$questions[$i]["id"].'" checked="" value="'.$answers[$x]["id"].'"><div class="state p-off"><label>Yes</label></div><div class="state p-on"><label class="color">Yes</label></div></div></div>';
+                            if ((!empty($values["q".$questions[$i]["id"]]))&&($values["q".$questions[$i]["id"]]==$answers[$x]["id"])) {
+                                $checked='checked=""';
+                            } else {
+                                $checked='';
+                            }
+                            $echoForm=$echoForm.'<div class="answer yes"><div class="pretty p-toggle p-plain"><input type="radio" name="q'.$questions[$i]["id"].'" value="'.$answers[$x]["id"].'" '.$checked.'><div class="state p-off"><label>Yes</label></div><div class="state p-on"><label class="color">Yes</label></div></div></div>';
                         } else {
-                            $echoForm=$echoForm.'<div class="answer no"><div class="pretty p-toggle p-plain"><input type="radio" name="'.$questions[$i]["id"].'" value="'.$answers[$x]["id"].'"><div class="state p-off"><label>No</label></div><div class="state p-on"><label class="color">No</label></div></div></div>';
+                            if ((!empty($values["q".$questions[$i]["id"]]))&&($values["q".$questions[$i]["id"]]==$answers[$x]["id"])) {
+                                $checked='checked=""';
+                            } else {
+                                $checked='';
+                            }
+                            $echoForm=$echoForm.'<div class="answer no"><div class="pretty p-toggle p-plain"><input type="radio" name="q'.$questions[$i]["id"].'" value="'.$answers[$x]["id"].'" '.$checked.'><div class="state p-off"><label>No</label></div><div class="state p-on"><label class="color">No</label></div></div></div>';
                         }
                     } elseif ($questions[$i]["type_id"]==4) {
-                        $echoForm=$echoForm.'<div class="answer typeA2"><div class="pretty p-icon p-round p-smooth p-bigger p-toggle up answerBox"><input type="radio" name="%QUESTION%'.$questions[$i]["id"].'%*QUESTION%%ANSWER%'.$answers[$x]["id"].'%*ANSWER" value="1"><div class="state p-on p-success-o"><i class="icon mdi mdi-arrow-up"></i><label></label></div><div class="state p-off"><i class="icon mdi mdi-arrow-up"></i><label></label></div></div><div class="pretty p-icon p-round p-smooth p-bigger p-toggle down answerBox"><input type="radio" name="%QUESTION%'.$questions[$i]["id"].'%*QUESTION%%ANSWER%'.$answers[$x]["id"].'%*ANSWER" value="0"><div class="state p-on p-success-o"><i class="icon mdi mdi-arrow-down"></i><label></label></div><div class="state p-off"><i class="icon mdi mdi-arrow-down"></i><label></label></div></div><p class="answerDesc">'.$answers[$x]["name"].'</p></div>';
+
+                        if ((isset($values['QUESTION%'.$questions[$i]["id"].'QUESTION*ANSWER%'.$answers[$x]["id"].'ANSWER*']))&&($values['QUESTION%'.$questions[$i]["id"].'QUESTION*ANSWER%'.$answers[$x]["id"].'ANSWER*']=="1")) {
+                            $checkedUP='checked=""';
+                            $checkedDOWN='';
+                        } elseif ((isset($values["QUESTION%".$questions[$i]["id"]."QUESTION*ANSWER%".$answers[$x]["id"]."ANSWER*"]))&&($values["QUESTION%".$questions[$i]["id"]."QUESTION*ANSWER%".$answers[$x]["id"]."ANSWER*"]==0)) {
+                            $checkedDOWN='checked=""';
+                            $checkedUP='';
+                        } else {
+                            $checkedUP='';
+                            $checkedDOWN='';
+                        }
+                        $echoForm=$echoForm.'<div class="answer typeA2"><div class="pretty p-icon p-round p-smooth p-bigger p-toggle up answerBox"><input type="radio" name="QUESTION%'.$questions[$i]["id"].'QUESTION*ANSWER%'.$answers[$x]["id"].'ANSWER*" value="1"  '.$checkedUP.'><div class="state p-on p-success-o"><i class="icon mdi mdi-arrow-up"></i><label></label></div><div class="state p-off"><i class="icon mdi mdi-arrow-up"></i><label></label></div></div><div class="pretty p-icon p-round p-smooth p-bigger p-toggle down answerBox"><input type="radio" name="QUESTION%'.$questions[$i]["id"].'QUESTION*ANSWER%'.$answers[$x]["id"].'ANSWER*" value="0"  '.$checkedDOWN.'><div class="state p-on p-success-o"><i class="icon mdi mdi-arrow-down"></i><label></label></div><div class="state p-off"><i class="icon mdi mdi-arrow-down"></i><label></label></div></div><p class="answerDesc">'.$answers[$x]["name"].'</p></div>';
                     }
                     
                 } else {
-                    $echoForm=$echoForm.'<div class="answer"><div class="pretty p-icon p-round p-smooth p-bigger answerBox"><input type="checkbox" name="'.$questions[$i]["id"].'" value="'.$answers[$x]["id"].'"><div class="state p-primary"><i class="icon mdi mdi-check"></i><label></label></div></div>';
+                    if ((!empty($values["q".$questions[$i]["id"]]))&&($values["q".$questions[$i]["id"]]==$answers[$x]["id"])) {
+                        $checked='checked=""';
+                    } else {
+                        $checked='';
+                    }
+                    $echoForm=$echoForm.'<div class="answer"><div class="pretty p-icon p-round p-smooth p-bigger answerBox"><input type="checkbox" name="q'.$questions[$i]["id"].'" value="'.$answers[$x]["id"].'" '.$checked.'><div class="state p-primary"><i class="icon mdi mdi-check"></i><label></label></div></div>';
                     $echoForm=$echoForm.'<p class="answerDesc">'.$answers[$x]["name"].'</p></div>';
                 }
             }
@@ -97,6 +123,13 @@
         return $returnCSS;
     }
 
+    //session (pouze v případě špatně vyplněného emailu)
+    session_start();
+    $values="";
+    if (!empty($_SESSION)) {
+        $values=$_SESSION;
+    }
+    session_destroy();
     //kontrola adresy
     $id=$_GET["id"] ?? null;
     if ((!empty($id))&&(is_numeric($id))) {
@@ -118,7 +151,7 @@
                     $echoCSS=SetFormCSS($formCSSkey, $formCSSvalue);
                     //vypisuje nadpis a informuje o anonymitě
                     $echoForm='<div class="question"><h1 class="formHeading">'.$FormName[0]["name"].'</h1><div class="formDescriptionContainer"><p class="description">This form is anonymous. Your answers will not be linked to you in any way.</p></div></div>';
-                    $echoForm=WriteForm ($questionIDs, $questions, $DBlib, $echoForm);
+                    $echoForm=WriteForm ($questionIDs, $questions, $DBlib, $echoForm, $values);
                     $echoCSS=$echoCSS.SetQuestionCSS ($questionIDs, $questions, $DBlib);
                     $actionAdress="id=".$id;
                 } else{
@@ -139,9 +172,9 @@
                             $echoCSS=SetFormCSS($formCSSkey, $formCSSvalue);
                             //vypisuje nadpis a informuje o anonymitě
                             $echoForm='<div class="question"><h1 class="formHeading">'.$FormName[0]["name"].'</h1><div class="formDescriptionContainer"><p class="description">This form is anonymous. Your answers will not be linked to you in any way.</p></div></div>';
-                            $echoForm=WriteForm ($questionIDs, $questions, $DBlib, $echoForm);
+                            $echoForm=WriteForm ($questionIDs, $questions, $DBlib, $echoForm, $values);
                             $echoCSS=$echoCSS.SetQuestionCSS ($questionIDs, $questions, $DBlib);
-                            $actionAdress="id=".$id;
+                            $actionAdress="id=".$id."&guestId=".$guest."&code=".$code;
                         } else {
                             header("Location: ../error.php");
                         }
@@ -153,8 +186,14 @@
                 if ($public[0]["public"]==1) {
                     $echoCSS=SetFormCSS($formCSSkey, $formCSSvalue);
                     //vypisuje nadpis a informuje že uklada email , taky chce abys ho zadal
-                    $echoForm='<div class="question"><h1 class="formHeading">'.$FormName[0]["name"].'</h1><div class="formDescriptionContainer"><p class="description">Your email adress is going to be saved with your answers.<br>Enter a valid email adress: <input type="email" class="emailAdress" name="email"></input></p></div></div>';
-                    $echoForm=WriteForm ($questionIDs, $questions, $DBlib, $echoForm);
+                    if (!empty($values)) {
+                        $EmailError= "<div class='error'><p>This email adress is invalid</p></div>";
+                    } else {
+                        $EmailError= "";
+                    }
+                    
+                    $echoForm='<div class="question"><h1 class="formHeading">'.$FormName[0]["name"].'</h1><div class="formDescriptionContainer"><p class="description">Your email adress is going to be saved with your answers.<br>Enter a valid email adress: <input type="email" class="emailAdress" name="email"></input></p>'.$EmailError.'</div></div>';
+                    $echoForm=WriteForm ($questionIDs, $questions, $DBlib, $echoForm, $values);
                     $echoCSS=$echoCSS.SetQuestionCSS ($questionIDs, $questions, $DBlib);
                     $actionAdress="id=".$id;
                 } else {
@@ -175,7 +214,7 @@
                             $echoCSS=SetFormCSS($formCSSkey, $formCSSvalue);
                             //vypisuje nadpis a informuje že uklada email
                             $echoForm='<div class="question"><h1 class="formHeading">'.$FormName[0]["name"].'</h1><div class="formDescriptionContainer"><p class="description">Your email adress <span class="emailAdress">'.$guestEmail[0]["email"].'</span> is going to be saved with your answers.</p></div></div>';    
-                            $echoForm=WriteForm ($questionIDs, $questions, $DBlib, $echoForm);
+                            $echoForm=WriteForm ($questionIDs, $questions, $DBlib, $echoForm, $values);
                             $echoCSS=$echoCSS.SetQuestionCSS ($questionIDs, $questions, $DBlib);
                             $actionAdress="id=".$id."&guestId=".$guest."&code=".$code;
                         } else {

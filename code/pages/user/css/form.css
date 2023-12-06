@@ -20,6 +20,13 @@
     text-align: right;
     height: 0;
 }
+.error {
+    color: var(--red);
+    background-color: white;
+    float: left;
+    border-radius: 2px;
+    padding: 2px;
+}
 .formHeading, p, .questionHeading, label {
     font-family: var(--fontRegular);
 }
