@@ -43,6 +43,9 @@ $(document).ready(function(){
     var idValue = anchorId ? anchorId[1] : null;
 
     console.log('Extracted id:', idValue);
+    if (idValue) {
+      window.location.href = '../publish/publishForm.php?id=' + idValue;
+  }
 });
 
 $("#forms").on("click", ".mdi-earth-plus", function(e) {

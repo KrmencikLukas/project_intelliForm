@@ -6,6 +6,7 @@ include("../../assets/lib/php/DBlibrary.php");
 $DBlib = new DatabaseFunctions($db);
 session_start();
 
+
 if(isset($_GET["id"])){
     if(is_numeric($_GET["id"])){
         if(isset($_SESSION["user"])){
