@@ -6,6 +6,7 @@ include("../../assets/lib/php/DBlibrary.php");
 $DBlib = new DatabaseFunctions($db);
 session_start();
 
+
 if(isset($_GET["id"])){
     if(is_numeric($_GET["id"])){
         if(isset($_SESSION["user"])){
@@ -67,6 +68,7 @@ if(isset($_GET["id"])){
         let user = '<?php echo $_SESSION["user"] ?>';
     </script>
     <script src="js/editor.js"></script>
+    <link rel="icon" type="image/png" href="../../assets/img/logo/favicon.png">
 </head>
 <body>
     <div class="windowContainer chooseTypeContainer">

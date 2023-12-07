@@ -1,5 +1,26 @@
 @import url("../../../assets/global/vars.css");
-.formHeading, p, .questionHeading {
+.pretty input:checked~.state.p-success-o .icon,.pretty input:checked~.state.p-success-o .svg,.pretty input:checked~.state.p-success-o svg,.pretty.p-toggle.up .state.p-success-o .icon,.pretty.p-toggle.up .state.p-success-o .svg,.pretty.p-toggle.up .state.p-success-o svg {
+    color: white;
+    background-color: var(--blue);
+    stroke: var(--blue);
+}
+.pretty input:checked~.state.p-success-o .icon,.pretty input:checked~.state.p-success-o .svg,.pretty input:checked~.state.p-success-o svg,.pretty.p-toggle.down .state.p-success-o .icon,.pretty.p-toggle.down .state.p-success-o .svg,.pretty.p-toggle.down .state.p-success-o svg {
+    color: white;
+    background-color: var(--red);
+    stroke: var(--red);
+}
+.pretty input:checked~.state.p-success-o label:before, .pretty.p-switch input:checked~.state.p-success:before, .pretty.p-toggle.up .state.p-success-o label:before {
+    border-color: var(--blue);
+}
+.pretty input:checked~.state.p-success-o label:before, .pretty.p-switch input:checked~.state.p-success:before, .pretty.p-toggle.down .state.p-success-o label:before {
+    border-color: var(--red);
+}
+.mandatory {
+    width: 100%;
+    text-align: right;
+    height: 0;
+}
+.formHeading, p, .questionHeading, label {
     font-family: var(--fontRegular);
 }
 .formHeading {
@@ -16,6 +37,7 @@ h2, p {
     margin: 0;
 }
 .formDescriptionContainer{
+    font-family: var(--fontRegular);
     width: 100%;
     padding-top: 10px;
     padding-bottom: 3px;
@@ -25,6 +47,7 @@ h2, p {
     color: #427ce6;
     border-radius: 3px;
     padding: 4px;
+    border: none;
 }
 #content{
     display: flex;
@@ -50,7 +73,9 @@ h2, p {
     width: 85%;
     border-radius: var(--radius);
     padding: 30px;
-    min-height: 70%;
+    min-height: 500px;
+    margin-bottom: 50px;
+    background-color: var(--form-color);
 }
 
 .question{
@@ -63,11 +88,14 @@ h2, p {
     box-sizing: border-box;
     padding: 30px;
     margin-bottom: 20px;
+    position: relative;
+    padding-top: 40px;
+    background-color: white;
 }
 
 .questionHeading{
     width: 100%;
-    font-size: 30px;
+    font-size: 25px;
     border: none;
     outline: none;
     background-color: transparent;
@@ -107,7 +135,9 @@ h2, p {
     border: none;
     outline: none;
     font-size: 20px;
-    width: calc(100% - 65px);
+    width: calc(100% - 65px); 
+    margin-left: 15px;
+    font-family: var(--form-font);
 }
 
 .delete{
@@ -124,8 +154,13 @@ h2, p {
     font-family: var(--fontSpecial);
 }
 
-.type0 .answers{
+.type0 .answers, .type0 .answers{
     display: flex;
+    justify-content: center;
+}
+
+.type0 label{
+    position: absolute;
     justify-content: center;
 }
 
@@ -134,30 +169,337 @@ h2, p {
     text-align: center;
 }
 
-.type0 .answer{
+.type0 .answer, .type0 .answer{
     width: 30%;
     margin: 0;
     position: relative;
     height: 50px;
     margin: 5px;
-}
-
-.type0 .answerBox {
-    position: absolute;
-    top: 5px;
-    left: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .dis{
     display: none;
 }
 
-.yes{
+.type0 .yes, .type0 .yes{
     border: 3px solid var(--blue);
     border-radius: var(--radius);
 }
 
-.no{
+.type0 .no, .type0 .no{
     border: 3px solid var(--red);
     border-radius: var(--radius);
+}
+
+.type0 .no p{
+    width: calc(100% - 10px);
+    font-size: 20px;
+    font-weight: 600;
+    text-align: center;
+    background-color: var(--red);
+    border-radius: 13px;
+    padding: 8px 0;
+    color: white;
+}
+.type0 .yes p{
+    width: calc(100% - 10px);
+    font-size: 20px;
+    font-weight: 600;
+    text-align: center;
+    background-color: var(--blue);
+    border-radius: 13px;
+    padding: 8px 0;
+    color: white;
+}
+
+.pretty{
+    margin: 3px;
+    height: 16px;
+}
+
+.type0 .pretty{
+    width: calc(100% - 10px);
+    height: 40px;
+    text-align: center;
+    margin: 0;
+}
+
+#qId input[type=checkbox]{
+    display: none;
+}
+
+.type0 label::before, .type0 label::after{
+    display: none !important; 
+}
+
+.type0 label{
+    text-indent: 0 !important;
+    font-size: 20px !important;
+    font-weight: 600 !important;
+    padding: 10px 0 !important;
+    color: var(--gray);
+}
+
+.type0 .yes .color{
+    width: 100%;
+    text-align: center;
+    background-color: var(--blue);
+    border-radius: 13px;
+    color: white;
+}
+
+.type0 .no .color{
+    width: 100%;
+    text-align: center;
+    background-color: var(--red);
+    border-radius: 13px;
+    color: white;
+}
+
+.focus{
+    border: 1px solid var(--blue);
+    box-shadow: 0px 0px 0px 2px var(--blue);
+    -webkit-box-shadow: 0px 0px 0px 2px var(--blue);
+}
+
+.settings{
+    width: 20%;
+    min-height: 100px;
+    position: fixed;
+    right: 0;
+}
+
+.centerForm{
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.questionSettings, .formSettings, .save{
+    width: 100%;
+    min-height: 100px;
+    -webkit-box-shadow: var(--shadow);
+    -moz-box-shadow: var(--shadow);
+    box-shadow: var(--shadow); 
+    border-radius: var(--radius) 0 0 var(--radius);
+    margin-bottom: 20px;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 20px;
+}
+
+.save{
+    transition: 300ms;
+}
+.answerDesc {
+    margin-left: 10px;
+}
+.settings h3{
+    padding: 10px;
+    font-weight: 500;
+    font-size: 20px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid var(--light-gray);
+    margin-bottom: 5px;
+}
+
+#submit{
+    border: none;
+    height: 45px;
+    box-sizing: border-box;
+    width: 100%;
+    display: flex;
+    border-radius: var(--radius);
+    align-items: center;
+    justify-content: center;
+    background-color: var(--blue);
+    cursor: pointer;
+    color: white;
+    font-size: 20px;
+    background-image: url("../../../assets/img/icons/send.svg"); 
+    background-repeat: no-repeat; 
+    background-position: calc(50% + 50px) 50%;
+    background-position-y: center; 
+    background-size: 28px;
+}
+#submit:hover {
+    animation-name: send;
+    animation-duration: 1s;
+    transition: ease-in-out;
+    animation-fill-mode: backwards;
+    animation-iteration-count: infinite;
+}
+@keyframes send {
+    0% {background-position: calc(50% + 50px) 50%;}
+    20% {background-position: calc(50% + 60px) 50%;}
+    30% {background-position: calc(50% + 55px) 50%;}
+    40% {background-position: calc(50% + 60px) 50%;}
+    80% {background-position: calc(50% + 50px) 50%;}
+    100% {background-position: calc(50% + 50px) 50%;}
+}
+.window{
+    background-color: white;
+    width: 50%;
+    min-height: 200px;
+    -webkit-box-shadow: var(--shadow);
+    -moz-box-shadow: var(--shadow);
+    box-shadow: var(--shadow); 
+    border-radius: var(--radius);
+}
+
+.windowContainer{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    backdrop-filter: blur(10px);
+    z-index: 2000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.chooseType h3{
+    font-size: 20px;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.chooseType{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
+.chooseType select{
+    width: 50%;
+    margin-top: 10px;
+    padding: 10px;
+    border-radius: var(--radius);
+    outline: none;
+    margin-bottom: 20px;
+}
+
+.chooseTypeContainer{
+    display: none;
+}
+
+.chooseType .buttons{
+    display: flex;
+}
+
+.chooseType a{
+    margin: 5px;
+    color: white;
+    padding: 10px;
+    width: 100px;
+    text-align: center;
+    border-radius: var(--radius);
+    cursor: pointer;
+}
+
+.chooseType .add{
+    background-color: var(--blue);
+}
+
+.chooseType .close{
+    background-color: var(--red);
+}
+
+.newAnswer{
+    display: flex;
+    justify-content: center;
+    border: 3px dashed var(--blue);
+    border-radius: var(--radius);
+    color: var(--blue);
+    align-items: center;
+    cursor: pointer;
+}
+
+.newAnswer i {
+    font-size: 25px;
+}
+
+.question .absolute{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.question .absolute i{
+    color: var(--red);
+    font-size: 30px;
+    cursor: pointer;
+}
+
+.question .absolute select{
+    width: 180px;
+    border-radius: var(--radius);
+    outline: none;
+    padding: 5px;
+    margin-right: 10px;
+}
+
+.saveForm{
+    font-size: 15px;
+    background-color: var(--blue);
+    width: 60%;
+    margin: 0 auto;
+    padding: 10px;
+    color: white;
+    font-weight: 600;
+    border-radius: var(--radius);
+    text-align: center;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: 300ms;
+}
+
+.set{
+    display: flex;
+    border-bottom: 1px solid var(--light-gray);
+    margin: 0 30px;
+    padding: 5px 0;
+}
+
+.set p {
+    font-size: 15px;
+}
+
+.set .pretty{
+    font-size: 15px;
+    margin-left: auto;
+    margin-right: 15px;
+}
+
+.set input[type=color]{
+    margin-left: auto;
+    width: 30px;
+    height: 20px;
+    border: none;
+    background-color: var(--gray-line);
+    border-radius: 5px;
+}
+
+.set select{
+    margin-left: auto;
+    width: 100px;
+    height: 20px;
+    border: none;
+    border: 1px solid var(--gray-line);
+    border-radius: 5px;
+    outline: none;
+}
+
+#lastSaveTime {
+    margin-left: auto;
 }
