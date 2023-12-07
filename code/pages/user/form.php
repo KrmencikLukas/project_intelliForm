@@ -205,6 +205,7 @@
     <link href="https://cdn.jsdelivr.net/npm/@mdi/font@5.x/css/materialdesignicons.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../../assets/lib/css/pretty-checkbox/dist/pretty-checkbox.min.css">
     <link rel="stylesheet" href="css/form.css">
+    <link rel="icon" type="image/png" href="../../assets/img/logo/favicon.png">
     <style>
         <?=$echoCSS?>
     </style>

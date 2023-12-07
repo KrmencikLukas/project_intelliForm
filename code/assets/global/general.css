@@ -76,12 +76,12 @@ h1{
 
 #logo {
     background-color: #ffffff;
-    padding: 5%;
-    padding-top: 2%;
-    padding-bottom: 2%;
-    border: 1px black solid;
     color: black;
     margin-right: 8%;
+    margin-left: 5%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     cursor: pointer;
 }
 #LocationName {
@@ -210,7 +210,6 @@ h1{
     font-size: 20px;
     background-size: 105% 105%;
 }
-
 
 .IconText {
     /*display: none;*/
@@ -369,4 +368,9 @@ margin-top: -2px;
 }
 .logout{
     color: var(--red);
+}
+
+#logo img{
+    width: 100%;
+    height: 100%;
 }
