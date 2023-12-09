@@ -81,7 +81,7 @@ h2{
     left: calc(100% / 3);
 }
 
-#questions:checked ~ .slider{
+#question:checked ~ .slider{
     left: calc(2 * calc(100% / 3));
 }
 
@@ -97,4 +97,50 @@ h2{
     margin-top: 20px;
 }
 
+.questionInfo{
+    width: 85%;
+    margin-top: 40px;
+}
 
+.chart1{
+    height: 300px;
+    width: 30%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.chart2{
+    height: 300px;
+    width: 70%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.charts{
+    width: 85%;
+    display: flex;
+    align-items: center;
+}
+
+.answer{
+    position: relative;
+}
+
+.peopleCount{
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translate(0, -50%);
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    background-color: white;
+    border-radius: 3px;
+}
+
+.peopleCount span{
+    margin-right: 3px;
+    font-size: 15px;
+}

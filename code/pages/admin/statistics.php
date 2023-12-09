@@ -47,6 +47,7 @@ if(isset($_GET["id"])){
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <link rel="stylesheet" href="../../assets/lib/css/pretty-checkbox/dist/pretty-checkbox.min.css">
     <link rel="stylesheet" href="../../assets/global/general.css">
+    <link rel="stylesheet" href="../user/css/form.css">
     <link rel="stylesheet" href="css/statistics.css">
     <script src="../../assets/lib/js/general.js"></script>
     <script src="../../assets/lib/js/profileMenu.js"></script>
@@ -56,6 +57,8 @@ if(isset($_GET["id"])){
     <script src="https://unpkg.com/slim-select@latest/dist/slimselect.min.js"></script>
     <link href="../../assets/lib/css/slimSelect.css" rel="stylesheet"></link>
     <link rel="icon" type="image/png" href="../../assets/img/logo/favicon.png">
+    <link href="https://cdn.jsdelivr.net/npm/@mdi/font@5.x/css/materialdesignicons.min.css" rel="stylesheet">
+    <style id="customStyles"></style>
 </head>
 <body>
 
@@ -72,8 +75,8 @@ if(isset($_GET["id"])){
                 <label for="summary">Summary</label>
                 <input type="radio" id="people" name="view" class="viewRadio" <?php echo ($_GET["page"] == "people") ? "checked" : "" ?>>
                 <label for="people">People</label>
-                <input type="radio" id="questions" name="view" class="viewRadio" <?php echo ($_GET["page"] == "questions") ? "checked" : "" ?>>
-                <label for="questions">Questions</label>
+                <input type="radio" id="question" name="view" class="viewRadio" <?php echo ($_GET["page"] == "question") ? "checked" : "" ?>>
+                <label for="question">Question</label>
                 <div class="slider"></div>
             </div>
 

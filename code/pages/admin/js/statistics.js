@@ -1,3 +1,10 @@
+//definice promenych
+let questions
+let questionCtx1
+let questionCtx2
+let chart1JS
+let chart2JS
+
 function appendParamsToUrl(params) {
 
     var currentUrl = window.location.href;
@@ -19,8 +26,8 @@ $(document).ready(function(){
         write("people")
     })
 
-    $('#questions').change(function() {
-        write("questions")
+    $('#question').change(function() {
+        write("question")
     })
 
     $('#summary').change(function() {
@@ -42,9 +49,7 @@ $(document).ready(function(){
 })
 
 
-$("body").on("change", "#selectQuestion", function() {
-    alert( $( this ).text() );
-});
+
 
 
 
