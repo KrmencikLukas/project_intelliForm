@@ -4,6 +4,7 @@ let questionCtx1
 let questionCtx2
 let chart1JS
 let chart2JS
+let qSelect
 
 function appendParamsToUrl(params) {
 
@@ -38,7 +39,7 @@ $(document).ready(function(){
         $.ajax({
             type: 'GET',
             url: "action/"+what+"Statistics.php",
-            data: {"id": id},
+            data: {"id": id, "question":question,"guest":guest},
             success: function(response) {
                 appendParamsToUrl({page: what})
                 $(".data").html(response)

@@ -7,7 +7,6 @@ include("../../../assets/lib/php/DBlibrary.php");
 
 $DBlib = new DatabaseFunctions($db);
 
-
 $selectOptionsHtml = "";
 
 if(isset($_GET["id"])){
@@ -16,11 +15,22 @@ if(isset($_GET["id"])){
             if($DBlib->countByPDOWithCondition("form", "id","id = :id", [":id" => $_GET["id"]])){
                 if(($_SESSION["user"] ?? NULL) == $DBlib->fetchDataWithCondition("form", "user_id", "id = :id", [":id" => $_GET["id"]])[0]["user_id"]){
 
+                    $guestsDB = $DBlib->fetchDataWithCondition("guest", "*", "form_id = :id", [":id" => $_GET["id"]]);
+                    $guests = [];
+
+                    foreach($guestsDB as $key => $value){
+                        $guests[$value["id"]] = [
+                            "name" => $value["name"],
+                            "surname" => $value["surname"],
+                            "email" => $value["email"],
+                        ];
+                    }
+
                     $questions = $DBlib->fetchDataWithCondition("question", "*", "form_id = :id", [":id" => $_GET["id"]]);
 
                     foreach($questions as $key => $value){
 
-                      $questions[$key]["type"] = $DBlib->fetchDataWithCondition("question_type", "number", "id = :id", [":id" => $value["type_id"]])[0]["number"];
+                        $questions[$key]["type"] = $DBlib->fetchDataWithCondition("question_type", "number", "id = :id", [":id" => $value["type_id"]])[0]["number"];
 
                         $selectOptionsHtml .= "<option value='".$value["id"]."'>";
                         $selectOptionsHtml .= $value["heading"];
@@ -34,6 +44,10 @@ if(isset($_GET["id"])){
 
                         $questions[$key]["answers"] = $answers;
 
+                        if($value["id"] == $_GET["question"]){
+                            $currentQuestion = $key;
+                            echo $_GET["question"];
+                        }
                     }
 
                 }
@@ -64,19 +78,20 @@ if(isset($_GET["id"])){
 </div>
 
 
-
- 
 <script>
 
 questions = <?php echo json_encode($questions) ?>
 
-generateQuestion(questions[0])
+guestsArr = <?php echo json_encode($guests) ?>
 
-new SlimSelect({
+currentQuestion = <?php echo $currentQuestion ?? 0 ?>
+
+console.log(currentQuestion)
+
+qSelect = new SlimSelect({
     select: '#selectQuestion',
     events: {
-      afterChange: (newVal) => {
-        console.log(questions);
+    afterChange: (newVal) => {
 
         let data = ""
         for(i in questions){
@@ -86,15 +101,22 @@ new SlimSelect({
             }
         }
          
+        //appendParamsToUrl({"question": data.id})
         generateQuestion(data)
       }
     }
 })
 
+//qSelect.set(currentQuestion);
+
+generateQuestion(questions[currentQuestion])
+
 
 function generateQuestion(data){
 
-    $("#customStyles").html("")
+    console.log("append")
+
+    $("#customStyles").html(".peopleCount{display: flex}")
 
     if(chart1JS != undefined){
 		chart1JS.destroy();
@@ -105,13 +127,33 @@ function generateQuestion(data){
 
     let labels = []
     let guests = []
+    let guestsPos = []
+    let guestsNeg = []
 
     let totalGuests = 0;
     data["answers"].forEach(function(element){  
-		labels.push(element["name"])
-		guestCount = element["guests"].length
-		guests.push(guestCount)
-		totalGuests += guestCount
+        labels.push(element["name"])
+        if(data["type"] == 2){
+            guestPosCount = 0
+            guestNegCount = 0
+            element["guests"].forEach(function(guest){
+                if(guest["value"] == 1){
+                    guestPosCount++
+                }else{
+                    guestNegCount++
+                }
+            })
+            guestsPos.push(guestPosCount)
+            guestsNeg.push(guestNegCount)
+            guests.push(((guestPosCount-guestNegCount) < 0) ? 0 : guestPosCount-guestNegCount)
+            totalGuests += guestCount
+            totalGuests += guestNegCount
+
+        }else{
+            guestCount = element["guests"].length
+            guests.push(guestCount)
+            totalGuests += guestCount
+        }
     });
 
     $.ajax({
@@ -121,9 +163,28 @@ function generateQuestion(data){
         success: function(html) {
             $(".questionInfo").html(html)
 
+            let i = 0
             data["answers"].forEach(function(element){  
-                console.log(element["id"])
-                $(".peopleCount"+element["id"]).html("<span>"+element["guests"].length+"</span>"+"<i class='mdi mdi-account-multiple'></i>")
+                if(data["type"] == 2){
+                    $(".peopleCount"+element["id"]).html("<div class='up'><span>"+guestsPos[i]+"</span>"+"<i class='mdi mdi-arrow-up'></i></div>"+"<div class='down'><span>"+guestsNeg[i]+"</span>"+"<i class='mdi mdi-arrow-down'></i></div>")
+                }else{
+                    guestList = ""
+                    element["guests"].forEach(function(guestID){
+                        guest = guestsArr[guestID["guest_id"]]
+                        if(guest["email"] != null && guest["email"] != ""){
+                            if(guest["name"] == null){
+                                guest["name"] = ""
+                            }
+                            if(guest["surname"] == null){
+                                guest["surname"] = ""
+                            }
+                            guestList +=  "<div class='guest'>"+guest["name"]+" "+guest["surname"]+" - "+guest["email"]+"</div>"
+                        }
+                    })
+
+                    $(".peopleCount"+element["id"]).html("<span>"+element["guests"].length+"</span>"+"<i class='mdi mdi-account-multiple'></i><div class='guestList'>"+guestList+"</div>")
+                }
+                i++
             });
 
             if(totalGuests > 0){
@@ -150,10 +211,35 @@ function generateQuestion(data){
 					},
 				});
 
-
                 questionCtx2 = document.getElementById('chart2');
 
-				chart2JS = new Chart(questionCtx2, {
+                if(data["type"] == 2){
+                    chart2JS = new Chart(questionCtx2, {
+                    type: 'bar',
+                    data: {
+                        labels: labels,
+                        datasets: [
+                            {
+                                label: 'Upvotes',
+                                data: guestsPos,
+                            },
+                            {
+                                label: 'Downvotes',
+                                data: guestsNeg,
+                            },
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                        legend: {
+                            position: 'top',
+                        },
+                        }
+                    },
+				    });
+                }else{
+                    chart2JS = new Chart(questionCtx2, {
                     type: 'bar',
                     data: {
                         labels: labels,
@@ -172,9 +258,8 @@ function generateQuestion(data){
                         },
                         }
                     },
-				});
-
-            }else{
+				    });
+                }
 
             }
         },

@@ -3,7 +3,9 @@
 
 :root{
     --blue: #04B9E8;
+    --blueRGB: 4, 185, 232;
     --red: #F16566;
+    --redRGB: 241, 101, 102;
     --gray: #3C3C3B;
     --light-gray: #ababab;
     --darkBG: #121212;

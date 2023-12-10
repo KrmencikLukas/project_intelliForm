@@ -56,12 +56,40 @@ function WriteQuestion ($question){
     //vypisuje odpovedi podle typu otázky a hodnot v db
     for ($x=0; $x < count($answerIDs); $x++) { 
         $correctness = "";
+        $downCorrectness = "";
+        $correct = "";
+        $answerClass = "";
+        $correctDiv = "";
         if(isset($_POST["guest"])){
+            $correctnessBool = false;
             if(isset($question["answers"][$x]["guests"])){
                 foreach($question["answers"][$x]["guests"] as $key => $value){
                     if($value["guest_id"] == $_POST["guest"]){
-                        $correctness = "checked";
+                        if($value["value"] == 1){
+                            $correctnessBool = true;
+                            $correctness = "checked";
+                        }else{
+                            $downCorrectness = "checked";
+                        }
+
                     }
+                }
+            }
+            if($question["type_id"] == 5 || $question["type_id"] == 6){
+                if($answers[$x]["correctness"] == 1){
+                    $correct = "<i class='mdi mdi-check correctAnswer'></i>";
+                    $correctBool = true;
+                }else{
+                    $correct = "<i class='mdi mdi-close wrongAnswer'></i>";
+                    $correctBool = false;
+                }
+
+                if($correctnessBool && $correctBool){
+                    $answerClass = "correct";
+                }
+    
+                if($correctnessBool XOR $correctBool){
+                    $answerClass = "wrong";
                 }
             }
         }else{
@@ -73,20 +101,24 @@ function WriteQuestion ($question){
         if (($question["type_id"]==1)||($question["type_id"]==5)||($question["type_id"]==4)) {
             if (($question["type_id"]==1)||($question["type_id"]==5)) {
                 if ($x==0) {
-                    $echoForm=$echoForm.'<div class="answer yes"><div class="pretty p-locked p-toggle p-plain"><input type="radio" name="'.$answers[$x]["id"].'" '.$correctness.'><div class="state p-off"><label>Yes</label></div><div class="state p-on"><label class="color">Yes</label></div></div><div class="peopleCount'.$answers[$x]["id"].' peopleCount"></div></div>';
+                    $echoForm=$echoForm.'<div class="answer yes"><div class="pretty p-locked p-toggle p-plain"><input type="radio" name="'.$answers[$x]["id"].'" '.$correctness.'><div class="state p-off"><label>Yes</label></div><div class="state p-on"><label class="color">Yes</label></div></div><div class="peopleCount'.$answers[$x]["id"].' peopleCount"></div>'.$correct.'</div>';
                 } else {
-                    $echoForm=$echoForm.'<div class="answer no"><div class="pretty p-locked p-toggle p-plain"><input type="radio" name="'.$answers[$x]["id"].'"'.$correctness.'><div class="state p-off"><label>No</label></div><div class="state p-on"><label class="color">No</label></div></div><div class="peopleCount'.$answers[$x]["id"].' peopleCount"></div></div>';
+                    $echoForm=$echoForm.'<div class="answer no"><div class="pretty p-locked p-toggle p-plain"><input type="radio" name="'.$answers[$x]["id"].'"'.$correctness.'><div class="state p-off"><label>No</label></div><div class="state p-on"><label class="color">No</label></div></div><div class="peopleCount'.$answers[$x]["id"].' peopleCount"></div>'.$correct.'</div>';
+                }
+                if($answerClass != ""){
+                    $correctDiv = "<div class='correctDiv correctDiv".$answerClass."'>".$answerClass."</div>";
                 }
             } elseif ($question["type_id"]==4) {
-                $echoForm=$echoForm.'<div class="answer typeA2"><div class="pretty p-locked p-icon p-round p-smooth p-bigger p-toggle up answerBox"><input type="checkbox" name="'.$answers[$x]["id"].'"'.$correctness.'><div class="state p-on p-success-o"><i class="icon mdi mdi-arrow-up"></i><label></label></div><div class="state p-off"><i class="icon mdi mdi-arrow-up"></i><label></label></div></div><div class="pretty p-locked p-icon p-round p-smooth p-bigger p-toggle down answerBox"><input type="checkbox"><div class="state p-on p-success-o"><i class="icon mdi mdi-arrow-down"></i><label></label></div><div class="state p-off"><i class="icon mdi mdi-arrow-down"></i><label></label></div></div><p class="answerDesc">'.$answers[$x]["name"].'</p><div class="peopleCount'.$answers[$x]["id"].' peopleCount"></div></div>';
+                $echoForm=$echoForm.'<div class="answer typeA2 '.$answerClass.'"><div class="pretty p-locked p-icon p-round p-smooth p-bigger p-toggle up answerBox"><input type="checkbox" name="'.$answers[$x]["id"].'"'.$correctness.'><div class="state p-on p-success-o"><i class="icon mdi mdi-arrow-up"></i><label></label></div><div class="state p-off"><i class="icon mdi mdi-arrow-up"></i><label></label></div></div><div class="pretty p-locked p-icon p-round p-smooth p-bigger p-toggle down answerBox"><input type="checkbox" '.$downCorrectness.'><div class="state p-on p-success-o"><i class="icon mdi mdi-arrow-down"></i><label></label></div><div class="state p-off"><i class="icon mdi mdi-arrow-down"></i><label></label></div></div><p class="answerDesc">'.$answers[$x]["name"].'</p><div class="peopleCount'.$answers[$x]["id"].' peopleCount"></div>'.$correct.'</div>';
             }
             
         } else {
-            $echoForm=$echoForm.'<div class="answer"><div class="pretty p-locked p-icon p-round p-smooth p-bigger answerBox"><input type="checkbox" name="'.$answers[$x]["id"].'" '.$correctness.'><div class="state p-primary"><i class="icon mdi mdi-check"></i><label></label></div></div>';
-            $echoForm=$echoForm.'<p class="answerDesc">'.$answers[$x]["name"].'</p><div class="peopleCount'.$answers[$x]["id"].' peopleCount"></div></div>';
+            $echoForm=$echoForm.'<div class="answer '.$answerClass.'"><div class="pretty p-locked p-icon p-round p-smooth p-bigger answerBox"><input type="checkbox" name="'.$answers[$x]["id"].'" '.$correctness.'><div class="state p-primary"><i class="icon mdi mdi-check"></i><label></label></div></div>';
+            $echoForm=$echoForm.'<p class="answerDesc">'.$answers[$x]["name"].'</p><div class="peopleCount'.$answers[$x]["id"].' peopleCount"></div>'.$correct.'</div>';
         }
     }
-    $echoForm=$echoForm.'</div></div>';
+
+    $echoForm=$echoForm.'</div>'.$correctDiv.'</div>';
   
     return $echoForm;
 }
