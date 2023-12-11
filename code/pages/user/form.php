@@ -186,13 +186,18 @@
                 if ($public[0]["public"]==1) {
                     $echoCSS=SetFormCSS($formCSSkey, $formCSSvalue);
                     //vypisuje nadpis a informuje že uklada email , taky chce abys ho zadal
-                    if (!empty($values)) {
+                    if (isset($values["reason"])&&($values["reason"]=="email")) {
                         $EmailError= "<div class='error'><p>This email adress is invalid</p></div>";
                     } else {
                         $EmailError= "";
                     }
+                    if (isset($values["goodEmail"])) {
+                        $goodEmail=$values["goodEmail"];
+                    } else {
+                        $goodEmail="";
+                    }
                     
-                    $echoForm='<div class="question"><h1 class="formHeading">'.$FormName[0]["name"].'</h1><div class="formDescriptionContainer"><p class="description">Your email adress is going to be saved with your answers.<br>Enter a valid email adress: <input type="email" class="emailAdress" name="email"></input></p>'.$EmailError.'</div></div>';
+                    $echoForm='<div class="question"><h1 class="formHeading">'.$FormName[0]["name"].'</h1><div class="formDescriptionContainer"><p class="description">Your email adress is going to be saved with your answers.<br>Enter a valid email adress: <input type="email" class="emailAdress" name="email" value="'.$goodEmail.'"></input></p>'.$EmailError.'</div></div>';
                     $echoForm=WriteForm ($questionIDs, $questions, $DBlib, $echoForm, $values);
                     $echoCSS=$echoCSS.SetQuestionCSS ($questionIDs, $questions, $DBlib);
                     $actionAdress="id=".$id;
