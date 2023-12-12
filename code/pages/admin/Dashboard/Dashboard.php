@@ -68,7 +68,7 @@
                         <a href='../editor.php?id=" . $val["id"] . "' target='_self'>
                             <div class='form'>
                                 <h2>" . $val["name"] . "</h2>
-                                <div>" . timeAgo($val["timestamp"], "Last edited") . "</div>
+                                <div>" . timeAgo($val["timestamp"], "Created") . "</div>
                                 ".$actions."
                             </div>
                         </a>

@@ -85,7 +85,7 @@ $(document).ready(function(){
               );
               const timestamps = data.map((e) => e.timestamp);
               const identifier =`.form:last-child .date${i + count}`;
-              timeAgo2(timestamps, identifier, "Last edited");
+              timeAgo2(timestamps, identifier, "Created");
             });
             $.ajax({
               url: "../action/retrieveFormCount.php",
@@ -144,7 +144,7 @@ $(document).ready(function(){
             );
             const timestamps = searchData.map(e => e.timestamp); 
             const identifier = '.form .date';
-            timeAgo2(timestamps, identifier, "Last edited");
+            timeAgo2(timestamps, identifier, "Created");
             });
           } else if(searchData.length === 0 && Search !== ""){
             $("#forms").html("<p id='NoSearch'>No search results</p>");
@@ -179,7 +179,7 @@ $(document).ready(function(){
             );
             const timestamps = data.map(e => e.timestamp);
             const identifier = '.form .date';
-            timeAgo2(timestamps, identifier, "Last edited");
+            timeAgo2(timestamps, identifier, "Created");
             
           }); 
         }

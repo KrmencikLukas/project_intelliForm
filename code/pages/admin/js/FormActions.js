@@ -112,7 +112,7 @@ $("#forms").on("click", ".mdi-earth-plus", function(e) {
                   );
                   const timestamps = data.map(e => e.timestamp);
                   const identifier = '.form .date';
-                  timeAgo2(timestamps, identifier, "Last edited");
+                  timeAgo2(timestamps, identifier, "Created");
                   
                 }); 
               }

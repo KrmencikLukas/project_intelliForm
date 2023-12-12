@@ -13,7 +13,7 @@
                 <span id="close">&times;</span>
             </div>
             <div id="profile">
-                <img src="" alt='pf img' id="pfPic">
+                <img src="placeholder" alt='pf img' id="pfPic">
                 <h2></h2>
                 <p></p>
             </div>
