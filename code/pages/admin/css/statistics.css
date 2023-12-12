@@ -1,0 +1,100 @@
+#content{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding-top: 50px;
+    min-height: 85vh;
+    box-sizing: border-box;
+    justify-content: center;
+}
+
+.container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    -webkit-box-shadow: var(--shadow);
+    -moz-box-shadow: var(--shadow);
+    box-shadow: var(--shadow); 
+    max-width: 1200px;
+    width: 85%;
+    border-radius: var(--radius);
+    padding: 30px;
+    min-height: 500px;
+    margin-bottom: 50px;
+    background-color: var(--form-color);
+}
+
+h2{
+    font-size: 30px;
+    font-weight: 500;
+    margin-bottom: 20px;
+}
+
+.viewRadio{
+    display: none;
+}
+
+.radio{
+    position: relative;
+    display: flex;
+    width: 70%;
+    justify-content: space-around;
+    align-items: center;
+    height: 40px;
+    border: 1px solid var(--light-gray);
+    border-radius: var(--radius);
+}
+
+.radio label{
+    width: calc(100% / 3);
+    text-align: center;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    transition: 500ms;
+    cursor: pointer;
+}
+
+.slider{
+    position: absolute;
+    width: calc(100% / 3);
+    height: 100%;
+    background-color: var(--blue);
+    z-index: -10;
+    border-radius: var(--radius);
+    transition-timing-function: ease-in-out;
+    transition: 500ms;
+}
+
+.viewRadio:checked + label{
+    color: white;
+    transition: 500ms;
+}
+
+#summary:checked ~ .slider{
+    left: 0;
+}
+
+#people:checked ~ .slider{
+    left: calc(100% / 3);
+}
+
+#questions:checked ~ .slider{
+    left: calc(2 * calc(100% / 3));
+}
+
+.data {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.selectPeople, .selectQuestion{
+    width: 70%;
+    margin-top: 20px;
+}
+
+

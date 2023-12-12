@@ -100,6 +100,7 @@
     font-size: 32px;
     margin-left: 40px;
     font-weight: 300;
+    min-width: 20%;
 }
 .del{
     color: var(--red);

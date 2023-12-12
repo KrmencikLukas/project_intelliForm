@@ -31,6 +31,7 @@
     <script src="../js/showMoreForms.js"></script>
     <script src="../../../assets/lib/js/profileMenu.js"></script>
     <script src="../js/FormActions.js"></script>
+    <link rel="icon" type="image/png" href="../../../assets/img/logo/favicon.png">
     <script>
         var countForm = <?= json_encode($countForms)?>;
         var user = <?= json_encode($user)?>
