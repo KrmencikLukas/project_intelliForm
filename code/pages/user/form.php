@@ -62,14 +62,14 @@
                             } else {
                                 $checked='';
                             }
-                            $echoForm=$echoForm.'<div class="answer yes"><div class="pretty p-toggle p-plain"><input type="radio" name="q'.$questions[$i]["id"].'" value="'.$answers[$x]["id"].'" '.$checked.'><div class="state p-off"><label>Yes</label></div><div class="state p-on"><label class="color">Yes</label></div></div></div>';
+                            $echoForm=$echoForm.'<div class="answer yes"><div class="pretty p-toggle p-plain"><input type="radio" name="q'.$questions[$i]["id"].'a'.$answers[$x]["id"].'" value="1" '.$checked.'><div class="state p-off"><label>Yes</label></div><div class="state p-on"><label class="color">Yes</label></div></div></div>';
                         } else {
                             if ((!empty($values["q".$questions[$i]["id"]]))&&($values["q".$questions[$i]["id"]]==$answers[$x]["id"])) {
                                 $checked='checked=""';
                             } else {
                                 $checked='';
                             }
-                            $echoForm=$echoForm.'<div class="answer no"><div class="pretty p-toggle p-plain"><input type="radio" name="q'.$questions[$i]["id"].'" value="'.$answers[$x]["id"].'" '.$checked.'><div class="state p-off"><label>No</label></div><div class="state p-on"><label class="color">No</label></div></div></div>';
+                            $echoForm=$echoForm.'<div class="answer no"><div class="pretty p-toggle p-plain"><input type="radio" name="q'.$questions[$i]["id"].'a'.$answers[$x]["id"].'" value="1" '.$checked.'><div class="state p-off"><label>No</label></div><div class="state p-on"><label class="color">No</label></div></div></div>';
                         }
                     } elseif ($questions[$i]["type_id"]==4) {
 
@@ -92,7 +92,7 @@
                     } else {
                         $checked='';
                     }
-                    $echoForm=$echoForm.'<div class="answer"><div class="pretty p-icon p-round p-smooth p-bigger answerBox"><input type="checkbox" name="q'.$questions[$i]["id"].'" value="'.$answers[$x]["id"].'" '.$checked.'><div class="state p-primary"><i class="icon mdi mdi-check"></i><label></label></div></div>';
+                    $echoForm=$echoForm.'<div class="answer"><div class="pretty p-icon p-round p-smooth p-bigger answerBox"><input type="checkbox" name="q'.$questions[$i]["id"].'a'.$answers[$x]["id"].'" value="1" '.$checked.'><div class="state p-primary"><i class="icon mdi mdi-check"></i><label></label></div></div>';
                     $echoForm=$echoForm.'<p class="answerDesc">'.$answers[$x]["name"].'</p></div>';
                 }
             }
@@ -134,10 +134,10 @@
     $id=$_GET["id"] ?? null;
     if ((!empty($id))&&(is_numeric($id))) {
         $formID = [ "id" => $id];
-        $public=$DBlib->fetchDataWithCondition("form", "public", "id = :id", $formID);
+        $everyone=$DBlib->fetchDataWithCondition("form", "everyone", "id = :id", $formID);
         $anonymous=$DBlib->fetchDataWithCondition("form_settings", "value", 'form_id = :id AND `key` = "anonymous"', $formID);
         //kontrola jestli je anonymní
-        if (!empty($public)) {
+        if (!empty($everyone)) {
             //téměř všechna data z db
             $FormName=$DBlib->fetchDataWithCondition("form", "name", "id = :id", $formID);
             $formCSSkey=$DBlib->fetchDataWithCondition("form_settings", "`key`", "form_id = :id", $formID);
@@ -146,8 +146,8 @@
             $questions=$DBlib->fetchDataWithCondition("question", "*", "form_id = :id", $formID);
 
             if ((isset($anonymous[0]["value"]))&&($anonymous[0]["value"]==1)) {
-                //kontrola jestli je public
-                if ($public[0]["public"]==1) {
+                //kontrola jestli je everyone
+                if ($everyone[0]["everyone"]==1) {
                     $echoCSS=SetFormCSS($formCSSkey, $formCSSvalue);
                     //vypisuje nadpis a informuje o anonymitě
                     $echoForm='<div class="question"><h1 class="formHeading">'.$FormName[0]["name"].'</h1><div class="formDescriptionContainer"><p class="description">This form is anonymous. Your answers will not be linked to you in any way.</p></div></div>';
@@ -183,7 +183,7 @@
                     }
                 }
             } else {
-                if ($public[0]["public"]==1) {
+                if ($everyone[0]["everyone"]==1) {
                     $echoCSS=SetFormCSS($formCSSkey, $formCSSvalue);
                     //vypisuje nadpis a informuje že uklada email , taky chce abys ho zadal
                     if (isset($values["reason"])&&($values["reason"]=="email")) {
