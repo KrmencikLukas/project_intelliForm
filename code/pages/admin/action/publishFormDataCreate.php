@@ -8,12 +8,11 @@
     $name = htmlspecialchars($_POST['name'] ?? null);
     $surname = htmlspecialchars($_POST['surname'] ?? null);
     $email = $_POST['email'] ?? null;
-    $method = (int)$_POST["method"] ?? null;
     $form = (int)$_POST["form"] ?? null;
     $guest_id = (int)$_POST["guest"] ?? null;
 
     $error = [];
-    if(!empty($email) && !empty($guest_id) && $method !== 0 || $method !== 1){
+    if(!empty($email) && !empty($guest_id)){
         if(!filter_var($email, FILTER_VALIDATE_EMAIL)){
             $error["EmailFormat"] = "Invalid Email format";
         }
@@ -32,7 +31,6 @@
                 "email" => $email,
                 "name" => $name,
                 "surname" => $surname,
-                "method" => $method,
             ];
             $pdo->updateDataNormal("guest",$updateData, ["id" => $guest_id], "id = :id");
 

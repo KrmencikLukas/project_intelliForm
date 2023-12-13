@@ -6,9 +6,7 @@
     session_start();
     $pdo = new DatabaseFunctions($db);
     
-    if(!isset($_SESSION['user'])){
-        header("location: ../../user/login/login.php");
-    }
+
 
     $user = $_SESSION['user'] ?? null;
 
@@ -17,6 +15,11 @@
     ];
     $forms = $pdo->fetchDataWithCondition("form", "*","user_id = :id ORDER BY timestamp DESC LIMIT 4", $params);
     $countForms = $pdo->countByPDOWithCondition("form", "*","user_id = :id ", $params);
+
+    
+    if(!isset($_SESSION['user'])){
+        header("location: ../../user/login/login.php");
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">

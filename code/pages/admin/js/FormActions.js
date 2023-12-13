@@ -42,10 +42,10 @@ $(document).ready(function(){
     var anchorId = $(this).closest('a').attr('href').match(/(?:[?&])id=([^&]+)/);
     var idValue = anchorId ? anchorId[1] : null;
 
-    console.log('Extracted id:', idValue);
+
     if (idValue) {
       window.location.href = '../publish/publishForm.php?id=' + idValue;
-  }
+    }
 });
 
 $("#forms").on("click", ".mdi-earth-plus", function(e) {
@@ -55,7 +55,9 @@ $("#forms").on("click", ".mdi-earth-plus", function(e) {
   var anchorId = $(this).closest('a').attr('href').match(/(?:[?&])id=([^&]+)/);
   var idValue = anchorId ? anchorId[1] : null;
 
-  console.log('Extracted id:', idValue);
+  if (idValue) {
+    window.location.href = '../publish/publishForm.php?id=' + idValue;
+  }
 });
 
   $("#forms").on("click", ".bar", function(e) {

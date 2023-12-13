@@ -304,6 +304,7 @@ h3{
 }
 .copybtn{
     font-size: 26px;
+    cursor: pointer;
 }
 #sendbtn{
     width: 200px;
@@ -323,5 +324,37 @@ h3{
     align-items: center;
     justify-content: center;
     margin-right: -130px;
+    flex-flow: column;
     
+}
+#SuccessEmail{
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 170px;
+    height: 45px;
+    font-size: 20px;
+    border-radius: 9px;
+    background-color: white;
+    margin-top: 15px;
+    color: rgb(17, 167, 17);
+
+}
+#emptyEmail{
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    width: 170px;
+    height: 45px;
+    font-size: 20px;
+    border-radius: 9px;
+    background-color: white;
+    margin-top: 15px;
+    color: var(--red);
+}
+#SuccessEmail p {
+    padding: 3px;
+}
+.copybtnform{
+    cursor: pointer;
 }
