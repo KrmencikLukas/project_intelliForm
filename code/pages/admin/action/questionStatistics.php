@@ -84,9 +84,9 @@ questions = <?php echo json_encode($questions) ?>
 
 guestsArr = <?php echo json_encode($guests) ?>
 
-currentQuestion = <?php echo $currentQuestion ?? 0 ?>
+//currentQuestion = <?php // echo $currentQuestion ?? 0 ?>
 
-console.log(currentQuestion)
+//console.log(currentQuestion)
 
 qSelect = new SlimSelect({
     select: '#selectQuestion',
@@ -109,12 +109,12 @@ qSelect = new SlimSelect({
 
 //qSelect.set(currentQuestion);
 
-generateQuestion(questions[currentQuestion])
+generateQuestion(questions[0])
 
 
 function generateQuestion(data){
 
-    console.log("append")
+    console.log(data)
 
     $("#customStyles").html(".peopleCount{display: flex}")
 
@@ -171,15 +171,18 @@ function generateQuestion(data){
                     guestList = ""
                     element["guests"].forEach(function(guestID){
                         guest = guestsArr[guestID["guest_id"]]
-                        if(guest["email"] != null && guest["email"] != ""){
-                            if(guest["name"] == null){
-                                guest["name"] = ""
-                            }
-                            if(guest["surname"] == null){
-                                guest["surname"] = ""
-                            }
-                            guestList +=  "<div class='guest'>"+guest["name"]+" "+guest["surname"]+" - "+guest["email"]+"</div>"
+                        if(guest != undefined){
+                            if(guest["email"] != null && guest["email"] != ""){
+                                if(guest["name"] == null){
+                                    guest["name"] = ""
+                                }
+                                if(guest["surname"] == null){
+                                    guest["surname"] = ""
+                                }
+                                guestList +=  "<div class='guest'>"+guest["name"]+" "+guest["surname"]+" - "+guest["email"]+"</div>"
+                            }         
                         }
+
                     })
 
                     $(".peopleCount"+element["id"]).html("<span>"+element["guests"].length+"</span>"+"<i class='mdi mdi-account-multiple'></i><div class='guestList'>"+guestList+"</div>")
