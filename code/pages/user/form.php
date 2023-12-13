@@ -57,42 +57,42 @@
                 if (($questions[$i]["type_id"]==1)||($questions[$i]["type_id"]==5)||($questions[$i]["type_id"]==4)) {
                     if (($questions[$i]["type_id"]==1)||($questions[$i]["type_id"]==5)) {
                         if ($x==0) {
-                            if ((!empty($values["q".$questions[$i]["id"]]))&&($values["q".$questions[$i]["id"]]==$answers[$x]["id"])) {
+                            if ((!empty($values["*q".$questions[$i]["id"]."*a".$answers[$x]["id"]."*t".$questions[$i]["type_id"]]))&&($values["*q".$questions[$i]["id"]."*a".$answers[$x]["id"]."*t".$questions[$i]["type_id"]]==1)) {
                                 $checked='checked=""';
                             } else {
                                 $checked='';
                             }
-                            $echoForm=$echoForm.'<div class="answer yes"><div class="pretty p-toggle p-plain"><input type="radio" name="q'.$questions[$i]["id"].'a'.$answers[$x]["id"].'" value="1" '.$checked.'><div class="state p-off"><label>Yes</label></div><div class="state p-on"><label class="color">Yes</label></div></div></div>';
+                            $echoForm=$echoForm.'<div class="answer yes"><div class="pretty p-toggle p-plain"><input type="radio" name="*q'.$questions[$i]["id"].'*a'.$answers[$x]["id"].'*t'.$questions[$i]["type_id"].'" value="1" '.$checked.'><div class="state p-off"><label>Yes</label></div><div class="state p-on"><label class="color">Yes</label></div></div></div>';
                         } else {
-                            if ((!empty($values["q".$questions[$i]["id"]]))&&($values["q".$questions[$i]["id"]]==$answers[$x]["id"])) {
+                            if ((!empty($values["*q".$questions[$i]["id"]."*a".$answers[$x]["id"]."*t".$questions[$i]["type_id"]]))&&($values["*q".$questions[$i]["id"]."*a".$answers[$x]["id"]."*t".$questions[$i]["type_id"]]==1)) {
                                 $checked='checked=""';
                             } else {
                                 $checked='';
                             }
-                            $echoForm=$echoForm.'<div class="answer no"><div class="pretty p-toggle p-plain"><input type="radio" name="q'.$questions[$i]["id"].'a'.$answers[$x]["id"].'" value="1" '.$checked.'><div class="state p-off"><label>No</label></div><div class="state p-on"><label class="color">No</label></div></div></div>';
+                            $echoForm=$echoForm.'<div class="answer no"><div class="pretty p-toggle p-plain"><input type="radio" name="*q'.$questions[$i]["id"].'*a'.$answers[$x]["id"].'*t'.$questions[$i]["type_id"].'" value="1" '.$checked.'><div class="state p-off"><label>No</label></div><div class="state p-on"><label class="color">No</label></div></div></div>';
                         }
                     } elseif ($questions[$i]["type_id"]==4) {
 
-                        if ((isset($values['QUESTION%'.$questions[$i]["id"].'QUESTION*ANSWER%'.$answers[$x]["id"].'ANSWER*']))&&($values['QUESTION%'.$questions[$i]["id"].'QUESTION*ANSWER%'.$answers[$x]["id"].'ANSWER*']=="1")) {
+                        if ((isset($values['*q'.$questions[$i]["id"].'*a'.$answers[$x]["id"].'*t'.$questions[$i]["type_id"]]))&&($values['*q'.$questions[$i]["id"].'*a'.$answers[$x]["id"].'*t'.$questions[$i]["type_id"]]=="1")) {
                             $checkedUP='checked=""';
                             $checkedDOWN='';
-                        } elseif ((isset($values["QUESTION%".$questions[$i]["id"]."QUESTION*ANSWER%".$answers[$x]["id"]."ANSWER*"]))&&($values["QUESTION%".$questions[$i]["id"]."QUESTION*ANSWER%".$answers[$x]["id"]."ANSWER*"]==0)) {
+                        } elseif ((isset($values['*q'.$questions[$i]["id"].'*a'.$answers[$x]["id"].'*t'.$questions[$i]["type_id"]]))&&($values['*q'.$questions[$i]["id"].'*a'.$answers[$x]["id"].'*t'.$questions[$i]["type_id"]]==0)) {
                             $checkedDOWN='checked=""';
                             $checkedUP='';
                         } else {
                             $checkedUP='';
                             $checkedDOWN='';
                         }
-                        $echoForm=$echoForm.'<div class="answer typeA2"><div class="pretty p-icon p-round p-smooth p-bigger p-toggle up answerBox"><input type="radio" name="QUESTION%'.$questions[$i]["id"].'QUESTION*ANSWER%'.$answers[$x]["id"].'ANSWER*" value="1"  '.$checkedUP.'><div class="state p-on p-success-o"><i class="icon mdi mdi-arrow-up"></i><label></label></div><div class="state p-off"><i class="icon mdi mdi-arrow-up"></i><label></label></div></div><div class="pretty p-icon p-round p-smooth p-bigger p-toggle down answerBox"><input type="radio" name="QUESTION%'.$questions[$i]["id"].'QUESTION*ANSWER%'.$answers[$x]["id"].'ANSWER*" value="0"  '.$checkedDOWN.'><div class="state p-on p-success-o"><i class="icon mdi mdi-arrow-down"></i><label></label></div><div class="state p-off"><i class="icon mdi mdi-arrow-down"></i><label></label></div></div><p class="answerDesc">'.$answers[$x]["name"].'</p></div>';
+                        $echoForm=$echoForm.'<div class="answer typeA2"><div class="pretty p-icon p-round p-smooth p-bigger p-toggle up answerBox"><input type="radio" name="*q'.$questions[$i]["id"].'*a'.$answers[$x]["id"].'*t'.$questions[$i]["type_id"].'" value="1"  '.$checkedUP.'><div class="state p-on p-success-o"><i class="icon mdi mdi-arrow-up"></i><label></label></div><div class="state p-off"><i class="icon mdi mdi-arrow-up"></i><label></label></div></div><div class="pretty p-icon p-round p-smooth p-bigger p-toggle down answerBox"><input type="radio" name="*q'.$questions[$i]["id"].'*a'.$answers[$x]["id"].'*t'.$questions[$i]["type_id"].'" value="0"  '.$checkedDOWN.'><div class="state p-on p-success-o"><i class="icon mdi mdi-arrow-down"></i><label></label></div><div class="state p-off"><i class="icon mdi mdi-arrow-down"></i><label></label></div></div><p class="answerDesc">'.$answers[$x]["name"].'</p></div>';
                     }
                     
                 } else {
-                    if ((!empty($values["q".$questions[$i]["id"]]))&&($values["q".$questions[$i]["id"]]==$answers[$x]["id"])) {
+                    if ((!empty($values["*q".$questions[$i]["id"]."*a".$answers[$x]["id"]."*t".$questions[$i]["type_id"]]))&&($values["*q".$questions[$i]["id"]."*a".$answers[$x]["id"]."*t".$questions[$i]["type_id"]]==1)) {
                         $checked='checked=""';
                     } else {
                         $checked='';
                     }
-                    $echoForm=$echoForm.'<div class="answer"><div class="pretty p-icon p-round p-smooth p-bigger answerBox"><input type="checkbox" name="q'.$questions[$i]["id"].'a'.$answers[$x]["id"].'" value="1" '.$checked.'><div class="state p-primary"><i class="icon mdi mdi-check"></i><label></label></div></div>';
+                    $echoForm=$echoForm.'<div class="answer"><div class="pretty p-icon p-round p-smooth p-bigger answerBox"><input type="checkbox" name="*q'.$questions[$i]["id"].'*a'.$answers[$x]["id"].'*t'.$questions[$i]["type_id"].'" value="1" '.$checked.'><div class="state p-primary"><i class="icon mdi mdi-check"></i><label></label></div></div>';
                     $echoForm=$echoForm.'<p class="answerDesc">'.$answers[$x]["name"].'</p></div>';
                 }
             }
@@ -121,6 +121,18 @@
             }
         }
         return $returnCSS;
+    }
+
+    //funkce na kontrolu, jestli už guest form jednou neodeselal
+    function isInDatabase ($id,$DBlib){
+        $params = [":id" => $id];
+        $inDB= $DBlib->countByPDOWithCondition("guest_answer", "id","guest_id = :id", $params );
+        if ($inDB==0) {
+            return true;
+        } else {
+            return false;
+        }
+        
     }
 
     //session (pouze v případě špatně vyplněného emailu)
@@ -216,12 +228,17 @@
                         $guestEmail=$DBlib->fetchDataWithCondition("guest", "email", "id = :id AND code = :code AND form_id = :form_id", $guestCodeID);
                         
                         if (!empty($guestEmail)) {
-                            $echoCSS=SetFormCSS($formCSSkey, $formCSSvalue);
-                            //vypisuje nadpis a informuje že uklada email
-                            $echoForm='<div class="question"><h1 class="formHeading">'.$FormName[0]["name"].'</h1><div class="formDescriptionContainer"><p class="description">Your email adress <span class="emailAdress">'.$guestEmail[0]["email"].'</span> is going to be saved with your answers.</p></div></div>';    
-                            $echoForm=WriteForm ($questionIDs, $questions, $DBlib, $echoForm, $values);
-                            $echoCSS=$echoCSS.SetQuestionCSS ($questionIDs, $questions, $DBlib);
-                            $actionAdress="id=".$id."&guestId=".$guest."&code=".$code;
+                            if (isInDatabase ($guest,$DBlib)) {
+                                $echoCSS=SetFormCSS($formCSSkey, $formCSSvalue);
+                                //vypisuje nadpis a informuje že uklada email
+                                $echoForm='<div class="question"><h1 class="formHeading">'.$FormName[0]["name"].'</h1><div class="formDescriptionContainer"><p class="description">Your email adress <span class="emailAdress">'.$guestEmail[0]["email"].'</span> is going to be saved with your answers.</p></div></div>';    
+                                $echoForm=WriteForm ($questionIDs, $questions, $DBlib, $echoForm, $values);
+                                $echoCSS=$echoCSS.SetQuestionCSS ($questionIDs, $questions, $DBlib);
+                                $actionAdress="id=".$id."&guestId=".$guest."&code=".$code;
+                            } else {
+                                $echoForm='<div class="question"><h1 class="formHeading">'.$FormName[0]["name"].'</h1><div class="formDescriptionContainer"><p class="description">You have already submitted this form.</p></div></div>';    
+                                $echoCSS="#submit {display: none;} .form { min-height: 0px } .description {text-align: center;}";
+                            }
                         } else {
                             header("Location: ../error.php");
                         }
