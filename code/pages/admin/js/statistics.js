@@ -36,6 +36,10 @@ $(document).ready(function(){
     })
     
     function write(what){
+        let urlParams = new URLSearchParams(window.location.href);
+        let guest = urlParams.get("guest");
+        let question = urlParams.get("question");
+
         $.ajax({
             type: 'GET',
             url: "action/"+what+"Statistics.php",

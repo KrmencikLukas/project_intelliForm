@@ -41,7 +41,15 @@ if(isset($_GET["id"])){
                     }
 
                     foreach($guestsArr as $value){
-                        $selectOptionsHtml .= "<option value='".$value["id"]."'>";
+
+                        $selected = "";
+
+                        if($value["id"] == $_GET["guest"]){
+                            $currentGuest = $_GET["guest"];
+                            $selected = "selected";
+                        }
+
+                        $selectOptionsHtml .= "<option value='".$value["id"]."' ".$selected.">";
 
                         if($value["name"] == NULL && $value["surname"] == NULL){
                             $gap = "";
@@ -70,19 +78,22 @@ if(isset($_GET["id"])){
 <script>
 questions = <?php echo json_encode($questions) ?? NULL ?>
 
-generateQuestion(questions, <?php echo $guestsArr[0]["id"] ?>)
+generateQuestion(questions, <?php echo $currentGuest ?? $guestsArr[0]["id"] ?>)
 
 new SlimSelect({
     select: '#selectPeople',
     events: {
       afterChange: (newVal) => {
 
-        generateQuestion(questions,newVal[0]["value"])
+        guestID = newVal[0]["value"]
+        generateQuestion(questions,guestID)
+        appendParamsToUrl({"guest": guestID})
       }
     }
 })
 
 function generateQuestion(questions,guest){
+
     $("#customStyles").html("")
     $(".questionInfo").html("")
     questions.forEach(function(element){  

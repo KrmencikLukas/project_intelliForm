@@ -30,9 +30,17 @@ if(isset($_GET["id"])){
 
                     foreach($questions as $key => $value){
 
+                        $selected = "";
+
+                        if($value["id"] == $_GET["question"]){
+                            $currentQuestion = $key;
+                            $selected = "selected";
+                        }
+
                         $questions[$key]["type"] = $DBlib->fetchDataWithCondition("question_type", "number", "id = :id", [":id" => $value["type_id"]])[0]["number"];
 
-                        $selectOptionsHtml .= "<option value='".$value["id"]."'>";
+                        
+                        $selectOptionsHtml .= "<option value='".$value["id"]."' ".$selected.">";
                         $selectOptionsHtml .= $value["heading"];
                         $selectOptionsHtml .= "</option>";
 
@@ -43,11 +51,6 @@ if(isset($_GET["id"])){
                         }
 
                         $questions[$key]["answers"] = $answers;
-
-                        if($value["id"] == $_GET["question"]){
-                            $currentQuestion = $key;
-                            echo $_GET["question"];
-                        }
                     }
 
                 }
@@ -84,9 +87,9 @@ questions = <?php echo json_encode($questions) ?>
 
 guestsArr = <?php echo json_encode($guests) ?>
 
-//currentQuestion = <?php // echo $currentQuestion ?? 0 ?>
+currentQuestion = <?php  echo $currentQuestion ?? 0 ?>
 
-//console.log(currentQuestion)
+console.log(currentQuestion)
 
 qSelect = new SlimSelect({
     select: '#selectQuestion',
@@ -101,15 +104,15 @@ qSelect = new SlimSelect({
             }
         }
          
-        //appendParamsToUrl({"question": data.id})
+        appendParamsToUrl({"question": data.id})
         generateQuestion(data)
       }
     }
 })
 
-//qSelect.set(currentQuestion);
+console.log(qSelect);
 
-generateQuestion(questions[0])
+generateQuestion(questions[currentQuestion])
 
 
 function generateQuestion(data){
@@ -146,7 +149,7 @@ function generateQuestion(data){
             guestsPos.push(guestPosCount)
             guestsNeg.push(guestNegCount)
             guests.push(((guestPosCount-guestNegCount) < 0) ? 0 : guestPosCount-guestNegCount)
-            totalGuests += guestCount
+            totalGuests += guestPosCount + guestNegCount;
             totalGuests += guestNegCount
 
         }else{

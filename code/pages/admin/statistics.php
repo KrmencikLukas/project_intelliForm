@@ -42,11 +42,7 @@ if(isset($_GET["id"])){
     <title>Statistics</title>
     <script>
         id = <?php echo $_GET["id"] ?>;
-
-        question = <?php echo $_GET["question"] ?? "null" ?>;
-
-        guest = <?php echo $_GET["guest"] ?? "null" ?>;
-
+        
         page = "<?php echo $_GET["page"] ?>";
     </script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
