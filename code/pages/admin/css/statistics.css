@@ -81,17 +81,18 @@ h2{
     left: calc(100% / 3);
 }
 
-#question:checked ~ .slider{
+#questions:checked ~ .slider{
     left: calc(2 * calc(100% / 3));
 }
 
 .data {
     width: 100%;
     display: flex;
-    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 }
 
-.selectPeople{
+.selectPeople, .selectQuestion{
     width: 70%;
     margin-top: 20px;
 }
