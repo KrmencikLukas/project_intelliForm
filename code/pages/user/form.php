@@ -25,6 +25,9 @@
 
     //funkce na vypisování formu
     function WriteForm ($questionIDs, $questions, $DBlib, $echoForm, $values){
+        if ((isset($values["reason"])&&($values["reason"]=="mandatory"))) {
+            $echoForm=$echoForm.'<div class="question alert"><div class="formDescriptionContainer"><p class="description">Make sure to check all *Mandatory questions!</p></div></div>';
+        }
         for ($i=0; $i < count($questionIDs); $i++) { 
             $answerIDs="";
             $answers="";
@@ -43,11 +46,31 @@
             $questionSettings=$DBlib->fetchDataWithCondition("question_settings", "*", "question_id = :id", $questionID);
 
             if (isset($questionSettings)) {
+                $echoForm=$echoForm.'<div class="mandatory">';
                 foreach ($questionSettings as $key => $value) {
                     if (($value["question_id"]==$questions[$i]["id"])&&($value["key"]=="Mandatory")&&($value["value"]=="1")) {
-                        $echoForm=$echoForm.'<div class="mandatory"><p>*Mandatory</p></div>';
+                        $echoForm=$echoForm.'<p>*Mandatory</p>';
+                    }
+                    if (($value["question_id"]==$questions[$i]["id"])&&($value["key"]=="Min votes")) {
+                        $echoForm=$echoForm.'<p>min. tick '.$value["value"].'</p>';
+                    }
+                    if (($value["question_id"]==$questions[$i]["id"])&&($value["key"]=="Max votes")) {
+                        $echoForm=$echoForm.'<p>max. tick '.$value["value"].'</p>';
+                    }
+                    if (($value["question_id"]==$questions[$i]["id"])&&($value["key"]=="Min upvotes")) {
+                        $echoForm=$echoForm.'<p>Upvotes '.$value["value"].' - ';
+                    }
+                    if (($value["question_id"]==$questions[$i]["id"])&&($value["key"]=="Max upvotes")) {
+                        $echoForm=$echoForm.$value["value"].'</p>';
+                    }
+                    if (($value["question_id"]==$questions[$i]["id"])&&($value["key"]=="Min downvotes")) {
+                        $echoForm=$echoForm.'<p>Downvotes '.$value["value"].' - ';
+                    }
+                    if (($value["question_id"]==$questions[$i]["id"])&&($value["key"]=="Max downvotes")) {
+                        $echoForm=$echoForm.$value["value"].'</p>';
                     }
                 }
+                $echoForm=$echoForm.'</div>';
             }
 
             $echoForm=$echoForm.'<h2 class="questionHeading">'.$questions[$i]["heading"].'</h2><div class="descriptionContainer"><p class="description">'.nl2br(str_replace(" ","&nbsp;",$questions[$i]["description"])).'</p></div><div class="answers">';
@@ -56,20 +79,19 @@
             for ($x=0; $x < count($answerIDs); $x++) { 
                 if (($questions[$i]["type_id"]==1)||($questions[$i]["type_id"]==5)||($questions[$i]["type_id"]==4)) {
                     if (($questions[$i]["type_id"]==1)||($questions[$i]["type_id"]==5)) {
+                        $checked1='';
+                        $checked0='';
+                        if (isset($values["*q".$questions[$i]["id"]."*t".$questions[$i]["type_id"]])) {
+                            if ($values["*q".$questions[$i]["id"]."*t".$questions[$i]["type_id"]] == 1) {
+                                $checked1 = 'checked=""';
+                            } elseif ($values["*q".$questions[$i]["id"]."*t".$questions[$i]["type_id"]] == 0) {
+                                $checked0 = 'checked=""';
+                            }
+                        }
                         if ($x==0) {
-                            if ((!empty($values["*q".$questions[$i]["id"]."*a".$answers[$x]["id"]."*t".$questions[$i]["type_id"]]))&&($values["*q".$questions[$i]["id"]."*a".$answers[$x]["id"]."*t".$questions[$i]["type_id"]]==1)) {
-                                $checked='checked=""';
-                            } else {
-                                $checked='';
-                            }
-                            $echoForm=$echoForm.'<div class="answer yes"><div class="pretty p-toggle p-plain"><input type="radio" name="*q'.$questions[$i]["id"].'*a'.$answers[$x]["id"].'*t'.$questions[$i]["type_id"].'" value="1" '.$checked.'><div class="state p-off"><label>Yes</label></div><div class="state p-on"><label class="color">Yes</label></div></div></div>';
+                            $echoForm=$echoForm.'<div class="answer yes"><div class="pretty p-toggle p-plain"><input type="radio" name="*q'.$questions[$i]["id"].'*t'.$questions[$i]["type_id"].'" value="1" '.$checked1.'><div class="state p-off"><label>Yes</label></div><div class="state p-on"><label class="color">Yes</label></div></div></div>';
                         } else {
-                            if ((!empty($values["*q".$questions[$i]["id"]."*a".$answers[$x]["id"]."*t".$questions[$i]["type_id"]]))&&($values["*q".$questions[$i]["id"]."*a".$answers[$x]["id"]."*t".$questions[$i]["type_id"]]==1)) {
-                                $checked='checked=""';
-                            } else {
-                                $checked='';
-                            }
-                            $echoForm=$echoForm.'<div class="answer no"><div class="pretty p-toggle p-plain"><input type="radio" name="*q'.$questions[$i]["id"].'*a'.$answers[$x]["id"].'*t'.$questions[$i]["type_id"].'" value="1" '.$checked.'><div class="state p-off"><label>No</label></div><div class="state p-on"><label class="color">No</label></div></div></div>';
+                            $echoForm=$echoForm.'<div class="answer no"><div class="pretty p-toggle p-plain"><input type="radio" name="*q'.$questions[$i]["id"].'*t'.$questions[$i]["type_id"].'" value="0" '.$checked0.'><div class="state p-off"><label>No</label></div><div class="state p-on"><label class="color">No</label></div></div></div>';
                         }
                     } elseif ($questions[$i]["type_id"]==4) {
 
@@ -140,6 +162,7 @@
     $values="";
     if (!empty($_SESSION)) {
         $values=$_SESSION;
+        //var_dump($values);
     }
     session_destroy();
     //kontrola adresy

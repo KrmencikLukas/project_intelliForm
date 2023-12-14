@@ -21,7 +21,7 @@ function validateForm ($id, $formData, $DBlib) {
     foreach ($formData as $key => $value) {
         if (($key!="submit")&&($key!="email")) {
             $answerData = explode("*",$key);
-            if ((isset($answerData[0]))&&(isset($answerData[1]))&&(isset($answerData[2]))) {
+            if ((isset($answerData[0]))&&(isset($answerData[1]))&&(isset($answerData[2]))&&(isset($answerData[3]))) {
                 $questionID = strpos($answerData[1], "",1);
                 $questionID = substr($answerData[1], $questionID);
                 $params = [":id" => $questionID];
@@ -36,6 +36,14 @@ function validateForm ($id, $formData, $DBlib) {
                     if (($answerInDB==1)&&(!in_array($questionID,$sentCount))&&(isset($questionMandatory[0]["value"]))&&($questionMandatory[0]["value"]==1)) {
                         $sentCount[]=$questionID;
                     }
+                }
+            } elseif ((isset($answerData[0]))&&(isset($answerData[1]))&&(isset($answerData[2]))) {
+                $questionID = strpos($answerData[1], "",1);
+                $questionID = substr($answerData[1], $questionID);
+                $params = [":id" => $questionID];
+                $questionInDB= $DBlib->countByPDOWithCondition("question", "id","id = :id", $params );
+                if ($questionInDB==1) {
+                    $sentCount[]=$questionID;
                 }
             }
         }
@@ -60,17 +68,40 @@ function saveForm ($formData, $DBlib, $guest) {
             $questionInDB= $DBlib->countByPDOWithCondition("question", "id","id = :id", $params );
             
             if ($questionInDB==1) {
-                $answerID = strpos($answerData[2], "",1);
-                $answerID = substr($answerData[2], $answerID);
-                $params = [":id" => $answerID];
-                $answerInDB= $DBlib->countByPDOWithCondition("answer", "id","id = :id", $params );
-                if ($answerInDB==1) {
-                    $insertData=[
-                        "guest_id" => $guest,
-                        "answer_id" => $answerID,
-                        "value" => $value,
-                    ];
-                    $DBlib->insertData("guest_answer", $insertData);
+                if ((isset($answerData[0]))&&(isset($answerData[1]))&&(isset($answerData[2]))&&(isset($answerData[3]))) {
+                    $answerID = strpos($answerData[2], "",1);
+                    $answerID = substr($answerData[2], $answerID);
+                    $params = [":id" => $answerID];
+                    $answerInDB= $DBlib->countByPDOWithCondition("answer", "id","id = :id", $params );
+                    if ($answerInDB==1) {
+                        $insertData=[
+                            "guest_id" => $guest,
+                            "answer_id" => $answerID,
+                            "value" => $value,
+                        ];
+                        $DBlib->insertData("guest_answer", $insertData);
+                    }
+                } elseif ((isset($answerData[0]))&&(isset($answerData[1]))&&(isset($answerData[2]))) {
+                    $answer= $DBlib->fetchDataWithCondition("answer", "`id`, `name`",'question_id = :id', $params);
+                    for ($i=0; $i < count($answer); $i++) { 
+                        if (($answer[$i]["name"]=="Yes")&&($value==1)) {
+                            $insertData=[
+                                "guest_id" => $guest,
+                                "answer_id" => $answer[$i]["id"],
+                                "value" => 1,
+                            ];
+                            $DBlib->insertData("guest_answer", $insertData);
+                        } elseif (($answer[$i]["name"]=="No")&&($value==0)) {
+                            $insertData=[
+                                "guest_id" => $guest,
+                                "answer_id" => $answer[$i]["id"],
+                                "value" => 1,
+                            ];
+                            $DBlib->insertData("guest_answer", $insertData);
+                        }
+                        
+                    }
+                    
                 }
             }
         }
@@ -95,6 +126,7 @@ if ((isset($_GET["id"]))&&(is_numeric($_GET["id"]))&&(isset($_POST))) {
             } else {
                 session_start();
                 $_SESSION=$_POST;
+                $_SESSION["reason"]="mandatory";
                 header("Location: ../form.php?id=".$id);
             }
         } else {
@@ -115,6 +147,7 @@ if ((isset($_GET["id"]))&&(is_numeric($_GET["id"]))&&(isset($_POST))) {
                     } else {
                         session_start();
                         $_SESSION=$_POST;
+                        $_SESSION["reason"]="mandatory";
                         header("Location: ../form.php?id=".$id."&guestId=".$guestID."&code=".$guestCode);
                     }
                 } else {
@@ -175,6 +208,7 @@ if ((isset($_GET["id"]))&&(is_numeric($_GET["id"]))&&(isset($_POST))) {
                     } else {
                         session_start();
                         $_SESSION=$_POST;
+                        $_SESSION["reason"]="mandatory";
                         header("Location: ../form.php?id=".$id."&guestId=".$guestID."&code=".$guestCode);
                     }
                 } else {
