@@ -44,7 +44,7 @@ $(document).ready(function(){
 
 
     if (idValue) {
-      window.location.href = '../publish/publishForm.php?id=' + idValue;
+      window.location.href = '../publishForm/publishForm.php?id=' + idValue;
     }
 });
 
@@ -56,7 +56,7 @@ $("#forms").on("click", ".mdi-earth-plus", function(e) {
   var idValue = anchorId ? anchorId[1] : null;
 
   if (idValue) {
-    window.location.href = '../publish/publishForm.php?id=' + idValue;
+    window.location.href = '../publishForm/publishForm.php?id=' + idValue;
   }
 });
 
