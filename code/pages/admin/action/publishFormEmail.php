@@ -30,7 +30,7 @@
             foreach($formSpecifications2 as $value3){
                 $anonym = $value3["value"];
             }
-    
+            
             $link ="";
             $allEmailsSent = true;
             foreach($recipients as $value2){
@@ -44,7 +44,7 @@
     
                 $mail = new PHPMailer; 
              
-                $mail->SMTPDebug = SMTP::DEBUG_SERVER; 
+                $mail->SMTPDebug =0; 
                 $mail->isSMTP();        
                 $mail->Host = 'wes1-smtp.wedos.net';                
                 $mail->SMTPAuth = true;
@@ -68,9 +68,6 @@
                 $bodyContent .= '<p style="margin-left: 40px;">If you are having any problems please contact our support</p></div>';
                 $mail->Body  = $bodyContent; 
     
-                if($mail->send()) { 
-                    echo "yes yes";
-                }
     
                 if (!$mail->send()) {
                     $allEmailsSent = false;
@@ -80,6 +77,10 @@
                 $pdo->updateDataNormal("form", ["public" => 1], ["id" => $form], "id = :id");
                 $pdo->updateDataNormal("guest",["sent" => 1], ["form" => $form], "form_id = :form AND method = 0");
 
+                 if($anonym == 1){
+                     $pdo->updateDataNormal("guest",["name" => "", "surname" => "", "email" => "Anonymous guest", "sent" => 1], ["form" => $form], "form_id = :form AND method = 0");
+
+                 }
 
                 echo "Success";
                 ob_end_flush();

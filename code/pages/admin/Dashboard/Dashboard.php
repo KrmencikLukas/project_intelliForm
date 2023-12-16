@@ -42,6 +42,7 @@
 </head>
 <body>
     <?php 
+        $user =  $_SESSION['user'];
         $location = "Dashboard";
         include("../../../assets/global/headerSidebar.php");
     ?>

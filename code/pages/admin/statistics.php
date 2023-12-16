@@ -6,6 +6,8 @@ include("../../assets/lib/php/DBlibrary.php");
 $DBlib = new DatabaseFunctions($db);
 session_start();
 
+$user = $_SESSION['user'] ?? null;
+
 if(isset($_GET["id"])){
     if(is_numeric($_GET["id"])){
         if(isset($_SESSION["user"])){
@@ -150,6 +152,9 @@ function SetQuestionCSS ($questionIDs, $questions, $DBlib){
     <script src="https://unpkg.com/slim-select@latest/dist/slimselect.min.js"></script>
     <link href="../../assets/lib/css/slimSelect.css" rel="stylesheet"></link>
     <link rel="icon" type="image/png" href="../../assets/img/logo/favicon.png">
+    <script>
+        var user = <?= json_encode($user)?>
+    </script>
 </head>
 <body>
 

@@ -7,6 +7,7 @@ $DBlib = new DatabaseFunctions($db);
 session_start();
 
 
+$user = $_SESSION['user'] ?? null;
 if(isset($_GET["id"])){
     if(is_numeric($_GET["id"])){
         if(isset($_SESSION["user"])){

@@ -18,7 +18,11 @@
                 <p></p>
             </div>
             <div id="links">
-                <a href="" target="_self"><span class="mdi mdi-account-cog settingsIcon"></span></a>
+                <a href="<?php
+                    $userd = urlencode($user);
+                    $uspt = "/updateProfile.php?id={$userd}";
+                    echo absolutePath($uspt);
+                ?>" target="_self"><span class="mdi mdi-account-cog settingsIcon"></span></a>
                 <a href="<?php echo absolutePath("/logout.php")?>" target="_self"><span class="mdi mdi-logout logout"></span></a>
             </div>
         </div>
@@ -28,7 +32,8 @@
     <div id="header">
         <div id="HeaderLeft">
             <div id="logo">
-                <img src="<?php echo absolutePath('/../../assets/img/logo/logo.svg') ?>" alt="logo"> 
+                <img src="<?php 
+                echo absolutePath('/../../assets/img/logo/logo.svg') ?>" alt="logo"> 
             </div>
             <?php
             if(isset($location)){
@@ -80,11 +85,24 @@
 </div>
 
 <?php
-    function absolutePath($path){
-        $absolutePath = realpath(__DIR__ . $path);
-        $serverName = $_SERVER['HTTP_HOST'];
-        $path = 'http://' . $serverName . str_replace($_SERVER['DOCUMENT_ROOT'], '', $absolutePath);
-        return $path;
-    }
+    // function absolutePath($path){
+    //     $absolutePath = realpath(__DIR__ . $path);
+    //     $serverName = $_SERVER['HTTP_HOST'];
+    //     $path = 'http://' . $serverName . str_replace($_SERVER['DOCUMENT_ROOT'], '', $absolutePath);
+    //     return $path;
+    // }
 
+    function absolutePath($path) {
+        $serverName = $_SERVER['HTTP_HOST'];
+        $absolutePath = realpath(__DIR__ . parse_url($path, PHP_URL_PATH));
+    
+        $url = 'http://' . $serverName . str_replace($_SERVER['DOCUMENT_ROOT'], '', $absolutePath);
+    
+        $query = parse_url($path, PHP_URL_QUERY);
+        if ($query) {
+            $url .= '?' . $query;
+        }
+    
+        return $url;
+    }
 ?>
