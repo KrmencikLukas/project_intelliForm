@@ -39,6 +39,8 @@ $(document).ready(function(){
             $("#inviteForm").css("display", "flex")
             $("#inviteForm").removeClass("hidden")
             $(this).hide()
+            $('#byEmail').prop("checked", true)
+            $('#byLink').prop("checked", false)
             $.ajax({
                 url:"../action/publishEmptyGuest.php",
                 type:"POST",
@@ -82,14 +84,19 @@ $(document).ready(function(){
             var method;  
             if ($('#byLink').is(':checked')) {
                 method = 1 
+                console.log("l")
             } else if ($('#byEmail').is(':checked')) {
                 method = 0
                 $("#copyField").val("");
+                console.log("e")
             }
             $.ajax({
                 url: "../action/publishFormMethod.php",
                 type:"POST",
                 data:{form: Form, method: method, guest: EmptyGuest},
+                success:function(r){
+                    console.log(r)
+                }
             })
         });
 
@@ -213,6 +220,7 @@ $(document).ready(function(){
                 type:"POST",
                 data:{form: Form},
                 success:function(e){
+                    console.log(e)
                     if(e === "Empty"){
                         var existingElement = $(`#side #emptyEmail`);
 

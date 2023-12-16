@@ -6,6 +6,8 @@ include("../../assets/lib/php/DBlibrary.php");
 $DBlib = new DatabaseFunctions($db);
 session_start();
 
+$user = $_SESSION['user'] ?? null;
+
 if(isset($_GET["id"])){
     if(is_numeric($_GET["id"])){
         if(isset($_SESSION["user"])){
@@ -82,6 +84,10 @@ if(isset($_GET["id"])){
     <link rel="icon" type="image/png" href="../../assets/img/logo/favicon.png">
     <link href="https://cdn.jsdelivr.net/npm/@mdi/font@5.x/css/materialdesignicons.min.css" rel="stylesheet">
     <style id="customStyles"></style>
+      <script>
+        var user = <?= json_encode($user)?>
+    </script>
+
 </head>
 <body>
 
