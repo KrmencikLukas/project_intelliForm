@@ -1,3 +1,11 @@
+//definice promenych
+let questions
+let questionCtx1
+let questionCtx2
+let chart1JS
+let chart2JS
+let qSelect
+
 function appendParamsToUrl(params) {
 
     var currentUrl = window.location.href;
@@ -19,8 +27,8 @@ $(document).ready(function(){
         write("people")
     })
 
-    $('#questions').change(function() {
-        write("questions")
+    $('#question').change(function() {
+        write("question")
     })
 
     $('#summary').change(function() {
@@ -28,10 +36,14 @@ $(document).ready(function(){
     })
     
     function write(what){
+        let urlParams = new URLSearchParams(window.location.href);
+        let guest = urlParams.get("guest");
+        let question = urlParams.get("question");
+
         $.ajax({
             type: 'GET',
             url: "action/"+what+"Statistics.php",
-            data: {"id": id},
+            data: {"id": id, "question":question,"guest":guest},
             success: function(response) {
                 appendParamsToUrl({page: what})
                 $(".data").html(response)
@@ -42,9 +54,7 @@ $(document).ready(function(){
 })
 
 
-$("body").on("change", "#selectQuestion", function() {
-    alert( $( this ).text() );
-});
+
 
 
 
