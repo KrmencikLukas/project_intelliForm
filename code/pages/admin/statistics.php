@@ -16,6 +16,7 @@ if(isset($_GET["id"])){
                         $_GET["page"] = "summary";
                     }
 
+                    $form = $DBlib->fetchDataWithCondition("form", "*", "id = :id", [":id" => $_GET["id"]])[0];
 
                     $questions = $DBlib->fetchDataWithCondition("question", "*", "form_id = :id", [":id" => $_GET["id"]]);
 
@@ -91,7 +92,7 @@ if(isset($_GET["id"])){
 
     <div id="content">
         <div class="container">
-            <h2>Nazev formulare</h2>
+            <h2><?php echo $form["name"] ?></h2>
             <div class="radio">
                 <input type="radio" id="summary" name="view" class="viewRadio" <?php echo ($_GET["page"] == "summary") ? "checked" : "" ?>>
                 <label for="summary">Summary</label>
