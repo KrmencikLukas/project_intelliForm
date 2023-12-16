@@ -63,7 +63,7 @@
                     ];
                     $id = $pdo->insertData("user", $arr);
                     $_SESSION["user"] = $id;
-                    header("location:../signup/signup.php");
+                    header("location:../../admin/Dashboard/Dashboard.php");
                     ob_end_flush();
                     exit;
                 }

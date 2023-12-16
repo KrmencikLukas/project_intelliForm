@@ -7,4 +7,15 @@
         $return = $hash1.$revhash2;
         return $return;
     }
+    function generateRandomCode() {
+        $characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+        $codeLength = 20;
+        $code = '';
+
+        $shuffledCharacters = str_shuffle($characters);
+
+        $code = substr($shuffledCharacters, 0, $codeLength);
+    
+        return $code;
+    }
 ?>

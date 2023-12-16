@@ -10,8 +10,9 @@
         $resp = $pdo->fetchDataWithCondition("user","*","id = :id", $arr);
         
         $name ="";
-            $surname = "";
-            $email = "";
+        $surname = "";
+        $email = "";
+        
         foreach($resp as $val){
             $name =$val["name"];
             $surname = $val["surname"];

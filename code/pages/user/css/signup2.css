@@ -37,7 +37,7 @@ form{
 }
 h1{
     width: 80%;
-    border-bottom:  2px solid var(--gray);
+    border-bottom:  1px solid var(--light-gray);
     padding-bottom: 8px;
     margin-top: 30px;
     text-align: center;
