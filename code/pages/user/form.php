@@ -27,6 +27,8 @@
     function WriteForm ($questionIDs, $questions, $DBlib, $echoForm, $values){
         if ((isset($values["reason"])&&($values["reason"]=="mandatory"))) {
             $echoForm=$echoForm.'<div class="question alert"><div class="formDescriptionContainer"><p class="description">Make sure to check all *Mandatory questions!</p></div></div>';
+        }elseif ((isset($values["reason"])&&($values["reason"]=="minmax"))) {
+            $echoForm=$echoForm.'<div class="question alert"><div class="formDescriptionContainer"><p class="description">Don\'t forget to tick the correct number of answers!</p></div></div>';
         }
         for ($i=0; $i < count($questionIDs); $i++) { 
             $answerIDs="";
