@@ -7,7 +7,6 @@ include("../../../assets/lib/php/DBlibrary.php");
 
 $DBlib = new DatabaseFunctions($db);
 
-
 //funkce na css formu
 function SetFormCSS($formID){
     global $DBlib;

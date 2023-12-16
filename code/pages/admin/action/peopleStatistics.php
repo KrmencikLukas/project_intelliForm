@@ -29,7 +29,7 @@ if(isset($_GET["id"])){
                             foreach($guests as $key3 => $value3){
                                 if(!in_array($value3["guest_id"], $guestsIDs)){
                                     $guestsIDs[] = $value3["guest_id"];
-                                    $guestsArr[] = $DBlib->fetchDataWithCondition("guest", "*", "id = :id", [":id" => $value3["guest_id"]])[0];
+                                    $guestsArr[] = $DBlib->fetchDataWithCondition("guest", "*", "id = :id", [":id" => $value3["guest_id"]])[0] ?? NULL;
                                 } 
                                 
                             }
@@ -44,21 +44,24 @@ if(isset($_GET["id"])){
 
                         $selected = "";
 
-                        if($value["id"] == $_GET["guest"]){
-                            $currentGuest = $_GET["guest"];
-                            $selected = "selected";
+                        if($value != NULL){
+                            if($value["id"] == $_GET["guest"]){
+                                $currentGuest = $_GET["guest"];
+                                $selected = "selected";
+                            }
+    
+                            $selectOptionsHtml .= "<option value='".$value["id"] ."' ".$selected.">";
+    
+                            if($value["name"] == NULL && $value["surname"] == NULL){
+                                $gap = "";
+                            }else{
+                                $gap = " - ";
+                            }
+    
+                            $selectOptionsHtml .= $value["name"] ." ". $value["surname"] .$gap. $value["email"];
+                            $selectOptionsHtml .= "</option>";
                         }
 
-                        $selectOptionsHtml .= "<option value='".$value["id"]."' ".$selected.">";
-
-                        if($value["name"] == NULL && $value["surname"] == NULL){
-                            $gap = "";
-                        }else{
-                            $gap = " - ";
-                        }
-
-                        $selectOptionsHtml .= $value["name"] ." ". $value["surname"] .$gap. $value["email"];
-                        $selectOptionsHtml .= "</option>";
                     }
                 
                 }
@@ -66,6 +69,7 @@ if(isset($_GET["id"])){
         }
     }
 }
+
 ?>
 
 <div class="selectPeople">
@@ -78,7 +82,7 @@ if(isset($_GET["id"])){
 <script>
 questions = <?php echo json_encode($questions) ?? NULL ?>
 
-generateQuestion(questions, <?php echo $currentGuest ?? $guestsArr[0]["id"] ?>)
+generateQuestion(questions, <?php echo($currentGuest ?? $guestsArr[0]["id"]) ?>)
 
 new SlimSelect({
     select: '#selectPeople',

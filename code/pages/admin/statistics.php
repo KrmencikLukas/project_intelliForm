@@ -15,6 +15,27 @@ if(isset($_GET["id"])){
                     if(!isset($_GET["page"])){
                         $_GET["page"] = "summary";
                     }
+
+
+                    $questions = $DBlib->fetchDataWithCondition("question", "*", "form_id = :id", [":id" => $_GET["id"]]);
+
+                    $count = 0;
+                    foreach($questions as $key => $value){
+                        $answers = $DBlib->fetchDataWithCondition("answer", "*", "question_id = :id", [":id" => $value["id"]]);
+                        foreach($answers as $key2 => $value2){
+                            $count += $DBlib->countByPDOWithCondition("guest_answer", "*","answer_id = :id", [":id" => $value2["id"]]);
+                            var_dump($count);
+                            if($count > 0){
+                                break;
+                            }
+                        }
+ 
+                    }
+
+                    $peopleClass = "";
+                    if($count == 0){
+                        $peopleClass = "disabled";
+                    }
         
                 }else{
                     header("Location: ../error.php");
@@ -75,7 +96,7 @@ if(isset($_GET["id"])){
                 <input type="radio" id="summary" name="view" class="viewRadio" <?php echo ($_GET["page"] == "summary") ? "checked" : "" ?>>
                 <label for="summary">Summary</label>
                 <input type="radio" id="people" name="view" class="viewRadio" <?php echo ($_GET["page"] == "people") ? "checked" : "" ?>>
-                <label for="people">People</label>
+                <label for="people" class="<?php echo $peopleClass ?>">People</label>
                 <input type="radio" id="question" name="view" class="viewRadio" <?php echo ($_GET["page"] == "question") ? "checked" : "" ?>>
                 <label for="question">Question</label>
                 <div class="slider"></div>
