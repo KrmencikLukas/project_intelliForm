@@ -20,6 +20,13 @@
     text-align: right;
     height: 0;
 }
+.error {
+    color: var(--red);
+    background-color: white;
+    float: left;
+    border-radius: 2px;
+    padding: 2px;
+}
 .formHeading, p, .questionHeading, label {
     font-family: var(--fontRegular);
 }
@@ -32,9 +39,6 @@
     padding-bottom: 3px;
     border-bottom: 1px solid var(--gray);
     font-weight: 500;
-}
-h2, p {
-    margin: 0;
 }
 .formDescriptionContainer{
     font-family: var(--fontRegular);
@@ -118,6 +122,23 @@ h2, p {
     padding-top: 10px;
     padding-bottom: 3px;
     border-bottom: 1px solid var(--light-gray);
+}
+
+.alert {
+    background-color: #ff5655;
+    border-color: red;
+    color: white;
+    padding: 11px;
+}
+.alert div {
+    padding: 0;
+}
+.alert div p {
+    text-align: center;
+    font-size: large;
+}
+h2, p {
+    margin: 0;
 }
 
 .answers{

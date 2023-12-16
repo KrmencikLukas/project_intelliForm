@@ -64,7 +64,7 @@
                 <div class="SidebarIcon" id="SidebarHome"></div>
                 <p class="IconText" >Home</p>
             </a>
-            <a href="">
+            <a href="<?php echo absolutePath('/../../pages/admin/action/createForm.php') ?>" target="_self">
                 <div class="SidebarIcon" id="SidebarNewForm"></div>
                 <p class="IconText">New Form</p>
             </a>
