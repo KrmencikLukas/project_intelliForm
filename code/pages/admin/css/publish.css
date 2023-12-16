@@ -1,0 +1,359 @@
+@import url("../../../assets/global/vars.css");
+
+.ErrorDis{
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    justify-content: center;
+    width: 90%;
+    min-height: 25px;
+    color: var(--red);
+}
+.ErrorDis p{
+    font-size: 18px;
+}
+.wrap{
+    width: 93%;
+    display: flex;
+    justify-content: space-evenly;
+}
+#main{
+    width: 65%;
+    min-height: 900px;
+    background-color: white;
+   -webkit-box-shadow: var(--shadow);
+    -moz-box-shadow: var(--shadow);
+    box-shadow: var(--shadow);  
+    margin-top: 90px;
+    border-radius: 9px;
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    color: var(--gray);
+    margin-bottom: 20px;
+    margin-left: 80px;
+}
+h2{
+    font-size: 45px;
+    color: var(--gray);
+    font-weight: 300;
+    margin-top: 10px;
+}
+.Errorh2{
+    font-size: 26px;
+    font-weight: 700;
+    margin: 3px;
+    margin-top: 12px;
+    color: var(--red);
+}
+h3{
+    font-size: 30px;
+    color: var(--gray);
+    font-weight: 300;
+    margin-top: 10px;
+}
+
+.custom-radio {
+    margin-bottom: 20px;
+    display: flex;
+    flex-flow: row nowrap;
+}
+
+.custom-radio input[type="radio"] {
+    display: none;
+}
+
+.custom-radio label {
+    width: 150px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    margin-top: 15px;
+    background-color:  white;
+    color: var(--gray);
+    border: 1px solid var(--blue);
+    transition: background-color 0.3s ease;
+}
+.custom-radio label:first-of-type{
+    border-bottom-left-radius: 9px;
+    border-top-left-radius: 9px;
+}
+.custom-radio label:last-of-type{
+    border-bottom-right-radius: 9px;
+    border-top-right-radius: 9px;
+}
+.custom-radio input[type="radio"]:checked + label {
+    background-color: var(--blue);
+    border: none;
+    height: 49px;
+    color: white;
+}
+#invites{
+    display: flex;
+    flex-flow: column nowrap;
+    min-height: 400px;
+    width: 85%;
+    margin-top: 20px;
+    align-items: center;   
+    border-top: 1px solid var(--light-gray);
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+#invites h2:not(.Errorh2, .titles h2){
+    font-size: 35px;
+    color: var(--gray);
+    font-weight: 300;
+    margin-top: 10px;
+}
+#inviteButton{
+    width: 150px;
+    height: 50px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 15px;
+    border-radius: 9px;
+    background-color: var(--blue);
+    color: white;
+    font-size: 20px;
+    border: none;
+}
+#inviteForm{
+    width: 100%;
+    min-height: 200px;
+    display: none;
+    flex-flow: column wrap;
+    border-radius: 9px;
+    margin-top: 20px;
+    padding: 10px;
+    border: 1px solid var(--light-gray);
+}
+.hidden{
+    display: none;
+}
+#inviteForm h3{
+    font-size: 22px;
+    text-align: center;
+}
+#inviteForm input{
+    width: 250px;
+    padding-left: 10px;
+    height: 35px;
+    border-radius: 6px;
+    margin-right: 20px;
+    margin-left: 10px;
+    margin-top: 5px;
+    border: 1px solid var(--gray);
+}
+.mdi-content-copy{
+    font-size: 22px;
+    margin-top: 5px;
+}
+#link{
+    display: flex;
+    width: 100%;
+    height: 50px;
+    flex-flow: row nowrap;
+    align-items: center;
+    justify-content: center;
+}
+#link input{
+    background-color: transparent;
+    width: 400px;
+}
+#left, #right{
+    display: flex;
+    width: 50%;
+    flex-direction: column;
+}
+#fields{
+    width: 100%;
+    display: flex;
+    flex-flow: wrap row;
+    min-height: fit-content;
+}
+#left div, #right div:not(#method){
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+#surnameh3{
+    margin-left: -25px;
+}
+#methodwrap{
+    flex-wrap: wrap;
+}
+#actions{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 60px;
+    flex-direction: row;
+}
+#save, #delete{
+    margin-top: 10px;
+    width: 120px;
+    height: 42px;
+    border-radius: 9px;
+    font-size: 20px;
+    border: none;
+    color: white;
+    cursor: pointer;
+}
+#save{
+    background-color: var(--blue);
+    margin-right: 100px;
+}
+#delete{
+    background-color: var(--red);
+}
+#method{
+    width: 250px;
+}
+#method label:first-of-type{
+    width: 50%;
+    margin-left: 20px;
+}
+#methodTitle{
+    margin-left: -100px;
+    margin-top: -5px;
+}
+#invitedPeople{
+    width: 100%;
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+    flex-flow: column nowrap;
+    border-top: 1px solid var(--light-gray);
+}
+.guest{
+    display: flex;
+    flex-flow: row wrap;
+    width: 100%;
+    min-height: 100px;
+    border: 1px solid var(--gray);
+    border-radius: 9px;
+    align-items: center;
+    justify-content: space-between;
+    margin: 8px;
+}
+#invited{
+    width: 100%;
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    margin-top: 10px;
+}
+.titles{
+    display: flex;
+    width: 280px;
+    flex-flow: column nowrap;
+    margin: 10px;
+    margin-left: 30px;
+
+}
+.titles h2{
+    font-size: 22px;
+}
+.titles p{
+    font-size: 16px;
+    margin-left: 20px;
+    opacity: 0.65;
+}
+.editButton{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 95px;
+    height: 45px;
+    border-radius: 9px;
+    border: none;
+    background-color: var(--blue);
+    color: white;
+    font-size: 22px;
+    margin-right: 10px;
+    cursor: pointer;
+}
+.deleteButtonMini{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 95px;
+    height: 45px;
+    border-radius: 9px;
+    border: none;
+    background-color: var(--red);
+    color: white;
+    font-size: 22px;
+    cursor: pointer;
+}
+.btns{
+    display: flex;
+    flex-flow: row nowrap;
+}
+.copy{
+    width: 50px;
+}
+.copybtn{
+    font-size: 26px;
+    cursor: pointer;
+}
+#sendbtn{
+    width: 200px;
+    height: 70px;
+    border-radius: 9px;
+    border: none;
+    background-color: var(--blue);
+    color: white;
+    font-size: 30px;
+    cursor: pointer;
+    -webkit-box-shadow: var(--shadow);
+    -moz-box-shadow: var(--shadow);
+    box-shadow: var(--shadow);  
+}
+#side{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: -130px;
+    flex-flow: column;
+    
+}
+#SuccessEmail{
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 170px;
+    height: 45px;
+    font-size: 20px;
+    border-radius: 9px;
+    background-color: white;
+    margin-top: 15px;
+    color: rgb(17, 167, 17);
+
+}
+#emptyEmail{
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    width: 170px;
+    height: 45px;
+    font-size: 20px;
+    border-radius: 9px;
+    background-color: white;
+    margin-top: 15px;
+    color: var(--red);
+}
+#SuccessEmail p {
+    padding: 3px;
+}
+.copybtnform{
+    cursor: pointer;
+}

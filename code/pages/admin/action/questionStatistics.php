@@ -28,14 +28,21 @@ if(isset($_GET["id"])){
 
                     $questions = $DBlib->fetchDataWithCondition("question", "*", "form_id = :id", [":id" => $_GET["id"]]);
 
-                    $questionsHTML = "";
-
                     foreach($questions as $key => $value){
 
                         $selected = "";
 
+                        if($value["id"] == $_GET["question"]){
+                            $currentQuestion = $key;
+                            $selected = "selected";
+                        }
+
                         $questions[$key]["type"] = $DBlib->fetchDataWithCondition("question_type", "number", "id = :id", [":id" => $value["type_id"]])[0]["number"];
 
+                        
+                        $selectOptionsHtml .= "<option value='".$value["id"]."' ".$selected.">";
+                        $selectOptionsHtml .= $value["heading"];
+                        $selectOptionsHtml .= "</option>";
 
                         $answers = $DBlib->fetchDataWithCondition("answer", "*", "question_id = :id", [":id" => $value["id"]]);
 
@@ -44,8 +51,6 @@ if(isset($_GET["id"])){
                         }
 
                         $questions[$key]["answers"] = $answers;
-
-                        $questionsHTML .= '<div class="questionDiv"><div class="questionInfo questionInfo'.$key.'"></div><div class="chartX"><canvas id="chart'.$key.'"></canvas></div></div>';
                     }
 
                 }
@@ -53,9 +58,28 @@ if(isset($_GET["id"])){
         }
     }
 }
-
-echo $questionsHTML;
 ?>
+
+<div class="selectQuestion">
+    <select id="selectQuestion">
+        <?php echo $selectOptionsHtml ?>
+    </select>
+</div>
+
+<div class="questionInfo">
+    
+</div>
+
+<div class="charts">
+	<div class="chart1">
+		<canvas id="chart1"></canvas>
+	</div>
+
+	<div class="chart2">
+		<canvas id="chart2"></canvas>
+	</div>
+</div>
+
 
 <script>
 
@@ -63,11 +87,35 @@ questions = <?php echo json_encode($questions) ?>
 
 guestsArr = <?php echo json_encode($guests) ?>
 
-for(i in questions){
-    generateQuestion(questions[i],i)
-}
+currentQuestion = <?php  echo $currentQuestion ?? 0 ?>
 
-function generateQuestion(data,index){
+console.log(currentQuestion)
+
+qSelect = new SlimSelect({
+    select: '#selectQuestion',
+    events: {
+    afterChange: (newVal) => {
+
+        let data = ""
+        for(i in questions){
+            if(questions[i].id == newVal[0].value){
+                data = questions[i]
+                break
+            }
+        }
+         
+        appendParamsToUrl({"question": data.id})
+        generateQuestion(data)
+      }
+    }
+})
+
+console.log(qSelect);
+
+generateQuestion(questions[currentQuestion])
+
+
+function generateQuestion(data){
 
     console.log(data)
 
@@ -84,8 +132,6 @@ function generateQuestion(data,index){
     let guests = []
     let guestsPos = []
     let guestsNeg = []
-    questionCtxArr = []
-    chartArrJS = []
 
     let totalGuests = 0;
     data["answers"].forEach(function(element){  
@@ -118,7 +164,7 @@ function generateQuestion(data,index){
         url: "action/generateQuestion.php",
         data: {"data": data},
         success: function(html) {
-            $(".questionInfo"+index).html(html)
+            $(".questionInfo").html(html)
 
             let i = 0
             data["answers"].forEach(function(element){  
@@ -147,6 +193,7 @@ function generateQuestion(data,index){
                     })
 
                     $(".peopleCount"+element["id"]).html("<div class='up'><span>"+guestsPos[i]+"</span>"+"<i class='mdi mdi-arrow-up'></i><div class='guestList'>"+guestListPos+"</div></div>"+"<div class='down'><span>"+guestsNeg[i]+"</span>"+"<i class='mdi mdi-arrow-down'></i><div class='guestList'>"+guestListNeg+"</div></div>")
+
                 }else{
                     guestList = ""
                     element["guests"].forEach(function(guestID){
@@ -162,7 +209,6 @@ function generateQuestion(data,index){
                                 guestList +=  "<div class='guest'>"+guest["name"]+" "+guest["surname"]+" - "+guest["email"]+"</div>"
                             }         
                         }
-
                     })
 
                     $(".peopleCount"+element["id"]).html("<span>"+element["guests"].length+"</span>"+"<i class='mdi mdi-account-multiple'></i><div class='guestList'>"+guestList+"</div>")
@@ -171,11 +217,9 @@ function generateQuestion(data,index){
             });
 
             if(totalGuests > 0){
-				questionCtx1 = document.getElementById('chart'+index)
+				questionCtx1 = document.getElementById('chart1');
 
-                console.log(id)
-
-				new Chart(questionCtx1, {
+				chart1JS = new Chart(questionCtx1, {
 					type: 'pie',
 					data: {
 					labels: labels,
@@ -194,7 +238,58 @@ function generateQuestion(data,index){
 						},
 					}
 					},
-				})
+				});
+
+                questionCtx2 = document.getElementById('chart2');
+
+                if(data["type"] == 2){
+                    chart2JS = new Chart(questionCtx2, {
+                    type: 'bar',
+                    data: {
+                        labels: labels,
+                        datasets: [
+                            {
+                                label: 'Upvotes',
+                                data: guestsPos,
+                            },
+                            {
+                                label: 'Downvotes',
+                                data: guestsNeg,
+                            },
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                        legend: {
+                            position: 'top',
+                        },
+                        }
+                    },
+				    });
+                }else{
+                    chart2JS = new Chart(questionCtx2, {
+                    type: 'bar',
+                    data: {
+                        labels: labels,
+                        datasets: [
+                            {
+                                label: 'Votes',
+                                data: guests,
+                            },
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                        legend: {
+                            position: 'top',
+                        },
+                        }
+                    },
+				    });
+                }
+
             }
         },
     });
