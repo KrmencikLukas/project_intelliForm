@@ -1,8 +1,10 @@
 //definice promenych
 let questions
 let questionCtx1
+let questionCtxArr
 let questionCtx2
 let chart1JS
+let chartArrJS
 let chart2JS
 let qSelect
 

@@ -169,7 +169,31 @@ function generateQuestion(data){
             let i = 0
             data["answers"].forEach(function(element){  
                 if(data["type"] == 2){
-                    $(".peopleCount"+element["id"]).html("<div class='up'><span>"+guestsPos[i]+"</span>"+"<i class='mdi mdi-arrow-up'></i></div>"+"<div class='down'><span>"+guestsNeg[i]+"</span>"+"<i class='mdi mdi-arrow-down'></i></div>")
+
+                    guestListPos = ""
+                    guestListNeg = ""
+                    element["guests"].forEach(function(guestID){
+                        guest = guestsArr[guestID["guest_id"]]
+                        if(guest != undefined){
+                            if(guest["email"] != null && guest["email"] != ""){
+                                if(guest["name"] == null){
+                                    guest["name"] = ""
+                                }
+                                if(guest["surname"] == null){
+                                    guest["surname"] = ""
+                                }
+                                let addList = "<div class='guest'>"+guest["name"]+" "+guest["surname"]+" - "+guest["email"]+"</div>"
+                                if(guestID["value"] == 1){
+                                    guestListPos = addList;
+                                }else{
+                                    guestListNeg = addList;
+                                }  
+                            }         
+                        }
+                    })
+
+                    $(".peopleCount"+element["id"]).html("<div class='up'><span>"+guestsPos[i]+"</span>"+"<i class='mdi mdi-arrow-up'></i><div class='guestList'>"+guestListPos+"</div></div>"+"<div class='down'><span>"+guestsNeg[i]+"</span>"+"<i class='mdi mdi-arrow-down'></i><div class='guestList'>"+guestListNeg+"</div></div>")
+
                 }else{
                     guestList = ""
                     element["guests"].forEach(function(guestID){
@@ -185,7 +209,6 @@ function generateQuestion(data){
                                 guestList +=  "<div class='guest'>"+guest["name"]+" "+guest["surname"]+" - "+guest["email"]+"</div>"
                             }         
                         }
-
                     })
 
                     $(".peopleCount"+element["id"]).html("<span>"+element["guests"].length+"</span>"+"<i class='mdi mdi-account-multiple'></i><div class='guestList'>"+guestList+"</div>")
