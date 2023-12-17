@@ -1,0 +1,61 @@
+@import url("../../../assets/global/vars.css");
+.form {
+    background-color: white;
+    min-height: 0;
+}
+.form #thanksDiv{
+    display: flex;
+    align-content: center;
+    align-items: center;
+    margin-bottom: 60px;
+}
+.formHeading {
+    text-align: center;
+}
+#thanks {
+    font-size: 22px;
+}
+#checkbox {
+    margin-left: 10px;
+    position: relative;
+    width: 38px;
+    display: flex;
+    align-content: center;
+    align-items: center;
+}
+.material-symbols-outlined {
+    position: absolute;
+}
+.check {
+    font-size: 38px;
+    left: -3px;
+    bottom: -17px;
+    color: var(--blue);
+    animation-name: tick;
+    animation-duration: 0.15s;
+    animation-delay: 1s;
+    animation-timing-function: ease-in-out;
+    filter: opacity(0%);
+    animation-fill-mode: forwards;
+}
+@keyframes tick {
+    0% {font-size: 80px;filter: opacity(0%);}
+    50% {filter: opacity(100%);}
+    100% {font-size: 38px;filter: opacity(100%);}
+}
+#powered {
+    margin-top: auto;
+    text-decoration: none;
+    color: black;
+    font-family: var(--fontRegular);
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 120px;
+}
+#formative {
+    width: 100px;
+}
+img {
+    width: 200px;
+}

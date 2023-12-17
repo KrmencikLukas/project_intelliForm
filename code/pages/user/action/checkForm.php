@@ -105,7 +105,6 @@ if ((isset($_GET["id"]))&&(is_numeric($_GET["id"]))&&(isset($_POST))) {
                 if ($guestVerification==1) {
                     $reason=validateForm ($id,$_POST,$DBlib);
                     if ($reason==1) {
-                        var_dump($reason);
                         saveForm ($_POST, $DBlib, $guestID);
                         header("Location: ../formSubmitted.php?id=".$id);
                     } else {
