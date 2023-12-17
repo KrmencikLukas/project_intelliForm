@@ -115,8 +115,7 @@
                                 $echoCSS=$echoCSS.SetQuestionCSS ($questionIDs, $questions, $DBlib);
                                 $actionAdress="id=".$id."&guestId=".$guest."&code=".$code;
                             } else {
-                                $echoForm='<div class="question"><h1 class="formHeading">'.$FormName[0]["name"].'</h1><div class="formDescriptionContainer"><p class="description">You have already submitted this form.</p></div></div>';    
-                                $echoCSS="#submit {display: none;} .form { min-height: 0px } .description {text-align: center;}";
+                                header("Location: formSubmitted.php?id=".$id);
                             }
                         } else {
                             header("Location: ../error.php");

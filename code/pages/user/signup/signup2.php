@@ -18,6 +18,7 @@
     <link rel="stylesheet" href="../css/signup2.css">
     <link rel="stylesheet" href="../../../assets/global/vars.css">
     <link rel="stylesheet" href="../../../assets/global/general.css">
+    <link rel="icon" type="image/png" href="../../../assets/img/logo/favicon.png">
 </head>
 <body>
     <div id="BodyWrap">

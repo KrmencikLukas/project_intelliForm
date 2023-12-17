@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="../css/login.css">
     <link rel="stylesheet" href="../../../assets/global/vars.css">
     <link rel="stylesheet" href="../../../assets/global/general.css">
+    <link rel="icon" type="image/png" href="../../../assets/img/logo/favicon.png">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="../js/viewPassword.js"></script>
 
