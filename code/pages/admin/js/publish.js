@@ -84,11 +84,9 @@ $(document).ready(function(){
             var method;  
             if ($('#byLink').is(':checked')) {
                 method = 1 
-                console.log("l")
             } else if ($('#byEmail').is(':checked')) {
                 method = 0
                 $("#copyField").val("");
-                console.log("e")
             }
             $.ajax({
                 url: "../action/publishFormMethod.php",

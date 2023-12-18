@@ -69,6 +69,7 @@ if(isset($_GET["id"])){
         
         page = "<?php echo $_GET["page"] ?>";
     </script>
+        <link href="https://cdn.jsdelivr.net/npm/@mdi/font@5.x/css/materialdesignicons.min.css" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <link rel="stylesheet" href="../../assets/lib/css/pretty-checkbox/dist/pretty-checkbox.min.css">
     <link rel="stylesheet" href="../../assets/global/general.css">
@@ -82,7 +83,6 @@ if(isset($_GET["id"])){
     <script src="https://unpkg.com/slim-select@latest/dist/slimselect.min.js"></script>
     <link href="../../assets/lib/css/slimSelect.css" rel="stylesheet"></link>
     <link rel="icon" type="image/png" href="../../assets/img/logo/favicon.png">
-    <link href="https://cdn.jsdelivr.net/npm/@mdi/font@5.x/css/materialdesignicons.min.css" rel="stylesheet">
     <style id="customStyles"></style>
       <script>
         var user = <?= json_encode($user)?>
