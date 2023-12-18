@@ -107,6 +107,7 @@
     padding-bottom: 3px;
     border-bottom: 1px solid var(--gray);
     font-weight: 500;
+    min-height: 30px;
 }
 
 .description{

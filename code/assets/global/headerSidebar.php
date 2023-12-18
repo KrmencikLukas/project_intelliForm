@@ -72,7 +72,7 @@
                 <div class="SidebarIcon" id="SidebarImport"></div>
                 <p class="IconText">Import Form</p>
             </a>
-            <a href="">
+            <a href="<?php echo absolutePath('/../../pages/user/about.html') ?>" target="_blank">
                 <div class="SidebarIcon" id="SidebarAbout"></div>
                 <p class="IconText">About</p>
             </a>
