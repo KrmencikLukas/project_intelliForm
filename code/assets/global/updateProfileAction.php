@@ -102,7 +102,7 @@
             }
         }
     }else{
-        header("location:../error.php");
+        header("location:".Location);
     }
     
 ?>

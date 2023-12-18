@@ -14,8 +14,8 @@
             </div>
             <div id="profile">
                 <img src="placeholder" alt='pf img' id="pfPic">
-                <h2></h2>
-                <p></p>
+                <h2 id="userEmail"></h2>
+                <p id="userNames"></p>
             </div>
             <div id="links">
                 <a href="<?php
@@ -83,7 +83,24 @@
         </div>
     </div>
 </div>
-
+<script>
+    $(document).ready(function(){
+        console.log("dtrth")
+        $.ajax({
+            url:"<?= absolutePath("/profileMenu.php")?>",
+            type: "POST",
+            data:{userID: <?= $user ?>},
+            success:function(userdata){
+                console.log(userdata)
+                let fetchedData =JSON.parse(userdata)
+                $("#userEmail").text(fetchedData.email)
+                $("#userNames").text(fetchedData.name+ "  " + fetchedData.surname)
+                $(".UserIcon").attr("src", "<?= absolutePath('/../img/uploads/') ?>/" + fetchedData.image)
+                $("#pfPic").attr("src", "<?= absolutePath('/../img/uploads/') ?>/" + fetchedData.image)
+            }
+        })
+    })
+</script>
 <?php
     // function absolutePath($path){
     //     $absolutePath = realpath(__DIR__ . $path);

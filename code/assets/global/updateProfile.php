@@ -21,18 +21,17 @@
     $SuccessAlert = $_SESSION["Success"] ?? null;
     unset($_SESSION["Success"]);
     if(!isset($_SESSION['user'])){
-        header("location: ../../user/login/login.php");
+        header("location: ../../code/pages/user/login/login.php");
     }
     if(!isset($_GET["id"])){
-        header("location:../Dashboard/Dashboard.php");
+        header("location:../../pages/admin/Dashboard/Dashboard.php");
     }   
     if(!is_numeric($_GET["id"])){
-        header("location:../Dashboard/Dashboard.php");
+        header("location:../../pages/admin/Dashboard/Dashboard.php");
     }   
     if($user != $id){
-        header("location:../Dashboard/Dashboard.php");
+        header("location:../../pages/admin/Dashboard/Dashboard.php");
     } 
-    //opravit cesty
 ?>
 <!DOCTYPE html>
 <html lang="en">
