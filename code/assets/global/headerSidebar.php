@@ -10,7 +10,7 @@
         <div class="preview-container">
             <div id="Arrow"></div>
             <div id="backWrap">
-                <span id="close">&times;</span>
+                <span id="close"><span class="mdi mdi-close-thick"></span></span>
             </div>
             <div id="profile">
                 <img src="placeholder" alt='pf img' id="pfPic">
