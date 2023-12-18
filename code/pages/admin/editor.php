@@ -151,6 +151,7 @@ if(isset($_GET["id"])){
                     <p id="lastSaveTime">Now</p>
                 </div>
                 <span class="saveForm">Save All</span>
+                <span class="exportForm">Export</span>
             </div>
         </div>
     </div>

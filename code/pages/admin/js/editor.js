@@ -245,6 +245,28 @@ function afterLoad(){
     $("#formFont").on("input", function() {
         $("html").css("--form-font", $(this).val() + ", sans-serif");
     });
+
+    $(".exportForm").on("click", function(){
+        $.ajax({
+            url:"action/readForm.php",
+            type:"POST",
+            data:{id: formId},
+            success:function(r){
+                var dec = JSON.parse(r)
+                var blob = new Blob([r], { type: "application/json" });
+
+                var a = document.createElement("a");
+                a.href = window.URL.createObjectURL(blob);
+
+                a.download = `${dec.name}.frd`;
+                
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+            }
+        })
+
+    })
 }
 
 

@@ -82,14 +82,16 @@
 
         SessionLog($error, Location);
 
-        if(empty($ImageFile) && $Default == true){
-            $ImageFile = "user.svg";
-        }
+
 
         if(!file_exists($folder.$ImageFile)){
             move_uploaded_file($file, $targetFile);
         }
 
+        if(empty($ImageFile) && $Default == true){
+            $ImageFile = "user.svg";
+        }
+        
         if(SessionLog($error, Location) == false){
             if(empty($ImageFile) && $Default == false){
                 $pdo->updateDataNormal("user",["name" => $Firstname, "surname" => $Lastname, "email" => $Email, "password" => HashSalt($Password, $Email)],[":id" => $id], "id = :id");

@@ -85,13 +85,11 @@
 </div>
 <script>
     $(document).ready(function(){
-        console.log("dtrth")
         $.ajax({
             url:"<?= absolutePath("/profileMenu.php")?>",
             type: "POST",
             data:{userID: <?= $user ?>},
             success:function(userdata){
-                console.log(userdata)
                 let fetchedData =JSON.parse(userdata)
                 $("#userEmail").text(fetchedData.email)
                 $("#userNames").text(fetchedData.name+ "  " + fetchedData.surname)
