@@ -82,15 +82,15 @@
 
         SessionLog($error, Location);
 
-
-
-        if(!file_exists($folder.$ImageFile)){
-            move_uploaded_file($file, $targetFile);
-        }
-
         if(empty($ImageFile) && $Default == true){
             $ImageFile = "user.svg";
         }
+        
+        if(!file_exists("../img/uploads/".$ImageFile)){
+            move_uploaded_file($file, $targetFile);
+        }
+
+
         
         if(SessionLog($error, Location) == false){
             if(empty($ImageFile) && $Default == false){

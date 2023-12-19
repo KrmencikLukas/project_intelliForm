@@ -264,7 +264,6 @@ function afterLoad(){
                 a.click();
                 document.body.removeChild(a);
 
-                window.URL.revokeObjectURL(blobUrl);
             }
         })
 
