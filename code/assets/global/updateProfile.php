@@ -82,7 +82,7 @@
                         <label></label>
                     </div>
                 </div>
-</div>
+            </div>
                 <?= notify("Size")?>
                 <?= notify("NotImage")?>
             </div>
