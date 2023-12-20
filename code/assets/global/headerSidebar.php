@@ -68,10 +68,10 @@
                 <div class="SidebarIcon" id="SidebarNewForm"></div>
                 <p class="IconText">New Form</p>
             </a>
-            <a href="">
+            <span id="import" class="import">
                 <div class="SidebarIcon" id="SidebarImport"></div>
                 <p class="IconText">Import Form</p>
-            </a>
+            </span>
             <a href="">
                 <div class="SidebarIcon" id="SidebarAbout"></div>
                 <p class="IconText">About</p>
@@ -83,8 +83,46 @@
         </div>
     </div>
 </div>
+<div id="window">
+    <label for="file">Choose file</label>
+    <input id="file" name="file" type="file"/>
+</div>
 <script>
     $(document).ready(function(){
+
+        $("#file").change(function () {
+
+            let file = $('#file')[0].files[0];
+
+            if (file) {
+                let reader = new FileReader();
+
+                reader.onload = function (e) {
+                    let fileContent = e.target.result;
+
+                    console.log(fileContent);
+
+                    $.ajax({
+                        url:"<?= absolutePath("/importForm.php")?>",
+                        type: "POST",
+                        data:{data: fileContent},
+                        success:function(data){
+                            $("#window").fadeOut(200)
+                            console.log(data)
+                        }
+                    })
+                    
+                };
+
+                reader.readAsText(file);
+            }
+        })
+
+        $("#import").click(function(){
+            $("#window").fadeIn(200)
+            $("#window").css("display", "flex")
+        })
+
         $.ajax({
             url:"<?= absolutePath("/profileMenu.php")?>",
             type: "POST",
@@ -111,7 +149,7 @@
         $serverName = $_SERVER['HTTP_HOST'];
         $absolutePath = realpath(__DIR__ . parse_url($path, PHP_URL_PATH));
     
-        $url = 'http://' . $serverName . str_replace($_SERVER['DOCUMENT_ROOT'], '', $absolutePath);
+        $url = '//' . $serverName . str_replace($_SERVER['DOCUMENT_ROOT'], '', $absolutePath);
     
         $query = parse_url($path, PHP_URL_QUERY);
         if ($query) {

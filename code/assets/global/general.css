@@ -178,7 +178,7 @@ h1{
     transition: 500ms;
     background-position: center;
 }
-#Sidebar a {
+#Sidebar a , #Sidebar .import{
     padding-top: 15px;
     padding-bottom: 15px;
     border-bottom: 1px solid #848484;
@@ -197,7 +197,7 @@ h1{
 #Sidebar:hover {
     width: 200px;
 }
-#Sidebar:hover a {
+#Sidebar:hover a, #Sidebar:hover .import{
     width: 80%;
 }
 #Sidebar a:hover{
@@ -388,4 +388,37 @@ margin-top: -2px;
     color: var(--gray);
     opacity: 0.75;
     font-size: 16px;
+}
+
+#import{
+    cursor: pointer;
+}
+
+#window{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    width: 300px;
+    height: 200px;
+    background-color: white;
+    display: none;
+    box-shadow: var(--dark-shadow);
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    border-radius: var(--radius);
+}
+
+#window label{
+    font-size: 30px;
+    background-color: var(--blue);
+    padding: 10px;
+    border-radius: var(--radius);
+    color: white;
+    cursor: pointer;
+}
+
+#window input{
+    display: none;
 }
