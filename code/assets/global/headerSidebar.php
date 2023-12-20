@@ -32,8 +32,8 @@
     <div id="header">
         <div id="HeaderLeft">
             <div id="logo">
-                <img src="<?php 
-                echo absolutePath('/../../assets/img/logo/logo.svg') ?>" alt="logo"> 
+                <a href="<?= absolutePath("/../../pages/homepage/homepage.php")?>" target="_self"><img src="<?php 
+                echo absolutePath('/../../assets/img/logo/logo.svg') ?>" alt="logo"> </a>
             </div>
             <?php
             if(isset($location)){
@@ -111,7 +111,7 @@
         $serverName = $_SERVER['HTTP_HOST'];
         $absolutePath = realpath(__DIR__ . parse_url($path, PHP_URL_PATH));
     
-        $url = 'http://' . $serverName . str_replace($_SERVER['DOCUMENT_ROOT'], '', $absolutePath);
+        $url = '//' . $serverName . str_replace($_SERVER['DOCUMENT_ROOT'], '', $absolutePath);
     
         $query = parse_url($path, PHP_URL_QUERY);
         if ($query) {
