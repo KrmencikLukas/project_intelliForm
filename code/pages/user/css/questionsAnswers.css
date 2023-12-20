@@ -1,0 +1,24 @@
+li {
+    display: flex;
+    align-items: center;
+}
+.mdi-chat-question-outline, .mdi-information-outline {
+    font-size: 40px;
+    margin-right: 10px;
+}
+.form {
+    align-items: flex-start;
+}
+.form #thanksDiv {
+    width: 100%;
+    display: flex;
+    align-content: center;
+    align-items: center;
+    margin-bottom: 60px;
+    justify-content: center;
+}
+ul + p {
+    margin-top: 30px;
+    width: 100%;
+    text-align: center;
+}

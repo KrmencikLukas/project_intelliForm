@@ -1,0 +1,24 @@
+@import url("../../../assets/global/vars.css");
+.form {
+    padding-right: 60px;
+    padding-left: 60px;
+}
+h3 {
+    font-family: var(--fontRegular);
+}
+li {
+    font-family: var(--fontRegular);
+}
+strong {
+    font-family: var(--fontSpecial);
+}
+li {
+    list-style-type: none;
+}
+.mdi-information {
+    margin-right: 5px;
+}
+h2 {
+    margin-top: 80px;
+    font-family: var(--fontRegular);
+}

@@ -95,6 +95,8 @@
     margin: 8px;
     margin-left: 0px;
     border: 1px solid var(--gray);
+    flex-direction: row;
+    flex-wrap: nowrap;
 }
 .form h2{
     font-size: 32px;

@@ -48,7 +48,7 @@
                 <?= notify("AccountExists")?>
                 <button type="submit" name="submit">Sign up</button>
                 <p id="HaveAccount">Already have an account? <a href="../login/login.php" target="_self">Log in</a></p>
-                <p id="Disclaimer">By clicking Sign up, you agree to the <a target="_self" href>Terms of service</a>and <a href="" target="_self">Privacy policy</a></p>
+                <p id="Disclaimer">By clicking Sign up, you agree to the <a href="../about.html#tou" target="_blank" href>Terms of service</a> and <a href="../about.html#pp" target="_blank" href>Privacy policy</a></p>
             </form>
         </div>
     </div>

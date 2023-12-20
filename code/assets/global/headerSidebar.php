@@ -72,11 +72,11 @@
                 <div class="SidebarIcon" id="SidebarImport"></div>
                 <p class="IconText">Import Form</p>
             </a>
-            <a href="">
+            <a href="<?php echo absolutePath('/../../pages/user/about.html') ?>" target="_blank">
                 <div class="SidebarIcon" id="SidebarAbout"></div>
                 <p class="IconText">About</p>
             </a>
-            <a href="">
+            <a href="<?php echo absolutePath('/../../pages/user/questionsAnswers.html') ?>" target="_blank">
                 <div class="SidebarIcon" id="SidebarQA"></div>
                 <p class="IconText">Q&A</p>
             </a>
@@ -111,7 +111,7 @@
         $serverName = $_SERVER['HTTP_HOST'];
         $absolutePath = realpath(__DIR__ . parse_url($path, PHP_URL_PATH));
     
-        $url = 'http://' . $serverName . str_replace($_SERVER['DOCUMENT_ROOT'], '', $absolutePath);
+        $url = '//' . $serverName . str_replace($_SERVER['DOCUMENT_ROOT'], '', $absolutePath);
     
         $query = parse_url($path, PHP_URL_QUERY);
         if ($query) {

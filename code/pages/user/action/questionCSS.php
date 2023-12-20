@@ -11,10 +11,10 @@ function SetQuestionCSS ($questionIDs, $questions, $DBlib){
         if (isset($questionCSS)) {
             foreach ($questionCSS as $key => $value) {
                 if (($value["question_id"]==$questions[$i]["id"])&&($value["key"]=="Background color")) {
-                    $returnCSS=$returnCSS.'.q'.$questions[$i]["id"].' {background-color:'.$value["value"].'}';
+                    $returnCSS=$returnCSS.'.q'.$questions[$i]["id"].' {background-color:'.$value["value"].';}'."\n";
                 }
                 if (($value["question_id"]==$questions[$i]["id"])&&($value["key"]=="Text color")) {
-                    $returnCSS=$returnCSS.'.q'.$questions[$i]["id"].', .q'.$questions[$i]["id"].' div div div div label {color:'.$value["value"].'}';
+                    $returnCSS=$returnCSS.'.q'.$questions[$i]["id"].', .q'.$questions[$i]["id"].' div div div div label {color:'.$value["value"].';}'."\n";
                 }
             }
         }
