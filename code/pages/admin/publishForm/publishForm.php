@@ -53,6 +53,7 @@
     <link href="https://cdn.jsdelivr.net/npm/@mdi/font@5.x/css/materialdesignicons.min.css" rel="stylesheet">
     <link href="../../../assets/global/general.css" rel="stylesheet">
     <link rel="stylesheet" href="../css/publish.css">  
+    <link rel="icon" type="image/png" href="../../../assets/img/logo/favicon.png">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="../../../assets/lib/js/profileMenu.js"></script>
     <script src="../js/publish.js"></script></script>

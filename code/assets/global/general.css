@@ -270,7 +270,7 @@ h1{
 /* Profile onlick styly*/
 
 #backgroundOverlay{
-position: absolute;
+position: fixed;
 top: 0;
 left: 0;
 width: 100%;
@@ -376,4 +376,16 @@ margin-top: -2px;
 #logo img{
     width: 100%;
     height: 100%;
+}
+#userEmail{
+    font-size: 20px;
+    font-weight: 300;
+    color: var(--gray);
+}
+#userNames{
+    margin-bottom: 5px;
+    margin-top: 5px;
+    color: var(--gray);
+    opacity: 0.75;
+    font-size: 16px;
 }

@@ -13,9 +13,9 @@
                 <span id="close"><span class="mdi mdi-close-thick"></span></span>
             </div>
             <div id="profile">
-                <img src="placeholder" alt='pf img' id="pfPic">
-                <h2></h2>
-                <p></p>
+                <img src="" alt='pf img' id="pfPic">
+                <h2 id="userEmail"></h2>
+                <p id="userNames"></p>
             </div>
             <div id="links">
                 <a href="<?php
@@ -49,12 +49,12 @@
                     echo $PageSpecific;
                 }
                 //sem si přes $PageSpecific můžete dát co chete, pokud chcete
-                $userIconPath = '/../img/icons/user.svg';
+
             ?>
         </div>
         <div id="HeaderRight">
             <div class="userIconDiv">
-                <img class="UserIcon" src="<?php echo absolutePath($userIconPath) ?>" alt="">
+                <img class="UserIcon" src="" alt="">
             </div>
         </div>
     </div>
@@ -83,7 +83,22 @@
         </div>
     </div>
 </div>
-
+<script>
+    $(document).ready(function(){
+        $.ajax({
+            url:"<?= absolutePath("/profileMenu.php")?>",
+            type: "POST",
+            data:{userID: <?= $user ?>},
+            success:function(userdata){
+                let fetchedData =JSON.parse(userdata)
+                $("#userEmail").text(fetchedData.email)
+                $("#userNames").text(fetchedData.name+ "  " + fetchedData.surname)
+                $(".UserIcon").attr("src", "<?= absolutePath('/../img/uploads/') ?>/" + fetchedData.image)
+                $("#pfPic").attr("src", "<?= absolutePath('/../img/uploads/') ?>/" + fetchedData.image)
+            }
+        })
+    })
+</script>
 <?php
     // function absolutePath($path){
     //     $absolutePath = realpath(__DIR__ . $path);

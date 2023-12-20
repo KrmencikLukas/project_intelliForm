@@ -483,3 +483,17 @@ input::-webkit-inner-spin-button {
 #lastSaveTime {
     margin-left: auto;
 }
+.exportForm{
+    font-size: 15px;
+    background-color: var(--blue);
+    width: 60%;
+    margin: 0 auto;
+    padding: 10px;
+    color: white;
+    font-weight: 600;
+    border-radius: var(--radius);
+    text-align: center;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: 300ms;
+}
