@@ -13,7 +13,7 @@
                 <span id="close"><span class="mdi mdi-close-thick"></span></span>
             </div>
             <div id="profile">
-                <img src="placeholder" alt='pf img' id="pfPic">
+                <img src="" alt='pf img' id="pfPic">
                 <h2 id="userEmail"></h2>
                 <p id="userNames"></p>
             </div>
@@ -49,12 +49,12 @@
                     echo $PageSpecific;
                 }
                 //sem si přes $PageSpecific můžete dát co chete, pokud chcete
-                $userIconPath = '/../img/icons/user.svg';
+
             ?>
         </div>
         <div id="HeaderRight">
             <div class="userIconDiv">
-                <img class="UserIcon" src="<?php echo absolutePath($userIconPath) ?>" alt="">
+                <img class="UserIcon" src="" alt="">
             </div>
         </div>
     </div>
