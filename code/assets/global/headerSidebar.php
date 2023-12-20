@@ -76,7 +76,7 @@
                 <div class="SidebarIcon" id="SidebarAbout"></div>
                 <p class="IconText">About</p>
             </a>
-            <a href="">
+            <a href="<?php echo absolutePath('/../../pages/user/questionsAnswers.html') ?>" target="_blank">
                 <div class="SidebarIcon" id="SidebarQA"></div>
                 <p class="IconText">Q&A</p>
             </a>
