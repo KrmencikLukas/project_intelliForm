@@ -17,12 +17,13 @@
             $name =$val["name"];
             $surname = $val["surname"];
             $email = $val["email"];
-
+            $image = $val["pf_image"];
         }
         $userData = [
             "name" => $name,
             "surname" => $surname,
-            "email" => $email
+            "email" => $email,
+            "image" => $image
         ];
 
 

@@ -21,7 +21,6 @@
         $Email = $_POST['Email'] ?? null;
         $Password = $_POST['Password'] ?? null;
         $PasswordCheck = $_POST['PasswordValid'] ?? null;
-        
 
         $error = [];
         define("Location", "../signup/signup.php");

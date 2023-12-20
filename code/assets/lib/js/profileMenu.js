@@ -17,7 +17,6 @@ function setMenuPosition(Menu, CenterDiv, container) {
 
 $(document).ready(function(){
     var CurrentUserId = JSON.parse(user);
-    var UserPic = $(".UserIcon").attr("src")
    
       $(".UserIcon").on("click", function(){
         // $.ajax({
@@ -32,9 +31,8 @@ $(document).ready(function(){
         // })
         $("#Preview").removeClass("hidden");
         $(".UserIcon").addClass("hov")
-        $("#pfPic").attr("src", UserPic)
         $("#backgroundOverlay").removeClass("hidden");
-        $("#backgroundOverlay, #close, #close p, #Preview").on("click", function(e) {
+        $("#backgroundOverlay, #close, .mdi-close-thick, #Preview").on("click", function(e) {
             if (e.target === this) {
               $("#backgroundOverlay").addClass("hidden");
               $(".UserIcon").removeClass("hov")
