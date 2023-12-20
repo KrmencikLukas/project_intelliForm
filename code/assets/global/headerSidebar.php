@@ -111,7 +111,7 @@
         $serverName = $_SERVER['HTTP_HOST'];
         $absolutePath = realpath(__DIR__ . parse_url($path, PHP_URL_PATH));
     
-        $url = 'http://' . $serverName . str_replace($_SERVER['DOCUMENT_ROOT'], '', $absolutePath);
+        $url = '//' . $serverName . str_replace($_SERVER['DOCUMENT_ROOT'], '', $absolutePath);
     
         $query = parse_url($path, PHP_URL_QUERY);
         if ($query) {
