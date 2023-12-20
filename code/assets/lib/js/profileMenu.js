@@ -15,30 +15,18 @@ function setMenuPosition(Menu, CenterDiv, container) {
 
   }
 
-$(document).ready(function(){
-    var CurrentUserId = JSON.parse(user);
-   
-      $(".UserIcon").on("click", function(){
-        // $.ajax({
-        //   url: "../../../assets/global/profileMenu.php",
-        //   type: "POST",
-        //   data: {userID:  CurrentUserId},
-        //   success: function(resp){
-        //     data = JSON.parse(resp)
-        //     $("#profile h2").html(data.name +"&nbsp;&nbsp;" + data.surname);
-        //     $("#profile p").html(data.email);
-        //   }
-        // })
-        $("#Preview").removeClass("hidden");
-        $(".UserIcon").addClass("hov")
-        $("#backgroundOverlay").removeClass("hidden");
-        $("#backgroundOverlay, #close, .mdi-close-thick, #Preview").on("click", function(e) {
-            if (e.target === this) {
-              $("#backgroundOverlay").addClass("hidden");
-              $(".UserIcon").removeClass("hov")
-            }
-          });
-      })
+$(document).ready(function(){   
+  $(".UserIcon").on("click", function(){
+    $("#Preview").removeClass("hidden");
+    $(".UserIcon").addClass("hov")
+    $("#backgroundOverlay").removeClass("hidden");
+    $("#backgroundOverlay, #close, .mdi-close-thick, #Preview").on("click", function(e) {
+        if (e.target === this) {
+          $("#backgroundOverlay").addClass("hidden");
+          $(".UserIcon").removeClass("hov")
+        }
+      });
+  })
     
     
     setMenuPosition(".preview-container",".UserIcon","#backgroundOverlay");

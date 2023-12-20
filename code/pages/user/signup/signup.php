@@ -21,7 +21,7 @@
 <body>
     <div id="BodyWrap">
         <div id="ButtonWrap">
-            <a href="" target="_self" id="BackBtn"><span></span> go back</a>
+            <a href="../../homepage/homepage.php" target="_self" id="BackBtn"><span></span> go back</a>
         </div>
         <div id="Main">
             <form method="post" action="../action/signupAction.php">

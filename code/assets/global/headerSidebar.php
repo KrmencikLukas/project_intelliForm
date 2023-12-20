@@ -32,8 +32,8 @@
     <div id="header">
         <div id="HeaderLeft">
             <div id="logo">
-                <img src="<?php 
-                echo absolutePath('/../../assets/img/logo/logo.svg') ?>" alt="logo"> 
+                <a href="<?= absolutePath("/../../pages/homepage/homepage.php")?>" target="_self"><img src="<?php 
+                echo absolutePath('/../../assets/img/logo/logo.svg') ?>" alt="logo"> </a>
             </div>
             <?php
             if(isset($location)){
