@@ -61,7 +61,8 @@ function validateForm ($id, $formData, $DBlib) {
                 $questionID = substr($answerData[1], $questionID);
                 $params = [":id" => $questionID];
                 $questionInDB= $DBlib->countByPDOWithCondition("question", "id","id = :id", $params );
-                if ($questionInDB==1) {
+                $questionMandatory= $DBlib->fetchDataWithCondition("question_settings", "`value`",'question_id = :id AND `key` = "Mandatory"', $params);
+                if (($questionInDB==1)&&(!in_array($questionID,$sentCount))&&(isset($questionMandatory[0]["value"]))&&($questionMandatory[0]["value"]==1)) {
                     $sentCount[]=$questionID;
                 }
             }
