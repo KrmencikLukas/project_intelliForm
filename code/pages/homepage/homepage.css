@@ -65,7 +65,7 @@ body {
   position: absolute;
   opacity: 0.8;
   z-index: 1000;
-  top: 35vh;
+  top: 31vh;
   border-radius: 18px;
   left: 0;
   -webkit-box-shadow: var(--shadow);
