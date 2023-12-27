@@ -59,3 +59,11 @@
 img {
     width: 200px;
 }
+#results {
+    text-decoration: none;
+    color: white;
+    background-color: var(--blue);
+    padding: 15px 20px 15px 20px;
+    font-family: var(--fontRegular);
+    border-radius: 13px;
+}

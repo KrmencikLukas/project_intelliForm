@@ -18,7 +18,6 @@
         $values=$_SESSION;
         //var_dump($values);
     }
-    session_destroy();
 
     //kontrola adresy
     $id=$_GET["id"] ?? null;
@@ -115,7 +114,7 @@
                                 $echoCSS=$echoCSS.SetQuestionCSS ($questionIDs, $questions, $DBlib);
                                 $actionAdress="id=".$id."&guestId=".$guest."&code=".$code;
                             } else {
-                                header("Location: formSubmitted.php?id=".$id);
+                                header("Location: formSubmitted.php?id=".$id."&guestId=".$guest."&code=".$code);
                             }
                         } else {
                             header("Location: ../error.php");
