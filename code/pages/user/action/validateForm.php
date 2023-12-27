@@ -123,7 +123,7 @@ function validateForm ($id, $formData, $DBlib) {
                 $MinMaxDBCount=$MinMaxDBCount+1;
                 if ((isset($count[$formQuestions[$i]["id"]]))&&($questionMinVote[0]["value"]<=$count[$formQuestions[$i]["id"]])&&($questionMaxVote[0]["value"]>=$count[$formQuestions[$i]["id"]])) {
                     $FinalCount=$FinalCount+1;
-                } elseif ($questionMinVote[0]["value"]==0) {
+                } elseif (($questionMinVote[0]["value"]==0)&&(empty($count[$formQuestions[$i]["id"]]))) {
                     $FinalCount=$FinalCount+1;
                 }
 
@@ -133,7 +133,7 @@ function validateForm ($id, $formData, $DBlib) {
                 $MinMaxDBCount=$MinMaxDBCount+1;
                 if ((isset($upvote[$formQuestions[$i]["id"]]))&&(isset($downvote[$formQuestions[$i]["id"]]))&&($questionMinUpvote[0]["value"]<=$upvote[$formQuestions[$i]["id"]])&&($questionMaxUpvote[0]["value"]>=$upvote[$formQuestions[$i]["id"]])&&($questionMinDownvote[0]["value"]<=$downvote[$formQuestions[$i]["id"]])&&($questionMaxDownvote[0]["value"]>=$downvote[$formQuestions[$i]["id"]])) {
                     $FinalCount=$FinalCount+1;
-                } elseif ($questionMinUpvote[0]["value"]==0) {
+                } elseif (($questionMinUpvote[0]["value"]==0)&&(empty($upvote[$formQuestions[$i]["id"]]))||($questionMinDownvote[0]["value"]==0)&&(empty($downvote[$formQuestions[$i]["id"]]))) {
                     $FinalCount=$FinalCount+1;
                 }
 

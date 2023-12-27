@@ -3,6 +3,7 @@ include("../../../assets/lib/php/db.php");
 include("../../../assets/lib/php/DBlibrary.php");
 include("saveForm.php");
 include("validateForm.php");
+include("../../../assets/lib/php/HashLibrary.php");
 $DBlib = new DatabaseFunctions($db);
 
 //var_dump($_POST);
@@ -41,6 +42,7 @@ if ((isset($_GET["id"]))&&(is_numeric($_GET["id"]))&&(isset($_POST))) {
                 
                 if ($guestVerification==1) {
                     $reason=validateForm ($id,$_POST,$DBlib);
+                    
                     if ($reason==1) {
                         saveForm ($_POST, $DBlib, null);
                         header("Location: ../formSubmitted.php?id=".$id);
@@ -50,6 +52,7 @@ if ((isset($_GET["id"]))&&(is_numeric($_GET["id"]))&&(isset($_POST))) {
                         $_SESSION["reason"]=$reason;
                         header("Location: ../form.php?id=".$id."&guestId=".$guestID."&code=".$guestCode);
                     }
+                    
                 } else {
                     header("Location: ../../error.php");
                 }
@@ -73,6 +76,7 @@ if ((isset($_GET["id"]))&&(is_numeric($_GET["id"]))&&(isset($_POST))) {
                         $insertData=[
                             "email" => $_POST["email"],
                             "form_id" => $id,
+                            "code" => generateRandomCode(),
                         ];
                         $newGuest=$DBlib->insertData("guest", $insertData);
                         $newGuestID = [ "id" => $newGuest];
