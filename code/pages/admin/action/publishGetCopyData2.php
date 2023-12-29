@@ -8,9 +8,9 @@
 
     $form = (int)$_POST["form"] ?? null;
     $EditGuest =(int)$_POST["EditGuest"] ?? null;
-
-    if($form && $EditGuest){
-        $recipients = $pdo->fetchDataWithCondition("guest", "*", "form_id =:form AND method = 1 AND id = :id",[":form" => $form, ":id" => $EditGuest]);
+    $method = (int)$_POST["Method"] ?? null;
+    if($form && $EditGuest && $method){
+        $recipients = $pdo->fetchDataWithCondition("guest", "*", "form_id =:form AND method = :method AND id = :id",[":form" => $form, ":id" => $EditGuest, ":method" => $method]);
         $formSpecifications = $pdo->fetchDataWithCondition("form","*","id = :id",[":id" => $form]);
         $formSpecifications2 = $pdo->fetchDataWithCondition("form_settings","value","form_id= :id AND `key` = 'anonymous' ",[":id" => $form] );
 
@@ -20,7 +20,9 @@
         foreach($formSpecifications2 as $value3){
             $anonym = $value3["value"];
         }
-
+        if(empty($recipients)){
+            echo "emp";
+        }
         $link2 = "";
         foreach($recipients as $value2){
             if($private == 0){
@@ -29,6 +31,13 @@
                 $link2 = "id={$form}";
             } 
         }
-        echo json_encode($link2);
+        if($link2 !== ""){
+            echo json_encode($link2);
+        }else{
+            echo "avs";
+        }
+
+    }else{
+        "ssd";
     }
 ?>
