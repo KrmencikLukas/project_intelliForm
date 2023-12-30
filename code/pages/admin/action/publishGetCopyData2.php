@@ -33,11 +33,6 @@
         }
         if($link2 !== ""){
             echo json_encode($link2);
-        }else{
-            echo "avs";
         }
-
-    }else{
-        "ssd";
     }
 ?>
