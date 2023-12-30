@@ -13,5 +13,5 @@
             "method" => $method,
         ];
         $update = $pdo->updateDataNormal("guest",$arr2 ,[":id" => $guest, ":form" => $form],"id = :id AND form_id = :form");
-        echo $update;
+        echo $method;
     }

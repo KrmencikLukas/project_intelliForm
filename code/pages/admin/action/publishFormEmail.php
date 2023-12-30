@@ -17,7 +17,7 @@
 
     ob_start();
     if($form){
-        $recipients = $pdo->fetchDataWithCondition("guest", "*", "form_id =:form AND method = 0 AND sent = 0",[":form" => $form]);
+        $recipients = $pdo->fetchDataWithCondition("guest", "*", "form_id =:form AND method = 0 AND sent = 0 AND email IS NOT NULL",[":form" => $form]);
         $formSpecifications = $pdo->fetchDataWithCondition("form","*","id = :id",[":id" => $form]);
         $formSpecifications2 = $pdo->fetchDataWithCondition("form_settings","value","form_id= :id AND `key` = 'anonymous' ",[":id" => $form] );
 

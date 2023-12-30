@@ -56,7 +56,7 @@
     <link rel="icon" type="image/png" href="../../../assets/img/logo/favicon.png">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="../../../assets/lib/js/profileMenu.js"></script>
-    <script src="../js/publish.js"></script></script>
+    <script src="../js/publish.js"></script>
     <script>
         var user = <?= json_encode($user)?>;
         <?php if($Exists){

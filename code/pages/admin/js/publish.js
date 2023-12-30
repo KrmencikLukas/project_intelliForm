@@ -33,6 +33,8 @@ $(document).ready(function(){
             })
         });
 
+       
+        
         var EmptyGuest
 
         $('#inviteButton').on("click", function(){
@@ -79,24 +81,6 @@ $(document).ready(function(){
                 }
             })
         })
-
-        $('input[name="user-method"]').change(function(){
-            var method;  
-            if ($('#byLink').is(':checked')) {
-                method = 1 
-            } else if ($('#byEmail').is(':checked')) {
-                method = 0
-                $("#copyField").val("");
-            }
-            $.ajax({
-                url: "../action/publishFormMethod.php",
-                type:"POST",
-                data:{form: Form, method: method, guest: EmptyGuest},
-                success:function(r){
-                    console.log(r)
-                }
-            })
-        });
 
         $("#save").on("click", function(){
             var name = $("#name").val()
@@ -223,11 +207,11 @@ $(document).ready(function(){
                         var existingElement = $(`#side #emptyEmail`);
 
                         if (existingElement.length == 0) {
+                            $("#SuccessEmail").remove()
                             $("#side").append("<div id='emptyEmail'><p>No emails to send</p></div>")
                             $("#sendbtn").css("margin-top", "60px")
                             setTimeout(function() {
                                 $("#emptyEmail").remove()
-                                $("#SuccessEmail").remove()
                                 $("#sendbtn").css("margin-top", "0px")
                             }, 3000);
                         }
@@ -268,19 +252,69 @@ $(document).ready(function(){
             }
         })
 
-        $('input[name="user-method"]').change(function(){
-            if($('#byLink').is(':checked')) {
+        $('input[name="user-method"]').change(function () {
+            var method;
+            if ($('#byLink').is(':checked')) {
+                method = 1;
                 $.ajax({
-                    url:"../action/publishGetCopyData2.php",
+                    url: "../action/publishFormMethod.php",
                     type: "POST",
-                    data:{form: Form, EditGuest: EmptyGuest},
-                    success:function(link2){
-                        $("#copyField").val(`http://project.lukaskrmencik.cz/S/code/pages/user/form.php?${JSON.parse(link2)}`)
+                    data: { form: Form, method: method, guest: EmptyGuest },
+                    success: function (r) {        
+                       
+                        $.ajax({
+                            url: "../action/publishGetCopyData2.php",
+                            type: "POST",
+                            data: { form: Form, EditGuest: EmptyGuest, Method: 1 },
+                            success: function (link2) {
+                                $("#copyField").val(`http://project.lukaskrmencik.cz/S/code/pages/user/form.php?${JSON.parse(link2)}`);
+                            },
+                        });
                     }
-                })
+                });
+            } else {
+                method = 0;
+                $("#copyField").val("");
+        
+                $.ajax({
+                    url: "../action/publishFormMethod.php",
+                    type: "POST",
+                    data: { form: Form, method: method, guest: EmptyGuest },
+                    success: function (r) {
+                    }
+                });
             }
         });
-
+        $('input[name="user-type"]').change(function(){
+            var everyone;  
+            if ($('#everyone').is(':checked')) {
+                everyone = 1 
+            
+            } else if ($('#Peoplelink').is(':checked')) {
+                everyone = 0
+            }
+            if($('#byLink').is(':checked')){
+                $.ajax({
+                    url: "../action/publishFormEveryone.php",
+                    type:"POST",
+                    data:{form: Form, everyone: everyone},
+                    success:function(r){
+                        if(r == 1){
+                            $("#copyField").val(`http://project.lukaskrmencik.cz/S/code/pages/user/form.php?id=${Form}`);
+                        }else{
+                            method = 1;
+                            $.ajax({
+                                url: "../action/publishGetCopyData2.php",
+                                type: "POST",
+                                data: { form: Form, EditGuest: EmptyGuest, Method: 1 },
+                                success: function (link2) {
+                                    $("#copyField").val(`http://project.lukaskrmencik.cz/S/code/pages/user/form.php?${JSON.parse(link2)}`);
+                                },
+                            });
+                        }
+                    }
+                })
+            }  
+        });
     }
-
 })

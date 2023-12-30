@@ -12,5 +12,5 @@
             "everyone" => $everyone,
         ];
         $update = $pdo->updateDataNormal("form",$arr2 ,[":id" => $form],"id = :id");
-        echo $update;
+        echo $everyone;
     }
