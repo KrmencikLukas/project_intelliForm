@@ -31,10 +31,10 @@
 <div id="HeaderAndSidebar">
     <div id="header">
         <div id="HeaderLeft">
-            <div id="logo">
-                <a href="<?= absolutePath("/../../pages/homepage/homepage.php")?>" target="_self"><img src="<?php 
-                echo absolutePath('/../../assets/img/logo/logo.svg') ?>" alt="logo"> </a>
-            </div>
+            <a id="logo" href="<?php echo absolutePath('/../../pages/homepage/homepage.php') ?>">
+                <img src="<?php 
+                echo absolutePath('/../../assets/img/logo/logo.svg') ?>" alt="logo"> 
+            </a>
             <?php
             if(isset($location)){
                 echo "<div id='LocationName'><h1>";

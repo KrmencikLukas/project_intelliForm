@@ -3,6 +3,7 @@ include("../../../assets/lib/php/db.php");
 include("../../../assets/lib/php/DBlibrary.php");
 include("saveForm.php");
 include("validateForm.php");
+include("../../../assets/lib/php/HashLibrary.php");
 $DBlib = new DatabaseFunctions($db);
 
 //var_dump($_POST);
@@ -41,6 +42,7 @@ if ((isset($_GET["id"]))&&(is_numeric($_GET["id"]))&&(isset($_POST))) {
                 
                 if ($guestVerification==1) {
                     $reason=validateForm ($id,$_POST,$DBlib);
+                    
                     if ($reason==1) {
                         saveForm ($_POST, $DBlib, null);
                         header("Location: ../formSubmitted.php?id=".$id);
@@ -50,6 +52,7 @@ if ((isset($_GET["id"]))&&(is_numeric($_GET["id"]))&&(isset($_POST))) {
                         $_SESSION["reason"]=$reason;
                         header("Location: ../form.php?id=".$id."&guestId=".$guestID."&code=".$guestCode);
                     }
+                    
                 } else {
                     header("Location: ../../error.php");
                 }
@@ -61,20 +64,32 @@ if ((isset($_GET["id"]))&&(is_numeric($_GET["id"]))&&(isset($_POST))) {
         if ($everyone==1) {
             if ((isset($_POST["email"]))&&(filter_var($_POST["email"], FILTER_VALIDATE_EMAIL))) {
                 $reason=validateForm ($id,$_POST,$DBlib);
+                
                 if ($reason==1) {
-                    $validateEmail = [":email" => $_POST["email"]];
-                    $emailInDB=$DBlib->countByPDOWithCondition("guest","id","email = :email",$validateEmail);
+                    $validateEmail = [
+                        ":email" => $_POST["email"],
+                        ":form_id" => $id,
+                    ];
+                    $emailInDB=$DBlib->countByPDOWithCondition("guest","id","email = :email AND form_id = :form_id",$validateEmail);
+                    
                     if ($emailInDB==0) {
                         $insertData=[
                             "email" => $_POST["email"],
                             "form_id" => $id,
+                            "code" => generateRandomCode(),
                         ];
                         $newGuest=$DBlib->insertData("guest", $insertData);
+                        $newGuestID = [ "id" => $newGuest];
+                        $newGuestCode=$DBlib->fetchDataWithCondition("guest", "code", "id = :id", $newGuestID);
     
                         saveForm ($_POST, $DBlib, $newGuest);
-                        header("Location: ../formSubmitted.php?id=".$id);
+                        header("Location: ../formSubmitted.php?id=".$id."&guestId=".$newGuest."&code=".$newGuestCode[0]["code"]);
                     } else {
-                        header("Location: ../formSubmitted.php?id=".$id);
+                        $GuestID = [ "email" => $_POST["email"], "id" => $id];
+                        $Guest=$DBlib->fetchDataWithCondition("guest", "id", "form_id = :id AND email = :email", $GuestID);
+                        $GuestID = [ "id" => $Guest[0]["id"]];
+                        $GuestCode=$DBlib->fetchDataWithCondition("guest", "code", "id = :id", $GuestID);
+                        header("Location: ../formSubmitted.php?id=".$id."&guestId=".$Guest[0]["id"]."&code=".$GuestCode[0]["code"]);
                     }
                 } else {
                     session_start();
@@ -85,6 +100,7 @@ if ((isset($_GET["id"]))&&(is_numeric($_GET["id"]))&&(isset($_POST))) {
                     $_SESSION["reason"]=$reason;
                     header("Location: ../form.php?id=".$id);
                 }
+                
             } else {
                 session_start();
                 $_SESSION=$_POST;
@@ -106,7 +122,7 @@ if ((isset($_GET["id"]))&&(is_numeric($_GET["id"]))&&(isset($_POST))) {
                     $reason=validateForm ($id,$_POST,$DBlib);
                     if ($reason==1) {
                         saveForm ($_POST, $DBlib, $guestID);
-                        header("Location: ../formSubmitted.php?id=".$id);
+                        header("Location: ../formSubmitted.php?id=".$id."&guestId=".$guestID."&code=".$guestCode);
                     } else {
                         session_start();
                         $_SESSION=$_POST;
