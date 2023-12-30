@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="../../assets/global/general.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="../../assets/lib/js/profileMenu.js"></script>
+    <link rel="icon" type="image/png" href="../../assets/img/logo/favicon.png">
 </head>
 <body>
     <div id="backgroundOverlay" class="hidden">
