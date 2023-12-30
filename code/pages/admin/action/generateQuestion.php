@@ -51,7 +51,8 @@ function WriteQuestion ($question){
     }
   
     $echoForm=$echoForm.'<h2 class="questionHeading">'.$question["heading"].'</h2><div class="descriptionContainer"><p class="description">'.nl2br(str_replace(" ","&nbsp;",$question["description"])).'</p></div><div class="answers">';
-    
+
+    $correctDiv = "";
     //vypisuje odpovedi podle typu otázky a hodnot v db
     for ($x=0; $x < count($answerIDs); $x++) { 
         $correctness = "";
