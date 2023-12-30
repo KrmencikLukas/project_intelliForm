@@ -68,11 +68,13 @@
                 <div class="SidebarIcon" id="SidebarNewForm"></div>
                 <p class="IconText">New Form</p>
             </a>
-            <a href="">
+            <span id="import" class="import">
                 <div class="SidebarIcon" id="SidebarImport"></div>
                 <p class="IconText">Import Form</p>
-            </a>
+
+            </span>
             <a href="<?php echo absolutePath('/../../pages/user/about.html') ?>" target="_blank">
+
                 <div class="SidebarIcon" id="SidebarAbout"></div>
                 <p class="IconText">About</p>
             </a>
@@ -83,8 +85,46 @@
         </div>
     </div>
 </div>
+<div id="window">
+    <label for="file">Choose file</label>
+    <input id="file" name="file" type="file"/>
+</div>
 <script>
     $(document).ready(function(){
+
+        $("#file").change(function () {
+
+            let file = $('#file')[0].files[0];
+
+            if (file) {
+                let reader = new FileReader();
+
+                reader.onload = function (e) {
+                    let fileContent = e.target.result;
+
+                    console.log(fileContent);
+
+                    $.ajax({
+                        url:"<?= absolutePath("/importForm.php")?>",
+                        type: "POST",
+                        data:{data: fileContent},
+                        success:function(data){
+                            $("#window").fadeOut(200)
+                            console.log(data)
+                        }
+                    })
+                    
+                };
+
+                reader.readAsText(file);
+            }
+        })
+
+        $("#import").click(function(){
+            $("#window").fadeIn(200)
+            $("#window").css("display", "flex")
+        })
+
         $.ajax({
             url:"<?= absolutePath("/profileMenu.php")?>",
             type: "POST",
