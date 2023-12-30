@@ -1,0 +1,249 @@
+@import url("../../assets/global/general.css");
+#logomain{
+  background-color: #ffffff;
+  color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  width: 200px;
+  height: inherit;
+}
+#HeaderLeft {
+  height: inherit;
+  padding-left: 35px;
+}
+#login{
+  color: white;
+  border-radius: 18px;
+  font-size: 26px;
+  text-decoration: none;
+  width: 150px;
+  height: 50px;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  background-color: var(--blue);
+
+}
+
+body {
+  margin: 0;
+  /*overflow: hidden;*/
+}
+
+#bigimage {
+  position: relative;
+  width: 100%;
+  height: 80vh;
+  overflow: hidden;
+}
+
+#bg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+#gradient-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to right, rgba(255, 255, 255, 1) 7%, rgba(255, 255, 255, 0) 70%);
+  pointer-events: none;
+}
+
+#introText{
+  width: 450px;
+  height: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 41px;
+  font-weight: 300;
+  color: white;
+  background-color: var(--blue);
+  position: absolute;
+  opacity: 0.8;
+  z-index: 1000;
+  top: 31vh;
+  border-radius: 18px;
+  left: 0;
+  -webkit-box-shadow: var(--shadow);
+  -moz-box-shadow: var(--shadow);
+  box-shadow: var(--shadow); 
+  filter: opacity(0%);
+  animation-name: show;
+  animation-duration: 1.25s;
+  animation-iteration-count: 1;
+  animation-timing-function: ease-in-out;
+  animation-fill-mode: forwards;
+}
+
+@keyframes show {
+  0% {margin-left: 0;}
+  30% {filter: opacity(0%);}
+  100% {margin-left: 18vw;filter: opacity(100%);}
+}
+
+#introText p {
+  padding: 10px;
+}
+
+#Header{
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  pointer-events: none;
+}
+
+#dashboard{
+  color: white;
+  border-radius: 18px;
+  margin-right: 40px;
+  font-size: 26px;
+  text-decoration: none;
+  width: 250px;
+  height: 50px;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  background-color: var(--blue);
+}
+
+#AboutPlatform {
+  display: flex;
+  padding-top: 100px;
+  flex-direction: column;
+  align-items: center;
+  font-size: 19px;
+  margin-bottom: 100px;
+}
+
+#greetings {
+  padding-bottom: 50px;
+}
+
+.infoImage {
+  border-radius: 21px;
+  width: 448px;
+}
+
+#formGif {
+  filter: contrast(1.19);
+  width: 435px;
+  border-radius: 0;
+}
+
+.info {
+  overflow: hidden;
+  filter: opacity(0%);
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  /*flex-wrap: wrap;*/
+  justify-content: center;
+  margin-top: 40px;
+  margin-left: -20%;
+}
+
+.info .text {
+  display: block;
+  background-color: var(--blue);
+  color: white;
+  max-width: 720px;
+  border-radius: 15px;
+  margin-left: 50px;
+  margin-right: 50px;
+  margin-top: 50px;
+  font-size: 21px;
+  padding: 13px;
+}
+
+.info a {
+  color: white;
+  text-decoration: none;
+}
+
+.info:nth-child(3) {
+  flex-direction: row-reverse;
+}
+
+.info-show-animation {
+  animation-name: show-info;
+}
+
+.info-hide-animation {
+  animation-name: hide-info;
+}
+
+.info-show-animation, .info-hide-animation {
+  animation-duration: 0.75s;
+  animation-iteration-count: 1;
+  animation-timing-function: ease-in-out;
+  animation-fill-mode: forwards;
+}
+
+@keyframes show-info {
+  0% {margin-left: -10%; filter: opacity(0%);}
+  100% {margin-left: 0%; filter: opacity(100%);overflow: none;}
+}
+
+@keyframes hide-info {
+  0% {margin-left: 0%; filter: opacity(100%);}
+  100% {margin-left: 10%; filter: opacity(0%);overflow: hidden;}
+}
+
+#footer {
+  width: calc(100% - 200px);
+  background-color: #2e2e2e;
+  height: 200px;
+  padding: 100px;
+}
+
+#invert-color {
+  filter: invert(1);
+  width: 250px;
+}
+
+#footer a, #firstLine a {
+  color: white;
+  text-decoration: none;
+}
+
+#firstLine {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+ul {
+  list-style-type: none;
+}
+
+li {
+  margin-bottom: 5px;
+}
+
+#else {
+  margin-top: 50px;
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+#copyright {
+  color: white;
+  margin-top: 50px;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+}

@@ -27,6 +27,7 @@ function validateForm ($id, $formData, $DBlib) {
         if (($key!="submit")&&($key!="email")) {
             //název dám do arraye, v názvu se totiž ukrývá id otázky, id odpovědi, typ odpovědi
             $answerData = explode("*",$key);
+            
             if ((isset($answerData[0]))&&(isset($answerData[1]))&&(isset($answerData[2]))&&(isset($answerData[3]))) {
                 $questionID = strpos($answerData[1], "",1);
                 $questionID = substr($answerData[1], $questionID);
@@ -39,6 +40,7 @@ function validateForm ($id, $formData, $DBlib) {
                     $answerID = substr($answerData[2], $answerID);
                     $params = [":id" => $answerID];
                     $answerInDB= $DBlib->countByPDOWithCondition("answer", "id","id = :id", $params );
+                    
                     //tady kontroluji jestli je otázka v db, jestli je na povinnou otázku, nakonec zapíšu do arraye, že byla zodpovězena, kontroluji tedy ještě jestli náhodnou v arrayi není
                     if (($answerInDB==1)&&(!in_array($questionID,$sentCount))&&(isset($questionMandatory[0]["value"]))&&($questionMandatory[0]["value"]==1)) {
                         $sentCount[]=$questionID;
@@ -49,6 +51,7 @@ function validateForm ($id, $formData, $DBlib) {
                         $maxInDB= $DBlib->countByPDOWithCondition("question_settings", "`value`",'question_id = :id AND `key` = "Max votes"', $params );
                         $minUInDB= $DBlib->countByPDOWithCondition("question_settings", "`value`",'question_id = :id AND `key` = "Min upvotes"', $params );
                         $maxUInDB= $DBlib->countByPDOWithCondition("question_settings", "`value`",'question_id = :id AND `key` = "Max upvotes"', $params );
+                        
                         //když otázka má nastavený striktní počet odpovědí, zapíšu si ji pro práci dále
                         if (($minInDB>0)||($maxInDB>0)||($minUInDB>0)||($maxUInDB>0)) {
                             $MinMaxCount[$answerID] = $questionID;
@@ -61,7 +64,9 @@ function validateForm ($id, $formData, $DBlib) {
                 $questionID = substr($answerData[1], $questionID);
                 $params = [":id" => $questionID];
                 $questionInDB= $DBlib->countByPDOWithCondition("question", "id","id = :id", $params );
-                if ($questionInDB==1) {
+                $questionMandatory= $DBlib->fetchDataWithCondition("question_settings", "`value`",'question_id = :id AND `key` = "Mandatory"', $params);
+                
+                if (($questionInDB==1)&&(!in_array($questionID,$sentCount))&&(isset($questionMandatory[0]["value"]))&&($questionMandatory[0]["value"]==1)) {
                     $sentCount[]=$questionID;
                 }
             }
@@ -96,6 +101,7 @@ function validateForm ($id, $formData, $DBlib) {
                     $count[$question]=0;
                 }
                 $count[$question]=$count[$question]+1;
+
             }
         }
         $MinMaxDBCount=0;
@@ -117,14 +123,20 @@ function validateForm ($id, $formData, $DBlib) {
                 $MinMaxDBCount=$MinMaxDBCount+1;
                 if ((isset($count[$formQuestions[$i]["id"]]))&&($questionMinVote[0]["value"]<=$count[$formQuestions[$i]["id"]])&&($questionMaxVote[0]["value"]>=$count[$formQuestions[$i]["id"]])) {
                     $FinalCount=$FinalCount+1;
-                } 
+                } elseif (($questionMinVote[0]["value"]==0)&&(empty($count[$formQuestions[$i]["id"]]))) {
+                    $FinalCount=$FinalCount+1;
+                }
+
             } elseif ((!empty($questionMinUpvote))&&(!empty($questionMaxUpvote))) {
                 
                 //v tomto případě jde o upvote downvote otázku - musím kotrolovat jestli je upvote mezi mimimem a maximem, to stejný o downvotu
                 $MinMaxDBCount=$MinMaxDBCount+1;
                 if ((isset($upvote[$formQuestions[$i]["id"]]))&&(isset($downvote[$formQuestions[$i]["id"]]))&&($questionMinUpvote[0]["value"]<=$upvote[$formQuestions[$i]["id"]])&&($questionMaxUpvote[0]["value"]>=$upvote[$formQuestions[$i]["id"]])&&($questionMinDownvote[0]["value"]<=$downvote[$formQuestions[$i]["id"]])&&($questionMaxDownvote[0]["value"]>=$downvote[$formQuestions[$i]["id"]])) {
                     $FinalCount=$FinalCount+1;
+                } elseif (($questionMinUpvote[0]["value"]==0)&&(empty($upvote[$formQuestions[$i]["id"]]))||($questionMinDownvote[0]["value"]==0)&&(empty($downvote[$formQuestions[$i]["id"]]))) {
+                    $FinalCount=$FinalCount+1;
                 }
+
             }
 
         }
@@ -135,6 +147,7 @@ function validateForm ($id, $formData, $DBlib) {
         } else {
             return "minmax";
         }
+
     } else {
         return "mandatory";
     }

@@ -31,10 +31,10 @@
 <div id="HeaderAndSidebar">
     <div id="header">
         <div id="HeaderLeft">
-            <div id="logo">
+            <a id="logo" href="<?php echo absolutePath('/../../pages/homepage/homepage.php') ?>">
                 <img src="<?php 
                 echo absolutePath('/../../assets/img/logo/logo.svg') ?>" alt="logo"> 
-            </div>
+            </a>
             <?php
             if(isset($location)){
                 echo "<div id='LocationName'><h1>";
@@ -71,12 +71,14 @@
             <span id="import" class="import">
                 <div class="SidebarIcon" id="SidebarImport"></div>
                 <p class="IconText">Import Form</p>
+
             </span>
-            <a href="">
+            <a href="<?php echo absolutePath('/../../pages/user/about.html') ?>" target="_blank">
+
                 <div class="SidebarIcon" id="SidebarAbout"></div>
                 <p class="IconText">About</p>
             </a>
-            <a href="">
+            <a href="<?php echo absolutePath('/../../pages/user/questionsAnswers.html') ?>" target="_blank">
                 <div class="SidebarIcon" id="SidebarQA"></div>
                 <p class="IconText">Q&A</p>
             </a>

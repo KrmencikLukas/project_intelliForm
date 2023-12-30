@@ -66,7 +66,6 @@ input:focus{
     align-content: center;
     justify-content: flex-end;
     align-items: center;
-    width: 400px;
 }
 
 h1{
@@ -83,6 +82,7 @@ h1{
     justify-content: center;
     align-items: center;
     cursor: pointer;
+    max-width: 190px;
 }
 #LocationName {
     border-left: #707070 2px solid;
@@ -264,9 +264,6 @@ h1{
     background-image: url(../img/icons/FAQ-blue.svg);
 }
 
-#PageSpecific{
-    margin-left: 80px;
-}
 /* Profile onlick styly*/
 
 #backgroundOverlay{

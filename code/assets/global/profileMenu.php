@@ -28,6 +28,5 @@
 
 
         echo json_encode($userData);
-
     }
 ?>

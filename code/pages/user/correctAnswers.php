@@ -10,7 +10,7 @@ session_start();
 
 if(isset($_GET["id"])){
     if(is_numeric($_GET["id"])){
-        if(isset($_SESSION["user"])){
+        //if(isset($_SESSION["user"])){
             if($DBlib->countByPDOWithCondition("guest", "id","id = :id", [":id" => $_GET["id"]])){
                 $guest = $DBlib->fetchDataWithCondition("guest", "*", "id = :id", [":id" => $_GET["id"]])[0];
 
@@ -22,9 +22,9 @@ if(isset($_GET["id"])){
             }else{
                 header("Location: ../error.php");
             }
-        }else{
-            header("Location: ../user/login/login.php");
-        }
+        //}else{
+            //header("Location: ../user/login/login.php");
+        //}
     }else{
         header("Location: ../error.php");
     }

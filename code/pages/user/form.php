@@ -18,7 +18,6 @@
         $values=$_SESSION;
         //var_dump($values);
     }
-    session_destroy();
 
     //kontrola adresy
     $id=$_GET["id"] ?? null;
@@ -115,7 +114,7 @@
                                 $echoCSS=$echoCSS.SetQuestionCSS ($questionIDs, $questions, $DBlib);
                                 $actionAdress="id=".$id."&guestId=".$guest."&code=".$code;
                             } else {
-                                header("Location: formSubmitted.php?id=".$id);
+                                header("Location: formSubmitted.php?id=".$id."&guestId=".$guest."&code=".$code);
                             }
                         } else {
                             header("Location: ../error.php");
@@ -142,7 +141,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?=$FormName[0]["name"]?> | Intelifom</title>
+    <title><?=$FormName[0]["name"]?> | Formative</title>
     <link href="https://cdn.jsdelivr.net/npm/@mdi/font@5.x/css/materialdesignicons.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../../assets/lib/css/pretty-checkbox/dist/pretty-checkbox.min.css">
     <link rel="stylesheet" href="css/form.css">
