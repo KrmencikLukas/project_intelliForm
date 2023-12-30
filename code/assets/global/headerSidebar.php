@@ -86,6 +86,7 @@
     </div>
 </div>
 <div id="window">
+    <i class="close mdi mdi-close"></i>
     <label for="file">Choose file</label>
     <input id="file" name="file" type="file"/>
 </div>
@@ -111,6 +112,7 @@
                         success:function(data){
                             $("#window").fadeOut(200)
                             console.log(data)
+                            window.location.replace("<?= absolutePath("/../../pages/admin/editor.php") ?>?id="+data);
                         }
                     })
                     
@@ -123,6 +125,10 @@
         $("#import").click(function(){
             $("#window").fadeIn(200)
             $("#window").css("display", "flex")
+        })
+
+        $(".close").click(function(){
+            $("#window").fadeOut(200)
         })
 
         $.ajax({

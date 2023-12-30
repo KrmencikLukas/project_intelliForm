@@ -10,21 +10,30 @@ session_start();
 
 if(isset($_GET["id"])){
     if(is_numeric($_GET["id"])){
-        //if(isset($_SESSION["user"])){
-            if($DBlib->countByPDOWithCondition("guest", "id","id = :id", [":id" => $_GET["id"]])){
-                $guest = $DBlib->fetchDataWithCondition("guest", "*", "id = :id", [":id" => $_GET["id"]])[0];
+        if($DBlib->countByPDOWithCondition("guest", "id","id = :id", [":id" => $_GET["id"]])){
+            $guest = $DBlib->fetchDataWithCondition("guest", "*", "id = :id", [":id" => $_GET["id"]])[0];
 
-                if($guest["code"] == $_GET["code"] ?? NULL){
-                    $questions = $DBlib->fetchDataWithCondition("question", "*", "form_id = :id", [":id" => $guest["form_id"]]);
-                }else{
-                    header("Location: ../error.php");
+            if($guest["code"] == $_GET["code"] ?? NULL){
+                $questions = $DBlib->fetchDataWithCondition("question", "*", "form_id = :id", [":id" => $guest["form_id"]]);
+
+                foreach($questions as $key => $value){
+
+                    $answers = $DBlib->fetchDataWithCondition("answer", "*", "question_id = :id", [":id" => $value["id"]]);
+
+                    foreach($answers as $key2 => $value2){
+                        $guests = $DBlib->fetchDataWithCondition("guest_answer", "*", "answer_id = :id", [":id" => $value2["id"]]);
+                        $answers[$key2]["guests"] = $guests;
+                    }
+
+                    $questions[$key]["answers"] = $answers;
                 }
+
             }else{
                 header("Location: ../error.php");
             }
-        //}else{
-            //header("Location: ../user/login/login.php");
-        //}
+        }else{
+            header("Location: ../error.php");
+        }
     }else{
         header("Location: ../error.php");
     }

@@ -405,6 +405,7 @@ margin-top: -2px;
     flex-direction: column;
     align-items: center;
     border-radius: var(--radius);
+    z-index: 1000;
 }
 
 #window label{
@@ -418,4 +419,13 @@ margin-top: -2px;
 
 #window input{
     display: none;
+}
+
+.close{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    color: var(--red);
+    font-size: 35px;
+    cursor: pointer;
 }
